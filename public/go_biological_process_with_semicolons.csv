@@ -1,0 +1,932 @@
+gene,annotation
+ABCB1,stem cell proliferation
+ABI3,defense response to tumor cell
+ACE,mononuclear cell proliferation
+ACKR3,angiogenesis
+ACTG1,angiogenesis
+ACVR2A,Sertoli cell proliferation
+ACVR2B,lymphangiogenesis
+ADAMTS12,cellular response to tumor necrosis factor
+ADAMTS9,negative regulation of sprouting angiogenesis
+ADGRA2,regulation of angiogenesis
+ADGRA2,sprouting angiogenesis
+ADGRB3,negative regulation of angiogenesis
+ADIPOQ,negative regulation of tumor necrosis factor production
+ADIPOQ,negative regulation of tumor necrosis factor-mediated signaling pathway
+AFF3,response to tumor necrosis factor
+AGGF1,angiogenesis
+AGGF1,positive regulation of angiogenesis
+AGGF1,positive regulation of endothelial cell proliferation
+AGO1,negative regulation of angiogenesis
+AKAP8,negative regulation of tumor necrosis factor production
+AKT3,positive regulation of vascular endothelial cell proliferation
+AKT3,positive regulation of angiogenesis
+AKT3,positive regulation of cell migration involved in sprouting angiogenesis
+AKT3,positive regulation of endothelial cell proliferation
+AMOT,angiogenesis
+AMOT,negative regulation of angiogenesis
+AMOTL1,angiogenesis
+ANG,angiogenesis
+ANG,negative regulation of smooth muscle cell proliferation
+ANG,positive regulation of endothelial cell proliferation
+ANGPT1,regulation of skeletal muscle satellite cell proliferation
+ANGPT1,sprouting angiogenesis
+ANGPT1,regulation of tumor necrosis factor production
+ANGPT1,angiogenesis
+ANGPT1,regulation of endothelial cell proliferation
+ANPEP,angiogenesis
+ANXA2,angiogenesis
+APLNR,angiogenesis
+APLNR,positive regulation of angiogenesis
+APLNR,positive regulation of blood vessel endothelial cell proliferation involved in sprouting angiogenesis
+AREG,glial cell proliferation
+AREG,epithelial cell proliferation involved in mammary gland duct elongation
+ARHGAP5,positive regulation of mesenchymal cell proliferation
+ARID2,cardiac muscle cell proliferation
+ARID5B,cellular response to leukemia inhibitory factor
+ARNT,positive regulation of endothelial cell proliferation
+ATP5F1B,angiogenesis
+AXIN2,stem cell proliferation
+AXL,negative regulation of tumor necrosis factor production
+AZI2,dendritic cell proliferation
+B2M,negative regulation of epithelial cell proliferation
+BABAM1,hematopoietic stem cell proliferation
+BAP1,common myeloid progenitor cell proliferation
+BBC3,execution phase of apoptosis
+BCL2,B cell proliferation
+BCL2L1,dendritic cell proliferation
+BCL2L1,positive regulation of mononuclear cell proliferation
+BCL2L2,Sertoli cell proliferation
+BCL6,regulation of T cell proliferation
+BCL6,positive regulation of B cell proliferation
+BCL6,B cell proliferation
+BCLAF1,cellular response to leukemia inhibitory factor
+BIRC3,tumor necrosis factor-mediated signaling pathway
+BMP5,positive regulation of epithelial cell proliferation
+BMP7,metanephric mesenchymal cell proliferation involved in metanephros development
+BMP7,negative regulation of glomerular mesangial cell proliferation
+BMPR1A,regulation of cardiac muscle cell proliferation
+BMPR1A,positive regulation of mesenchymal cell proliferation
+BMPR1A,positive regulation of epithelial cell proliferation
+BMPR1A,positive regulation of cardiac muscle cell proliferation
+BMPR1A,epithelial cell proliferation
+BMPR1A,angiogenesis
+BMPR2,endothelial cell proliferation
+BMPR2,negative regulation of cell proliferation involved in heart valve morphogenesis
+BMPR2,negative regulation of smooth muscle cell proliferation
+BMPR2,lymphangiogenesis
+BOK,regulation of chorionic trophoblast cell proliferation
+BOK,cellular component disassembly involved in execution phase of apoptosis
+BOK,positive regulation of execution phase of apoptosis
+BRCA2,negative regulation of mammary gland epithelial cell proliferation
+BRCA2,inner cell mass cell proliferation
+BRCA2,hematopoietic stem cell proliferation
+BTG1,positive regulation of angiogenesis
+BTK,positive regulation of B cell proliferation
+BTK,negative regulation of B cell proliferation
+BTK,positive regulation of tumor necrosis factor production
+C3,positive regulation of angiogenesis
+C3AR1,positive regulation of angiogenesis
+CALD1,angiogenesis
+CARD11,B cell proliferation
+CARD11,positive regulation of B cell proliferation
+CARD11,"CD4-positive, alpha-beta T cell proliferation"
+CARD11,"positive regulation of CD4-positive, alpha-beta T cell proliferation"
+CASP3,response to tumor necrosis factor
+CASP3,negative regulation of B cell proliferation
+CBLB,"negative regulation of CD4-positive, alpha-beta T cell proliferation"
+CBLB,"CD4-positive, alpha-beta T cell proliferation"
+CCL26,cellular response to tumor necrosis factor
+CCL26,positive regulation of endothelial cell proliferation
+CCN6,negative regulation of angiogenesis
+CCND1,mammary gland epithelial cell proliferation
+CCND1,positive regulation of mammary gland epithelial cell proliferation
+CCND3,T cell proliferation
+CCNE1,positive regulation of mesenchymal stem cell proliferation
+CD19,B cell proliferation involved in immune response
+CD1D,positive regulation of T cell proliferation
+CD209,regulation of T cell proliferation
+CD209,positive regulation of T cell proliferation
+CD22,regulation of B cell proliferation
+CD274,negative regulation of tumor necrosis factor superfamily cytokine production
+CD274,regulation of activated T cell proliferation
+CD274,"negative regulation of CD4-positive, alpha-beta T cell proliferation"
+CD274,positive regulation of tolerance induction to tumor cell
+CD274,negative regulation of T cell proliferation
+CD274,negative regulation of activated T cell proliferation
+CD274,positive regulation of T cell proliferation
+CD276,positive regulation of T cell proliferation
+CD28,"positive regulation of CD4-positive, alpha-beta T cell proliferation"
+CD28,"CD4-positive, alpha-beta T cell proliferation"
+CD28,positive regulation of T cell proliferation
+CD36,positive regulation of tumor necrosis factor production
+CD58,cellular response to tumor necrosis factor
+CD70,tumor necrosis factor-mediated signaling pathway
+CD70,B cell proliferation
+CD70,positive regulation of T cell proliferation
+CD74,positive regulation of B cell proliferation
+CD86,negative regulation of T cell proliferation
+CD86,positive regulation of T cell proliferation
+CDC73,negative regulation of epithelial cell proliferation
+CDH13,positive regulation of smooth muscle cell proliferation
+CDH13,sprouting angiogenesis
+CDH13,positive regulation of endothelial cell proliferation
+CDK6,negative regulation of epithelial cell proliferation
+CDKN2B,negative regulation of glial cell proliferation
+CDKN2B,negative regulation of epithelial cell proliferation
+CDKN2C,stem cell proliferation
+CDKN2C,negative regulation of stem cell proliferation
+CEBPA,hematopoietic stem cell proliferation
+CEBPA,negative regulation of hematopoietic stem cell proliferation
+CEBPA,cellular response to tumor necrosis factor
+CELA1,positive regulation of angiogenesis
+CHEK1,inner cell mass cell proliferation
+CHRNB2,positive regulation of B cell proliferation
+CITED2,negative regulation of cardiac muscle cell proliferation
+CLEC4G,alpha-beta T cell proliferation
+CLEC4G,negative regulation of alpha-beta T cell proliferation
+CLEC4G,negative regulation of immature T cell proliferation in thymus
+CLEC4G,immature T cell proliferation in thymus
+COL1A1,cellular response to tumor necrosis factor
+COL4A2,negative regulation of angiogenesis
+COL4A2,angiogenesis
+CPNE1,positive regulation of tumor necrosis factor-mediated signaling pathway
+CR1,negative regulation of T cell proliferation
+CREB1,cellular response to leukemia inhibitory factor
+CREB3L1,negative regulation of sprouting angiogenesis
+CRP,negative regulation of mononuclear cell proliferation
+CRTAM,activated T cell proliferation
+CRTAM,positive regulation of natural killer cell mediated cytotoxicity directed against tumor cell target
+CRTAM,negative regulation of activated T cell proliferation
+CRTAM,detection of tumor cell
+CSF1,positive regulation of mononuclear cell proliferation
+CSF1,microglial cell proliferation
+CSF1R,microglial cell proliferation
+CSPG4,angiogenesis
+CTLA4,negative regulation of T cell proliferation
+CTLA4,negative regulation of B cell proliferation
+CX3CR1,positive regulation of angiogenesis
+CX3CR1,regulation of tumor necrosis factor production
+CX3CR1,cellular response to tumor necrosis factor
+CXCR2,positive regulation of angiogenesis
+CYLD,regulation of tumor necrosis factor-mediated signaling pathway
+CYP7B1,epithelial cell proliferation
+CYP7B1,positive regulation of epithelial cell proliferation
+DAB2IP,negative regulation of angiogenesis
+DAB2IP,angiogenesis
+DAB2IP,negative regulation of epithelial cell proliferation
+DAB2IP,cellular response to tumor necrosis factor
+DACH1,type B pancreatic cell proliferation
+DACH1,negative regulation of cell proliferation involved in contact inhibition
+DCHS1,condensed mesenchymal cell proliferation
+DCSTAMP,cellular response to tumor necrosis factor
+DDR2,positive regulation of hepatic stellate cell proliferation
+DDR2,positive regulation of vascular associated smooth muscle cell proliferation
+DGCR8,regulation of stem cell proliferation
+DICER1,negative regulation of Schwann cell proliferation
+DICER1,negative regulation of tumor necrosis factor-mediated signaling pathway
+DICER1,negative regulation of tumor necrosis factor production
+DISP3,positive regulation of neural precursor cell proliferation
+DLC1,positive regulation of execution phase of apoptosis
+DLEC1,defense response to tumor cell
+DLL1,positive regulation of sprouting angiogenesis
+DNMT1,positive regulation of vascular associated smooth muscle cell proliferation
+DOCK2,alpha-beta T cell proliferation
+DOCK8,memory T cell proliferation
+E2F2,negative regulation of sprouting angiogenesis
+E2F3,negative regulation of fat cell proliferation
+EAF2,negative regulation of epithelial cell proliferation involved in prostate gland development
+EAF2,epithelial cell proliferation involved in prostate gland development
+EDNRB,regulation of epithelial cell proliferation
+EGFL7,angiogenesis
+EGFL7,positive regulation of endothelial cell proliferation
+EGR1,positive regulation of glomerular metanephric mesangial cell proliferation
+EGR1,glomerular mesangial cell proliferation
+EGR3,cell migration involved in sprouting angiogenesis
+EGR3,positive regulation of endothelial cell proliferation
+EIF2AK3,angiogenesis
+EIF2S2,male germ cell proliferation
+EIF4A2,cellular response to leukemia inhibitory factor
+EIF5A,tumor necrosis factor-mediated signaling pathway
+ELF4,natural killer cell proliferation
+ELF4,negative regulation of tumor necrosis factor production
+ELF4,NK T cell proliferation
+ELL,negative regulation of epithelial cell proliferation involved in prostate gland development
+ELL,epithelial cell proliferation involved in prostate gland development
+ELN,regulation of smooth muscle cell proliferation
+EPAS1,angiogenesis
+EPCAM,positive regulation of stem cell proliferation
+EPHA1,positive regulation of angiogenesis
+EPHA1,angiogenesis
+EPHA2,negative regulation of lymphangiogenesis
+EPHA2,mammary gland epithelial cell proliferation
+EPHA2,regulation of angiogenesis
+EPHA2,negative regulation of angiogenesis
+EPHA2,blood vessel endothelial cell proliferation involved in sprouting angiogenesis
+EPHB1,negative regulation of skeletal muscle satellite cell proliferation
+EPHB1,angiogenesis
+EPHB1,neural precursor cell proliferation
+EPHB4,angiogenesis
+EPPK1,negative regulation of epithelial cell proliferation
+ERBB2,cellular response to tumor necrosis factor
+ERBB4,positive regulation of cardiac muscle cell proliferation
+ERBIN,cellular response to tumor necrosis factor
+ERCC2,hematopoietic stem cell proliferation
+ERRFI1,epithelial cell proliferation
+ETS1,positive regulation of angiogenesis
+ETS1,regulation of angiogenesis
+ETV5,positive regulation of glial cell proliferation
+ETV6,hematopoietic stem cell proliferation
+EXT1,response to leukemia inhibitory factor
+EYA1,positive regulation of epithelial cell proliferation
+EYA1,epithelial cell proliferation
+FANCA,regulation of germ cell proliferation
+FAS,tumor necrosis factor-mediated signaling pathway
+FAS,negative regulation of angiogenesis
+FBLN1,negative regulation of stem cell proliferation
+FBXW7,regulation of cell migration involved in sprouting angiogenesis
+FCGR2B,negative regulation of B cell proliferation
+FCGR3A,positive regulation of tumor necrosis factor production
+FCGR3A,positive regulation of natural killer cell proliferation
+FES,cardiac muscle cell proliferation
+FGF10,positive regulation of urothelial cell proliferation
+FGF10,angiogenesis
+FGF10,positive regulation of epithelial cell proliferation
+FGF10,urothelial cell proliferation
+FGF10,endothelial cell proliferation
+FGF10,positive regulation of epithelial cell proliferation involved in wound healing
+FGF10,epithelial cell proliferation involved in salivary gland morphogenesis
+FGF10,positive regulation of endothelial cell proliferation
+FGF10,epithelial cell proliferation
+FGF2,endothelial cell proliferation
+FGF2,positive regulation of angiogenesis
+FGF2,regulation of cell migration involved in sprouting angiogenesis
+FGF2,regulation of blood vessel endothelial cell proliferation involved in sprouting angiogenesis
+FGF2,growth factor dependent regulation of skeletal muscle satellite cell proliferation
+FGF2,cell migration involved in sprouting angiogenesis
+FGF2,positive regulation of endothelial cell proliferation
+FGF2,regulation of angiogenesis
+FGF4,positive regulation of stem cell proliferation
+FGF4,mesenchymal cell proliferation
+FGF4,cellular response to leukemia inhibitory factor
+FGF4,stem cell proliferation
+FGF6,angiogenesis
+FGFBP1,positive regulation of cell migration involved in sprouting angiogenesis
+FGFBP1,positive regulation of blood vessel endothelial cell proliferation involved in sprouting angiogenesis
+FGFR1,angiogenesis
+FGFR1,mesenchymal cell proliferation
+FGFR1,positive regulation of mesenchymal cell proliferation
+FGFR2,angiogenesis
+FGFR2,fibroblast growth factor receptor signaling pathway involved in positive regulation of cell proliferation in bone marrow
+FGFR2,positive regulation of mesenchymal cell proliferation
+FLCN,negative regulation of cell proliferation involved in kidney development
+FLCN,epithelial cell proliferation
+FLCN,negative regulation of epithelial cell proliferation
+FLCN,cell proliferation involved in kidney development
+FLNA,angiogenesis
+FLT1,angiogenesis
+FLT1,negative regulation of vascular endothelial cell proliferation
+FLT1,positive regulation of angiogenesis
+FLT3,common myeloid progenitor cell proliferation
+FLT4,lymphangiogenesis
+FLT4,positive regulation of endothelial cell proliferation
+FLT4,sprouting angiogenesis
+FLT4,angiogenesis
+FMNL3,angiogenesis
+FMR1,negative regulation of tumor necrosis factor production
+FOXF1,positive regulation of mesenchymal cell proliferation
+FOXO1,regulation of neural precursor cell proliferation
+FOXO3,tumor necrosis factor-mediated signaling pathway
+FOXO3,regulation of neural precursor cell proliferation
+FOXO4,negative regulation of angiogenesis
+FOXP1,cellular response to tumor necrosis factor
+FOXP1,regulation of tumor necrosis factor production
+FOXP1,positive regulation of smooth muscle cell proliferation
+FRMD8,positive regulation of tumor necrosis factor production
+FRS2,regulation of epithelial cell proliferation
+FRS2,positive regulation of vascular associated smooth muscle cell proliferation
+FTO,regulation of white fat cell proliferation
+FXR1,negative regulation of tumor necrosis factor production
+FZD3,negative regulation of execution phase of apoptosis
+FZD3,cell proliferation in midbrain
+GAB1,angiogenesis
+GAB1,positive regulation of angiogenesis
+GATA2,positive regulation of cell migration involved in sprouting angiogenesis
+GATA2,positive regulation of angiogenesis
+GATA2,negative regulation of neural precursor cell proliferation
+GATA3,negative regulation of mammary gland epithelial cell proliferation
+GATA4,positive regulation of angiogenesis
+GATA6,positive regulation of cardiac muscle cell proliferation
+GATA6,cardiac muscle cell proliferation
+GATA6,negative regulation of sebum secreting cell proliferation
+GATA6,positive regulation of angiogenesis
+GDF5,negative regulation of epithelial cell proliferation
+GINS1,inner cell mass cell proliferation
+GLI1,positive regulation of cardiac muscle cell proliferation
+GLI3,lateral ganglionic eminence cell proliferation
+GNA12,negative regulation of vascular associated smooth muscle cell proliferation
+GNA13,negative regulation of vascular associated smooth muscle cell proliferation
+GNAI2,positive regulation of neural precursor cell proliferation
+GNAI2,positive regulation of vascular associated smooth muscle cell proliferation
+GPAM,positive regulation of activated T cell proliferation
+GPAM,activated T cell proliferation
+GPC3,cell proliferation involved in kidney development
+GPC3,negative regulation of epithelial cell proliferation
+GPC3,cell proliferation involved in metanephros development
+GPC3,epithelial cell proliferation
+GPC3,mesenchymal cell proliferation involved in ureteric bud development
+GPR183,positive regulation of B cell proliferation
+GPS2,negative regulation of tumor necrosis factor-mediated signaling pathway
+GPX1,angiogenesis involved in wound healing
+GPX1,regulation of mammary gland epithelial cell proliferation
+GREM1,positive regulation of angiogenesis
+GREM1,cell migration involved in sprouting angiogenesis
+GSDME,positive regulation of immune response to tumor cell
+GSDME,cellular response to tumor necrosis factor
+GTF2I,negative regulation of angiogenesis
+H2BC11,negative regulation of tumor necrosis factor-mediated signaling pathway
+HDAC7,positive regulation of cell migration involved in sprouting angiogenesis
+HDAC9,positive regulation of cell migration involved in sprouting angiogenesis
+HES1,cellular response to tumor necrosis factor
+HES1,regulation of epithelial cell proliferation
+HES1,T cell proliferation
+HES1,positive regulation of T cell proliferation
+HES1,negative regulation of glial cell proliferation
+HEY1,angiogenesis
+HGF,skeletal muscle cell proliferation
+HGF,epithelial cell proliferation
+HHLA2,positive regulation of activated T cell proliferation
+HIPK2,positive regulation of angiogenesis
+HLA-A,"positive regulation of CD8-positive, alpha-beta T cell proliferation"
+HLA-A,T cell mediated cytotoxicity directed against tumor cell target
+HLA-DRB1,positive regulation of T cell mediated immune response to tumor cell
+HLA-DRB1,negative regulation of T cell proliferation
+HMGA1,oncogene-induced cell senescence
+HMGA2,positive regulation of stem cell proliferation
+HMGA2,positive regulation of cell proliferation in bone marrow
+HMGA2,positive regulation of angiogenesis
+HMGA2,oncogene-induced cell senescence
+HMGB1,positive regulation of activated T cell proliferation
+HMGB1,positive regulation of tumor necrosis factor production
+HMGB1,regulation of T cell mediated immune response to tumor cell
+HNF1B,epithelial cell proliferation
+HOXA3,angiogenesis
+HOXA3,positive regulation of stem cell proliferation
+HOXA3,stem cell proliferation
+HOXA7,angiogenesis
+HOXB13,angiogenesis
+HSPG2,angiogenesis
+HSPG2,positive regulation of endothelial cell proliferation
+HSPG2,negative regulation of angiogenesis
+HTATIP2,angiogenesis
+HTATIP2,regulation of angiogenesis
+ICOSLG,positive regulation of activated T cell proliferation
+ID1,angiogenesis
+IFNGR1,positive regulation of tumor necrosis factor production
+IGF1,positive regulation of trophectodermal cell proliferation
+IGF1,positive regulation of epithelial cell proliferation
+IGF1,positive regulation of vascular associated smooth muscle cell proliferation
+IGF1,negative regulation of tumor necrosis factor production
+IGF1,positive regulation of activated T cell proliferation
+IGF1,positive regulation of smooth muscle cell proliferation
+IGF1R,positive regulation of smooth muscle cell proliferation
+IGF2,positive regulation of activated T cell proliferation
+IGF2,positive regulation of vascular endothelial cell proliferation
+IL10,negative regulation of B cell proliferation
+IL10,positive regulation of endothelial cell proliferation
+IL10,negative regulation of T cell proliferation
+IL10,negative regulation of vascular associated smooth muscle cell proliferation
+IL10,positive regulation of vascular associated smooth muscle cell proliferation
+IL10,negative regulation of tumor necrosis factor production
+IL10,positive regulation of sprouting angiogenesis
+IL10,B cell proliferation
+IL1A,positive regulation of tumor necrosis factor production
+IL1A,positive regulation of immature T cell proliferation in thymus
+IL1A,positive regulation of angiogenesis
+IL1B,positive regulation of T cell proliferation
+IL1B,positive regulation of immature T cell proliferation in thymus
+IL1B,positive regulation of angiogenesis
+IL2,activated T cell proliferation
+IL2,positive regulation of B cell proliferation
+IL2,"regulation of CD4-positive, alpha-beta T cell proliferation"
+IL2,positive regulation of activated T cell proliferation
+IL6ST,positive regulation of T cell proliferation
+IL6ST,leukemia inhibitory factor signaling pathway
+IL7R,B cell proliferation
+INPP5D,negative regulation of B cell proliferation
+IRAK4,positive regulation of smooth muscle cell proliferation
+IRF1,"regulation of CD8-positive, alpha-beta T cell proliferation"
+IRF6,negative regulation of stem cell proliferation
+IRF6,stem cell proliferation
+IRS2,positive regulation of B cell proliferation
+IRS2,positive regulation of type B pancreatic cell proliferation
+IRS2,type B pancreatic cell proliferation
+IRS2,positive regulation of mesenchymal cell proliferation
+ITCH,"CD4-positive, alpha-beta T cell proliferation"
+ITCH,"negative regulation of CD4-positive, alpha-beta T cell proliferation"
+ITGA4,positive regulation of vascular endothelial cell proliferation
+ITGAV,angiogenesis
+ITPKB,common myeloid progenitor cell proliferation
+JAG1,regulation of epithelial cell proliferation
+JAG1,angiogenesis
+JAK1,positive regulation of sprouting angiogenesis
+JARID2,cardiac muscle cell proliferation
+JARID2,negative regulation of cardiac muscle cell proliferation
+JARID2,cellular response to leukemia inhibitory factor
+KAT7,positive regulation of hematopoietic stem cell proliferation
+KDM2B,negative regulation of neural precursor cell proliferation
+KDR,angiogenesis
+KDR,positive regulation of endothelial cell proliferation
+KDR,positive regulation of mesenchymal cell proliferation
+KDR,cell migration involved in sprouting angiogenesis
+KDR,mesenchymal cell proliferation
+KIT,mast cell proliferation
+KIT,positive regulation of T cell proliferation
+KIT,positive regulation of mast cell proliferation
+KIT,T cell proliferation
+KIT,positive regulation of hematopoietic stem cell proliferation
+KLF2,cellular response to tumor necrosis factor
+KLF2,negative regulation of sprouting angiogenesis
+KLF4,defense response to tumor cell
+KLF4,negative regulation of smooth muscle cell proliferation
+KLF4,cellular response to leukemia inhibitory factor
+KLF4,negative regulation of angiogenesis
+KLF4,negative regulation of cell migration involved in sprouting angiogenesis
+KLF4,positive regulation of sprouting angiogenesis
+KLF5,cellular response to leukemia inhibitory factor
+KLF5,angiogenesis
+KLK3,negative regulation of angiogenesis
+KRAS,glial cell proliferation
+KRAS,positive regulation of glial cell proliferation
+LAMB1,positive regulation of epithelial cell proliferation
+LAMC1,positive regulation of epithelial cell proliferation
+LBP,positive regulation of tumor necrosis factor production
+LBP,negative regulation of tumor necrosis factor production
+LEF1,sprouting angiogenesis
+LEF1,B cell proliferation
+LEPR,glial cell proliferation
+LEPR,angiogenesis
+LGR5,epithelial cell proliferation involved in renal tubule morphogenesis
+LIFR,leukemia inhibitory factor signaling pathway
+LILRB1,negative regulation of T cell proliferation
+LILRB1,negative regulation of tumor necrosis factor production
+LILRB1,T cell proliferation involved in immune response
+LILRB1,negative regulation of mononuclear cell proliferation
+LILRB2,positive regulation of T cell proliferation
+LILRB2,negative regulation of T cell proliferation
+LRP5,positive regulation of mesenchymal cell proliferation
+LRRC32,negative regulation of activated T cell proliferation
+LRRK2,cellular response to tumor necrosis factor
+LUC7L2,regulation of type B pancreatic cell proliferation
+MALT1,T cell proliferation
+MAP2K1,type B pancreatic cell proliferation
+MAP2K1,epithelial cell proliferation involved in lung morphogenesis
+MAP2K2,epithelial cell proliferation involved in lung morphogenesis
+MAP2K7,response to tumor necrosis factor
+MAP4K3,response to tumor necrosis factor
+MAPK7,regulation of angiogenesis
+MAPK8IP1,"regulation of CD8-positive, alpha-beta T cell proliferation"
+MC1R,negative regulation of tumor necrosis factor production
+MECOM,hematopoietic stem cell proliferation
+MED1,angiogenesis
+MEF2C,positive regulation of cardiac muscle cell proliferation
+MEF2C,positive regulation of B cell proliferation
+MEF2C,B cell proliferation
+MEF2D,positive regulation of vascular associated smooth muscle cell proliferation
+MINAR1,negative regulation of angiogenesis
+MINAR1,angiogenesis
+MNAT1,positive regulation of smooth muscle cell proliferation
+MRAS,cellular response to leukemia inhibitory factor
+MS4A1,B cell proliferation
+MSN,T cell proliferation
+MYB,positive regulation of smooth muscle cell proliferation
+MYB,positive regulation of glial cell proliferation
+MYB,skeletal muscle cell proliferation
+MYB,positive regulation of hepatic stellate cell proliferation
+MYBL2,cellular response to leukemia inhibitory factor
+MYH9,angiogenesis
+MYOCD,negative regulation of vascular associated smooth muscle cell proliferation
+MYOD1,cellular response to tumor necrosis factor
+NAP1L1,positive regulation of neural precursor cell proliferation
+NCAPG2,inner cell mass cell proliferation
+NCSTN,epithelial cell proliferation
+NCSTN,T cell proliferation
+NDEL1,inner cell mass cell proliferation
+NEFH,cellular response to leukemia inhibitory factor
+NES,stem cell proliferation
+NES,positive regulation of neural precursor cell proliferation
+NF1,regulation of angiogenesis
+NF1,endothelial cell proliferation
+NF1,positive regulation of endothelial cell proliferation
+NF1,Schwann cell proliferation
+NF1,negative regulation of angiogenesis
+NF1,angiogenesis
+NF1,negative regulation of endothelial cell proliferation
+NF1,mast cell proliferation
+NF1,negative regulation of Schwann cell proliferation
+NF2,Schwann cell proliferation
+NF2,regulation of stem cell proliferation
+NF2,negative regulation of Schwann cell proliferation
+NF2,regulation of neural precursor cell proliferation
+NFATC2,positive regulation of B cell proliferation
+NFATC4,positive regulation of tumor necrosis factor production
+NFIB,negative regulation of epithelial cell proliferation involved in lung morphogenesis
+NFIB,stem cell proliferation
+NFIB,negative regulation of stem cell proliferation
+NFIB,cell proliferation in forebrain
+NFIB,negative regulation of mesenchymal cell proliferation involved in lung development
+NFIB,glial cell proliferation
+NFKBIZ,B cell proliferation
+NFKBIZ,execution phase of apoptosis
+NKX3-1,cellular response to tumor necrosis factor
+NKX3-1,negative regulation of epithelial cell proliferation
+NKX3-1,epithelial cell proliferation involved in salivary gland morphogenesis
+NKX3-1,negative regulation of epithelial cell proliferation involved in prostate gland development
+NKX3-1,epithelial cell proliferation involved in prostate gland development
+NOD1,positive regulation of tumor necrosis factor production
+NOTCH1,negative regulation of cell proliferation involved in heart valve morphogenesis
+NOTCH1,sprouting angiogenesis
+NOTCH2,cellular response to tumor cell
+NOTCH3,positive regulation of smooth muscle cell proliferation
+NPNT,cellular response to tumor necrosis factor
+NPR3,angiogenesis
+NR1H4,negative regulation of tumor necrosis factor production
+NR1H4,negative regulation of tumor necrosis factor-mediated signaling pathway
+NR4A3,positive regulation of epithelial cell proliferation
+NR4A3,common myeloid progenitor cell proliferation
+NR4A3,regulation of smooth muscle cell proliferation
+NR4A3,positive regulation of smooth muscle cell proliferation
+NR4A3,positive regulation of vascular associated smooth muscle cell proliferation
+NR4A3,regulation of type B pancreatic cell proliferation
+NRAS,positive regulation of endothelial cell proliferation
+NRP1,positive regulation of cell migration involved in sprouting angiogenesis
+NRP1,positive regulation of endothelial cell proliferation
+NRP1,angiogenesis
+NRP1,cell migration involved in sprouting angiogenesis
+NRP1,positive regulation of angiogenesis
+NRP1,angiogenesis involved in coronary vascular morphogenesis
+NRP1,sprouting angiogenesis
+ODAM,positive regulation of epithelial cell proliferation involved in wound healing
+OSR2,stem cell proliferation
+OSR2,positive regulation of stem cell proliferation
+OSR2,positive regulation of epithelial cell proliferation
+PALB2,inner cell mass cell proliferation
+PAX2,positive regulation of epithelial cell proliferation
+PBX1,positive regulation of stem cell proliferation
+PBX1,stem cell proliferation
+PDCD1LG2,negative regulation of T cell proliferation
+PDCD1LG2,negative regulation of activated T cell proliferation
+PDCD1LG2,positive regulation of T cell proliferation
+PDCD2,positive regulation of hematopoietic stem cell proliferation
+PDCD6,angiogenesis
+PDCD6,positive regulation of endothelial cell proliferation
+PDCD6,positive regulation of angiogenesis
+PDGFB,positive regulation of smooth muscle cell proliferation
+PDGFB,positive regulation of endothelial cell proliferation
+PDGFRA,positive regulation of cell proliferation by VEGF-activated platelet derived growth factor receptor signaling pathway
+PDGFRB,angiogenesis
+PDPK1,positive regulation of vascular endothelial cell proliferation
+PDPK1,positive regulation of sprouting angiogenesis
+PDPK1,positive regulation of angiogenesis
+PELI3,negative regulation of tumor necrosis factor-mediated signaling pathway
+PEX2,negative regulation of epithelial cell proliferation
+PFKP,cellular response to leukemia inhibitory factor
+PGR,regulation of epithelial cell proliferation
+PHOX2B,type B pancreatic cell proliferation
+PHOX2B,negative regulation of type B pancreatic cell proliferation
+PIGA,cellular response to leukemia inhibitory factor
+PIK3C2A,positive regulation of cell migration involved in sprouting angiogenesis
+PIK3CA,positive regulation of smooth muscle cell proliferation
+PIK3CA,angiogenesis
+PIK3CB,angiogenesis involved in wound healing
+PIK3CB,endothelial cell proliferation
+PIK3CB,negative regulation of sprouting angiogenesis
+PIK3CD,positive regulation of endothelial cell proliferation
+PIK3CD,positive regulation of angiogenesis
+PIK3CG,regulation of angiogenesis
+PIK3CG,angiogenesis
+PIK3CG,T cell proliferation
+PIK3R3,cell migration involved in sprouting angiogenesis
+PIK3R6,angiogenesis
+PIK3R6,positive regulation of angiogenesis
+PIM1,positive regulation of cardiac muscle cell proliferation
+PIM1,regulation of hematopoietic stem cell proliferation
+PKHD1,positive regulation of epithelial cell proliferation
+PLAG1,positive regulation of glial cell proliferation
+PLCG1,positive regulation of angiogenesis
+PLCG2,positive regulation of tumor necrosis factor production
+PLK2,positive regulation of cell migration involved in sprouting angiogenesis
+PLK2,negative regulation of angiogenesis
+PLXDC1,angiogenesis
+PLXND1,regulation of angiogenesis
+PLXND1,angiogenesis
+PML,negative regulation of angiogenesis
+PPARD,negative regulation of epithelial cell proliferation
+PPARD,positive regulation of fat cell proliferation
+PPARD,fat cell proliferation
+PPARD,regulation of skeletal muscle satellite cell proliferation
+PPARG,negative regulation of smooth muscle cell proliferation
+PPP3CA,positive regulation of activated T cell proliferation
+PPP3CA,regulation of cell proliferation involved in kidney morphogenesis
+PRDM1,sebum secreting cell proliferation
+PRF1,immune response to tumor cell
+PRF1,defense response to tumor cell
+PRKAR1A,negative regulation of activated T cell proliferation
+PRKAR1A,cardiac muscle cell proliferation
+PRKCB,positive regulation of angiogenesis
+PRKCI,positive regulation of glial cell proliferation
+PRKCQ,"positive regulation of CD4-positive, alpha-beta T cell proliferation"
+PRKCQ,"CD4-positive, alpha-beta T cell proliferation"
+PRKD2,angiogenesis
+PRKD2,positive regulation of angiogenesis
+PRKD2,positive regulation of endothelial cell proliferation
+PRKDC,regulation of smooth muscle cell proliferation
+PRKG1,negative regulation of vascular associated smooth muscle cell proliferation
+PRKX,angiogenesis
+PRKX,endothelial cell proliferation
+PRLR,positive regulation of B cell proliferation
+PRPF8,cellular response to tumor necrosis factor
+PRRX1,positive regulation of mesenchymal cell proliferation
+PRRX1,positive regulation of stem cell proliferation
+PRRX1,stem cell proliferation
+PRRX1,mesenchymal cell proliferation
+PTCH1,stem cell proliferation
+PTCH1,cell proliferation involved in metanephros development
+PTCH1,negative regulation of stem cell proliferation
+PTGDR2,negative regulation of male germ cell proliferation
+PTK2,angiogenesis
+PTK2B,tumor necrosis factor-mediated signaling pathway
+PTK2B,sprouting angiogenesis
+PTK2B,positive regulation of angiogenesis
+PTK2B,glial cell proliferation
+PTPN14,lymphangiogenesis
+PTPN2,negative regulation of tumor necrosis factor-mediated signaling pathway
+PTPN22,regulation of natural killer cell proliferation
+PTPN22,negative regulation of tumor necrosis factor production
+PTPN22,"positive regulation of CD8-positive, alpha-beta T cell proliferation"
+PTPN6,negative regulation of tumor necrosis factor production
+PTPRB,angiogenesis
+PTPRC,positive regulation of tumor necrosis factor production
+PTPRC,positive regulation of B cell proliferation
+PTPRC,B cell proliferation
+PTPRC,alpha-beta T cell proliferation
+PTPRC,positive regulation of alpha-beta T cell proliferation
+PTPRC,positive regulation of T cell proliferation
+RAC2,positive regulation of mast cell proliferation
+RAC2,mast cell proliferation
+RAC2,regulation of T cell proliferation
+RAD21,negative regulation of tumor necrosis factor production
+RAPGEF3,angiogenesis
+RAPGEF3,positive regulation of angiogenesis
+RAPGEF3,regulation of angiogenesis
+RARA,negative regulation of tumor necrosis factor production
+RBM10,negative regulation of vascular associated smooth muscle cell proliferation
+RBM10,vascular associated smooth muscle cell proliferation
+RBPJ,stem cell proliferation
+RBPJ,positive regulation of cardiac muscle cell proliferation
+RBPJ,epithelial cell proliferation
+RBPJ,positive regulation of epithelial cell proliferation
+RBPJ,angiogenesis
+RET,positive regulation of cysteine-type endopeptidase activity involved in execution phase of apoptosis
+RGCC,negative regulation of angiogenesis
+RGCC,negative regulation of endothelial cell proliferation
+RHOA,negative regulation of cell migration involved in sprouting angiogenesis
+RHOB,angiogenesis
+RHOB,positive regulation of angiogenesis
+RICTOR,positive regulation of endothelial cell proliferation
+RNF213,angiogenesis
+RNF213,sprouting angiogenesis
+RNF43,stem cell proliferation
+ROBO1,negative regulation of mammary gland epithelial cell proliferation
+ROBO1,cell migration involved in sprouting angiogenesis
+RPGR,neural precursor cell proliferation
+RPGRIP1,neural precursor cell proliferation
+RPTOR,positive regulation of endothelial cell proliferation
+RRAS,positive regulation of angiogenesis
+RREB1,positive regulation of mammary gland epithelial cell proliferation
+RSPO3,sprouting angiogenesis
+RUNX1,positive regulation of angiogenesis
+RUNX1,regulation of cardiac muscle cell proliferation
+RUNX1,hematopoietic stem cell proliferation
+RUNX2,positive regulation of epithelial cell proliferation
+RUNX2,positive regulation of stem cell proliferation
+RUNX2,stem cell proliferation
+RUNX2,epithelial cell proliferation
+S100A1,positive regulation of sprouting angiogenesis
+S100A7,angiogenesis
+S1PR1,angiogenesis
+S1PR1,positive regulation of smooth muscle cell proliferation
+SALL4,inner cell mass cell proliferation
+SAV1,negative regulation of cardiac muscle cell proliferation
+SAV1,cardiac muscle cell proliferation
+SAV1,negative regulation of epithelial cell proliferation
+SAV1,epithelial cell proliferation
+SCN5A,positive regulation of epithelial cell proliferation
+SDC4,negative regulation of T cell proliferation
+SEMA3E,negative regulation of angiogenesis
+SEMA3E,sprouting angiogenesis
+SEMA5A,positive regulation of angiogenesis
+SEMA5A,positive regulation of endothelial cell proliferation
+SEMA5A,blood vessel endothelial cell proliferation involved in sprouting angiogenesis
+SEMA6A,negative regulation of angiogenesis
+SEMA6A,negative regulation of cell adhesion involved in sprouting angiogenesis
+SEMA6A,negative regulation of sprouting angiogenesis
+SERPINB7,positive regulation of glomerular mesangial cell proliferation
+SETD2,angiogenesis
+SETD4,positive regulation of tumor necrosis factor production
+SETD4,regulation of cell proliferation in bone marrow
+SF1,negative regulation of smooth muscle cell proliferation
+SFRP1,positive regulation of epithelial cell proliferation
+SFRP1,negative regulation of epithelial cell proliferation
+SFRP1,regulation of angiogenesis
+SFRP2,positive regulation of angiogenesis
+SFRP2,hematopoietic stem cell proliferation
+SFRP2,negative regulation of epithelial cell proliferation
+SHH,T cell proliferation
+SHH,positive regulation of skeletal muscle cell proliferation
+SHH,negative regulation of T cell proliferation
+SHH,skeletal muscle cell proliferation
+SHH,positive regulation of immature T cell proliferation in thymus
+SHOC2,negative regulation of neural precursor cell proliferation
+SIRPA,negative regulation of tumor necrosis factor production
+SIRPA,regulation of tumor necrosis factor production
+SIX1,mesenchymal cell proliferation involved in ureter development
+SIX1,regulation of epithelial cell proliferation
+SIX1,regulation of skeletal muscle satellite cell proliferation
+SIX1,regulation of skeletal muscle cell proliferation
+SIX1,positive regulation of mesenchymal cell proliferation involved in ureter development
+SIX2,mesenchymal stem cell proliferation
+SIX2,condensed mesenchymal cell proliferation
+SKI,cardiac muscle cell proliferation
+SKI,negative regulation of Schwann cell proliferation
+SLAMF1,positive regulation of activated T cell proliferation
+SLAMF1,negative regulation of tumor necrosis factor production
+SLAMF1,natural killer cell proliferation
+SLC12A6,angiogenesis
+SLC39A12,positive regulation of sprouting angiogenesis
+SLC4A2,"negative regulation of CD8-positive, alpha-beta T cell proliferation"
+SLIT2,cell migration involved in sprouting angiogenesis
+SMO,positive regulation of epithelial cell proliferation
+SMO,positive regulation of mesenchymal cell proliferation
+SMO,epithelial cell proliferation
+SOCS3,cellular response to leukemia inhibitory factor
+SOS1,regulation of T cell proliferation
+SOX10,negative regulation of Schwann cell proliferation
+SOX11,negative regulation of glial cell proliferation
+SOX11,positive regulation of stem cell proliferation
+SOX11,glial cell proliferation
+SOX11,positive regulation of lens epithelial cell proliferation
+SOX17,regulation of stem cell proliferation
+SOX17,angiogenesis
+SOX17,cellular response to leukemia inhibitory factor
+SOX2,negative regulation of epithelial cell proliferation
+SPHK1,positive regulation of angiogenesis
+SPHK1,regulation of tumor necrosis factor-mediated signaling pathway
+SPHK1,response to tumor necrosis factor
+SPI1,defense response to tumor cell
+SPI1,oncogene-induced cell senescence
+SPN,positive regulation of tumor necrosis factor production
+SPN,positive regulation of T cell proliferation
+SPN,T cell proliferation
+SPN,negative regulation of T cell proliferation
+SPTA1,positive regulation of T cell proliferation
+SRPX,negative regulation of cell proliferation involved in contact inhibition
+SRSF3,cellular response to leukemia inhibitory factor
+ST6GAL1,positive regulation of mononuclear cell proliferation
+STAB1,negative regulation of angiogenesis
+STAT1,positive regulation of mesenchymal cell proliferation
+STAT1,negative regulation of endothelial cell proliferation
+STAT5A,positive regulation of endothelial cell proliferation
+STAT5B,natural killer cell proliferation
+STAT5B,positive regulation of natural killer cell proliferation
+STAT5B,positive regulation of activated T cell proliferation
+STAT5B,activated T cell proliferation
+STAT6,regulation of mast cell proliferation
+STAT6,mammary gland epithelial cell proliferation
+STIM1,positive regulation of angiogenesis
+SULF1,negative regulation of angiogenesis
+SULF1,negative regulation of endothelial cell proliferation
+SYK,angiogenesis
+TAL1,angiogenesis
+TBX3,positive regulation of stem cell proliferation
+TBX3,negative regulation of cell proliferation involved in heart morphogenesis
+TBX3,stem cell proliferation
+TCF7L2,regulation of smooth muscle cell proliferation
+TCF7L2,positive regulation of epithelial cell proliferation
+TCL1A,cellular response to tumor necrosis factor
+TEX14,cellular response to leukemia inhibitory factor
+TFDP1,negative regulation of fat cell proliferation
+TFRC,positive regulation of B cell proliferation
+TFRC,positive regulation of T cell proliferation
+TFRC,cellular response to leukemia inhibitory factor
+TGFA,positive regulation of epithelial cell proliferation
+TGFA,angiogenesis
+TGFBR1,positive regulation of endothelial cell proliferation
+TGFBR1,negative regulation of endothelial cell proliferation
+TGFBR1,endothelial cell proliferation
+TGFBR2,cell proliferation involved in endocardial cushion morphogenesis
+TGFBR3,cardiac muscle cell proliferation
+TGFBR3,positive regulation of cardiac muscle cell proliferation
+TGFBR3,negative regulation of epithelial cell proliferation
+TGFBR3,positive regulation of cell migration involved in sprouting angiogenesis
+THBS1,positive regulation of smooth muscle cell proliferation
+THBS1,positive regulation of angiogenesis
+THBS1,negative regulation of angiogenesis
+THBS1,positive regulation of tumor necrosis factor production
+THBS1,negative regulation of endothelial cell proliferation
+THBS1,sprouting angiogenesis
+THBS2,negative regulation of angiogenesis
+THSD7A,angiogenesis
+TIAL1,positive regulation of stem cell proliferation
+TIAL1,stem cell proliferation
+TJP1,positive regulation of sprouting angiogenesis
+TLE4,cellular response to leukemia inhibitory factor
+TLR2,positive regulation of tumor necrosis factor production
+TLR4,positive regulation of B cell proliferation
+TLR4,positive regulation of tumor necrosis factor production
+TLR4,B cell proliferation involved in immune response
+TLR4,negative regulation of tumor necrosis factor production
+TLR9,positive regulation of B cell proliferation
+TLR9,positive regulation of tumor necrosis factor production
+TMSB4X,tumor necrosis factor-mediated signaling pathway
+TNFAIP3,regulation of tumor necrosis factor-mediated signaling pathway
+TNFAIP3,negative regulation of tumor necrosis factor production
+TNFAIP3,negative regulation of smooth muscle cell proliferation
+TNFRSF11A,tumor necrosis factor-mediated signaling pathway
+TNFRSF11A,response to tumor necrosis factor
+TNFRSF14,negative regulation of alpha-beta T cell proliferation
+TNFRSF14,tumor necrosis factor-mediated signaling pathway
+TNFRSF17,tumor necrosis factor-mediated signaling pathway
+TNFRSF1B,tumor necrosis factor-mediated signaling pathway
+TNFRSF1B,regulation of T cell proliferation
+TNFRSF8,positive regulation of tumor necrosis factor production
+TNFSF13,positive regulation of endothelial cell proliferation
+TNFSF13,positive regulation of angiogenesis
+TNFSF13,angiogenesis
+TNFSF8,regulation of T cell proliferation
+TNN,positive regulation of sprouting angiogenesis
+TOX,positive regulation of neural precursor cell proliferation
+TP53BP2,positive regulation of execution phase of apoptosis
+TP63,positive regulation of stem cell proliferation
+TP63,stem cell proliferation
+TP63,squamous basal epithelial stem cell differentiation involved in prostate gland acinus development
+TP73,negative regulation of cardiac muscle cell proliferation
+TRAF2,positive regulation of tumor necrosis factor-mediated signaling pathway
+TRAF2,tumor necrosis factor-mediated signaling pathway
+TRAF3,tumor necrosis factor-mediated signaling pathway
+TRAF5,tumor necrosis factor-mediated signaling pathway
+TRAIP,negative regulation of tumor necrosis factor-mediated signaling pathway
+TRIM24,epithelial cell proliferation
+TRIM24,negative regulation of epithelial cell proliferation
+TSC22D1,negative regulation of hematopoietic stem cell proliferation
+TSPAN18,regulation of sprouting angiogenesis
+TWIST1,positive regulation of epithelial cell proliferation
+TWIST1,positive regulation of angiogenesis
+TWIST1,positive regulation of tumor necrosis factor production
+TWIST1,negative regulation of tumor necrosis factor production
+TWIST1,cell proliferation involved in heart valve development
+TXNIP,cellular response to tumor cell
+TYK2,positive regulation of NK T cell proliferation
+TYK2,positive regulation of T cell proliferation
+TYK2,positive regulation of natural killer cell proliferation
+UNCX,common myeloid progenitor cell proliferation
+VAV2,angiogenesis
+VEGFA,cell migration involved in sprouting angiogenesis
+VEGFA,positive regulation of endothelial cell proliferation
+VEGFA,angiogenesis
+VEGFA,positive regulation of blood vessel endothelial cell proliferation involved in sprouting angiogenesis
+VEZF1,angiogenesis
+WNK1,positive regulation of angiogenesis
+WNT2,cell proliferation in midbrain
+WNT2,positive regulation of mesenchymal cell proliferation
+WNT2,epithelial cell proliferation involved in lung morphogenesis
+WNT2,positive regulation of cardiac muscle cell proliferation
+WNT2,cardiac muscle cell proliferation
+WNT2,mesenchymal cell proliferation
+WNT2,positive regulation of epithelial cell proliferation involved in lung morphogenesis
+WT1,negative regulation of B cell proliferation
+WT1,negative regulation of metanephric glomerular mesangial cell proliferation
+WT1,negative regulation of T cell proliferation
+XBP1,positive regulation of angiogenesis
+XBP1,angiogenesis
+XCL2,cellular response to tumor necrosis factor
+XDH,negative regulation of endothelial cell proliferation
+XRCC5,regulation of smooth muscle cell proliferation
+YAP1,regulation of stem cell proliferation
+YBX3,cellular response to tumor necrosis factor
+YES1,regulation of stem cell proliferation
+YTHDF2,hematopoietic stem cell proliferation
+ZBTB7B,negative regulation of NK T cell proliferation
+ZC3H12A,positive regulation of execution phase of apoptosis
+ZC3H12A,angiogenesis
+ZC3H12A,cellular response to tumor necrosis factor
+ZC3H12A,positive regulation of angiogenesis
+ZC3H12A,negative regulation of tumor necrosis factor production
+ZEB1,regulation of mesenchymal cell proliferation
+ZFP36L1,regulation of stem cell proliferation
+ZFP36L1,cellular response to tumor necrosis factor
+ZFP36L2,cellular response to tumor necrosis factor
+ZFPM2,positive regulation of cardiac muscle cell proliferation
+ZNF143,positive regulation of smooth muscle cell proliferation
+ZNF503,neural precursor cell proliferation
+ZNF703,positive regulation of mammary gland epithelial cell proliferation

@@ -1,0 +1,999 @@
+gene	cancer	subtype
+FUCA2	Bladder Urothelial Carcinoma	High Microsatellite Instability
+CXCL12	Bladder Urothelial Carcinoma	High Microsatellite Instability
+EGF	Bladder Urothelial Carcinoma	High Microsatellite Instability
+PAFAH1B1	Bladder Urothelial Carcinoma	High Microsatellite Instability
+F2	Bladder Urothelial Carcinoma	High Microsatellite Instability
+APP	Bladder Urothelial Carcinoma	High Microsatellite Instability
+VAMP8	Bladder Urothelial Carcinoma	High Microsatellite Instability
+APOA1	Bladder Urothelial Carcinoma	High Microsatellite Instability
+APOB	Bladder Urothelial Carcinoma	High Microsatellite Instability
+STX6	Bladder Urothelial Carcinoma	High Microsatellite Instability
+ACTR2	Bladder Urothelial Carcinoma	High Microsatellite Instability
+COG2	Bladder Urothelial Carcinoma	High Microsatellite Instability
+FN1	Bladder Urothelial Carcinoma	High Microsatellite Instability
+PLG	Bladder Urothelial Carcinoma	High Microsatellite Instability
+CHRM2	Bladder Urothelial Carcinoma	High Microsatellite Instability
+ARRB1	Bladder Urothelial Carcinoma	High Microsatellite Instability
+SYT2	Bladder Urothelial Carcinoma	High Microsatellite Instability
+KTN1	Bladder Urothelial Carcinoma	High Microsatellite Instability
+TFRC	Bladder Urothelial Carcinoma	High Microsatellite Instability
+TF	Bladder Urothelial Carcinoma	High Microsatellite Instability
+WASL	Bladder Urothelial Carcinoma	High Microsatellite Instability
+PTPN11	Bladder Urothelial Carcinoma	High Microsatellite Instability
+PPBP	Bladder Urothelial Carcinoma	High Microsatellite Instability
+ALB	Bladder Urothelial Carcinoma	High Microsatellite Instability
+PPP2CA	Bladder Urothelial Carcinoma	High Microsatellite Instability
+PRCP	Bladder Urothelial Carcinoma	High Microsatellite Instability
+CD36	Bladder Urothelial Carcinoma	High Microsatellite Instability
+KNG1	Bladder Urothelial Carcinoma	High Microsatellite Instability
+TGOLN2	Bladder Urothelial Carcinoma	High Microsatellite Instability
+CTTN	Bladder Urothelial Carcinoma	High Microsatellite Instability
+FGG	Bladder Urothelial Carcinoma	High Microsatellite Instability
+DNAJC3	Bladder Urothelial Carcinoma	High Microsatellite Instability
+CDC42	Bladder Urothelial Carcinoma	High Microsatellite Instability
+RPS27A	Bladder Urothelial Carcinoma	High Microsatellite Instability
+MAPK1	Bladder Urothelial Carcinoma	High Microsatellite Instability
+DYNC1H1	Bladder Urothelial Carcinoma	High Microsatellite Instability
+C3	Bladder Urothelial Carcinoma	High Microsatellite Instability
+EGFR	Bladder Urothelial Carcinoma	High Microsatellite Instability
+RAP1A	Bladder Urothelial Carcinoma	High Microsatellite Instability
+SF1	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+NCBP1	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+LRRC41	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+CTNNB1	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+APOA1	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+RBM5	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+RNF4	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+PUF60	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+BUD31	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+HDAC6	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+NCOR1	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+HSP90AA1	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+RNF213	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+SNRPF	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+DHX15	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+SRSF11	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+SRSF6	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+U2AF2	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+CWC25	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+UBE2I	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+VEGFA	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+KNG1	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+UBB	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+CDC5L	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+AR	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+TAS2R19	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+RANBP2	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+CDC42	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+RPS27A	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+SP1	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+KAT2B	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+SNW1	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+UBE3A	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+SIN3B	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+EP300	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+SRRT	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+GNAI3	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+SF3B1	Bladder Urothelial Carcinoma	Low Microsatellite Instability
+PSMA7	Bladder Urothelial Carcinoma	Non-Papillary
+ADRB2	Bladder Urothelial Carcinoma	Non-Papillary
+PIK3CG	Bladder Urothelial Carcinoma	Non-Papillary
+RACGAP1	Bladder Urothelial Carcinoma	Non-Papillary
+GNGT1	Bladder Urothelial Carcinoma	Non-Papillary
+PAK1	Bladder Urothelial Carcinoma	Non-Papillary
+RAC1	Bladder Urothelial Carcinoma	Non-Papillary
+RHOA	Bladder Urothelial Carcinoma	Non-Papillary
+UBE2N	Bladder Urothelial Carcinoma	Non-Papillary
+CPSF6	Bladder Urothelial Carcinoma	Non-Papillary
+ARHGAP1	Bladder Urothelial Carcinoma	Non-Papillary
+HSP90AA1	Bladder Urothelial Carcinoma	Non-Papillary
+GRB2	Bladder Urothelial Carcinoma	Non-Papillary
+TRIO	Bladder Urothelial Carcinoma	Non-Papillary
+PIK3CA	Bladder Urothelial Carcinoma	Non-Papillary
+CCT5	Bladder Urothelial Carcinoma	Non-Papillary
+CFTR	Bladder Urothelial Carcinoma	Non-Papillary
+UBC	Bladder Urothelial Carcinoma	Non-Papillary
+TOM1	Bladder Urothelial Carcinoma	Non-Papillary
+GNB2	Bladder Urothelial Carcinoma	Non-Papillary
+SHC1	Bladder Urothelial Carcinoma	Non-Papillary
+CDC5L	Bladder Urothelial Carcinoma	Non-Papillary
+SLC11A1	Bladder Urothelial Carcinoma	Non-Papillary
+CDC42	Bladder Urothelial Carcinoma	Non-Papillary
+GNB1	Bladder Urothelial Carcinoma	Non-Papillary
+MAPK1	Bladder Urothelial Carcinoma	Non-Papillary
+PLD1	Bladder Urothelial Carcinoma	Non-Papillary
+EDN1	Bladder Urothelial Carcinoma	Non-Papillary
+ARHGEF1	Bladder Urothelial Carcinoma	Non-Papillary
+CCT7	Bladder Urothelial Carcinoma	Non-Papillary
+EGFR	Bladder Urothelial Carcinoma	Non-Papillary
+PXN	Bladder Urothelial Carcinoma	Non-Papillary
+PIK3R1	Bladder Urothelial Carcinoma	Non-Papillary
+AKT1	Bladder Urothelial Carcinoma	Non-Papillary
+FPR2	Bladder Urothelial Carcinoma	Non-Papillary
+ADRBK1	Bladder Urothelial Carcinoma	Non-Papillary
+RAP1A	Bladder Urothelial Carcinoma	Non-Papillary
+PAK2	Bladder Urothelial Carcinoma	Non-Papillary
+RAP1B	Bladder Urothelial Carcinoma	Papillary
+PSMD1	Bladder Urothelial Carcinoma	Papillary
+UBR4	Bladder Urothelial Carcinoma	Papillary
+CTNNB1	Bladder Urothelial Carcinoma	Papillary
+JUN	Bladder Urothelial Carcinoma	Papillary
+RHOA	Bladder Urothelial Carcinoma	Papillary
+CUL1	Bladder Urothelial Carcinoma	Papillary
+VAMP8	Bladder Urothelial Carcinoma	Papillary
+UBE2N	Bladder Urothelial Carcinoma	Papillary
+CPSF6	Bladder Urothelial Carcinoma	Papillary
+ATG7	Bladder Urothelial Carcinoma	Papillary
+UBE2S	Bladder Urothelial Carcinoma	Papillary
+ACTR2	Bladder Urothelial Carcinoma	Papillary
+NOTCH1	Bladder Urothelial Carcinoma	Papillary
+HRAS	Bladder Urothelial Carcinoma	Papillary
+HSP90AA1	Bladder Urothelial Carcinoma	Papillary
+PICALM	Bladder Urothelial Carcinoma	Papillary
+UBE2K	Bladder Urothelial Carcinoma	Papillary
+ARRB1	Bladder Urothelial Carcinoma	Papillary
+BTRC	Bladder Urothelial Carcinoma	Papillary
+NBEAL2	Bladder Urothelial Carcinoma	Papillary
+RPL13	Bladder Urothelial Carcinoma	Papillary
+HUWE1	Bladder Urothelial Carcinoma	Papillary
+CDC5L	Bladder Urothelial Carcinoma	Papillary
+UBA52	Bladder Urothelial Carcinoma	Papillary
+PSMC6	Bladder Urothelial Carcinoma	Papillary
+CDC42	Bladder Urothelial Carcinoma	Papillary
+RPS27A	Bladder Urothelial Carcinoma	Papillary
+MAPK1	Bladder Urothelial Carcinoma	Papillary
+SRC	Bladder Urothelial Carcinoma	Papillary
+CBLB	Bladder Urothelial Carcinoma	Papillary
+EGFR	Bladder Urothelial Carcinoma	Papillary
+CDC73	Bladder Urothelial Carcinoma	Papillary
+PIK3R1	Bladder Urothelial Carcinoma	Papillary
+AKT1	Bladder Urothelial Carcinoma	Papillary
+ADRB2	Breast Cancer	Ductal
+CCT2	Breast Cancer	Ductal
+GNGT1	Breast Cancer	Ductal
+GNB4	Breast Cancer	Ductal
+CTNNB1	Breast Cancer	Ductal
+EGF	Breast Cancer	Ductal
+RHOA	Breast Cancer	Ductal
+SYT8	Breast Cancer	Ductal
+CDH1	Breast Cancer	Ductal
+GNG7	Breast Cancer	Ductal
+HRAS	Breast Cancer	Ductal
+ORM2	Breast Cancer	Ductal
+PRKCA	Breast Cancer	Ductal
+AHSG	Breast Cancer	Ductal
+GNAQ	Breast Cancer	Ductal
+PIK3CA	Breast Cancer	Ductal
+PLCG1	Breast Cancer	Ductal
+TF	Breast Cancer	Ductal
+DVL2	Breast Cancer	Ductal
+CFTR	Breast Cancer	Ductal
+F2RL2	Breast Cancer	Ductal
+UBC	Breast Cancer	Ductal
+NFKB1	Breast Cancer	Ductal
+CCND1	Breast Cancer	Ductal
+PF4	Breast Cancer	Ductal
+VEGFA	Breast Cancer	Ductal
+KNG1	Breast Cancer	Ductal
+CBL	Breast Cancer	Ductal
+UBA52	Breast Cancer	Ductal
+CDC42	Breast Cancer	Ductal
+GNB1	Breast Cancer	Ductal
+PTPN6	Breast Cancer	Ductal
+C3	Breast Cancer	Ductal
+HIF1A	Breast Cancer	Ductal
+EGFR	Breast Cancer	Ductal
+VAMP3	Breast Cancer	Ductal
+AKT1	Breast Cancer	Ductal
+PIK3R1	Breast Cancer	Ductal
+CDKN2A	Breast Cancer	Ductal
+HDAC1	Breast Cancer	Ductal
+GNGT1	Breast Cancer	Ductal
+PCGF2	Breast Cancer	Ductal
+TRIM28	Breast Cancer	Ductal
+QKI	Breast Cancer	Ductal
+SMAD2	Breast Cancer	Ductal
+FGF23	Breast Cancer	Ductal
+PSMD1	Breast Cancer	Ductal
+CTNNB1	Breast Cancer	Ductal
+F2	Breast Cancer	Ductal
+HIST1H2BN	Breast Cancer	Ductal
+CCT8	Breast Cancer	Ductal
+UBE2C	Breast Cancer	Ductal
+PPP2R1A	Breast Cancer	Ductal
+PSMB3	Breast Cancer	Ductal
+HRAS	Breast Cancer	Ductal
+GRB2	Breast Cancer	Ductal
+TP53BP1	Breast Cancer	Ductal
+POLR2A	Breast Cancer	Ductal
+PSMC5	Breast Cancer	Ductal
+UBC	Breast Cancer	Ductal
+H2AFJ	Breast Cancer	Ductal
+CXCL8	Breast Cancer	Ductal
+UBE2I	Breast Cancer	Ductal
+FGG	Breast Cancer	Ductal
+MED1	Breast Cancer	Ductal
+CDC5L	Breast Cancer	Ductal
+CEBPB	Breast Cancer	Ductal
+AR	Breast Cancer	Ductal
+FGB	Breast Cancer	Ductal
+POLR2E	Breast Cancer	Ductal
+MAPK1	Breast Cancer	Ductal
+DYNC1H1	Breast Cancer	Ductal
+KRAS	Breast Cancer	Ductal
+EP300	Breast Cancer	Ductal
+MYC	Breast Cancer	Ductal
+C3	Breast Cancer	Ductal
+PSMD11	Breast Cancer	Ductal
+LCK	Breast Cancer	Lobular
+INS	Breast Cancer	Lobular
+PTAFR	Breast Cancer	Lobular
+GNGT1	Breast Cancer	Lobular
+HMOX2	Breast Cancer	Lobular
+GNAI1	Breast Cancer	Lobular
+JUN	Breast Cancer	Lobular
+SNAP25	Breast Cancer	Lobular
+APP	Breast Cancer	Lobular
+STAT3	Breast Cancer	Lobular
+CACNB2	Breast Cancer	Lobular
+PENK	Breast Cancer	Lobular
+GNB3	Breast Cancer	Lobular
+AGT	Breast Cancer	Lobular
+VAMP2	Breast Cancer	Lobular
+PIK3CA	Breast Cancer	Lobular
+CDH2	Breast Cancer	Lobular
+MAP2K6	Breast Cancer	Lobular
+PMCH	Breast Cancer	Lobular
+SAA1	Breast Cancer	Lobular
+KNG1	Breast Cancer	Lobular
+CHRM1	Breast Cancer	Lobular
+SHC1	Breast Cancer	Lobular
+IL6	Breast Cancer	Lobular
+FABP1	Breast Cancer	Lobular
+CXCR4	Breast Cancer	Lobular
+AVP	Breast Cancer	Lobular
+GNB1	Breast Cancer	Lobular
+POMC	Breast Cancer	Lobular
+MAPK1	Breast Cancer	Lobular
+ATP6AP2	Breast Cancer	Lobular
+MYC	Breast Cancer	Lobular
+S1PR1	Breast Cancer	Lobular
+ADAM10	Breast Cancer	Lobular
+GNB5	Breast Cancer	Lobular
+PIK3R1	Breast Cancer	Lobular
+FPR2	Breast Cancer	Lobular
+RAP1A	Breast Cancer	Lobular
+INS	Breast Cancer	Lobular
+ADRB2	Breast Cancer	Lobular
+GNGT1	Breast Cancer	Lobular
+GNG3	Breast Cancer	Lobular
+GNG13	Breast Cancer	Lobular
+ADCY2	Breast Cancer	Lobular
+AGTR1	Breast Cancer	Lobular
+GNAI1	Breast Cancer	Lobular
+JUN	Breast Cancer	Lobular
+PTK2	Breast Cancer	Lobular
+HIST1H2BN	Breast Cancer	Lobular
+KCNAB2	Breast Cancer	Lobular
+RTP2	Breast Cancer	Lobular
+AGT	Breast Cancer	Lobular
+GRB2	Breast Cancer	Lobular
+SYT1	Breast Cancer	Lobular
+PIK3CA	Breast Cancer	Lobular
+CHRM2	Breast Cancer	Lobular
+NPY5R	Breast Cancer	Lobular
+PMCH	Breast Cancer	Lobular
+MCHR2	Breast Cancer	Lobular
+TAS2R20	Breast Cancer	Lobular
+CHRM1	Breast Cancer	Lobular
+DYNC1I2	Breast Cancer	Lobular
+C3AR1	Breast Cancer	Lobular
+AVP	Breast Cancer	Lobular
+CDC42	Breast Cancer	Lobular
+CD59	Breast Cancer	Lobular
+GNB1	Breast Cancer	Lobular
+POMC	Breast Cancer	Lobular
+DYNC1H1	Breast Cancer	Lobular
+GPR84	Breast Cancer	Lobular
+GCG	Breast Cancer	Lobular
+EGFR	Breast Cancer	Lobular
+ESR1	Breast Cancer	Lobular
+PIK3R1	Breast Cancer	Lobular
+AKT1	Breast Cancer	Lobular
+INS	Breast Cancer	Mismatch repair intact
+ADRB2	Breast Cancer	Mismatch repair intact
+RACGAP1	Breast Cancer	Mismatch repair intact
+ARF1	Breast Cancer	Mismatch repair intact
+PRKACB	Breast Cancer	Mismatch repair intact
+ADCY2	Breast Cancer	Mismatch repair intact
+AP1M1	Breast Cancer	Mismatch repair intact
+GNAI1	Breast Cancer	Mismatch repair intact
+PAFAH1B1	Breast Cancer	Mismatch repair intact
+RBBP7	Breast Cancer	Mismatch repair intact
+APOB	Breast Cancer	Mismatch repair intact
+PENK	Breast Cancer	Mismatch repair intact
+HLA-DQA2	Breast Cancer	Mismatch repair intact
+AP2B1	Breast Cancer	Mismatch repair intact
+FN1	Breast Cancer	Mismatch repair intact
+GRB2	Breast Cancer	Mismatch repair intact
+CHRM2	Breast Cancer	Mismatch repair intact
+KDR	Breast Cancer	Mismatch repair intact
+DCTN1	Breast Cancer	Mismatch repair intact
+CENPA	Breast Cancer	Mismatch repair intact
+MATN3	Breast Cancer	Mismatch repair intact
+GLI3	Breast Cancer	Mismatch repair intact
+GRM4	Breast Cancer	Mismatch repair intact
+BMP4	Breast Cancer	Mismatch repair intact
+DYNC1I2	Breast Cancer	Mismatch repair intact
+TGOLN2	Breast Cancer	Mismatch repair intact
+ITSN1	Breast Cancer	Mismatch repair intact
+COPS7B	Breast Cancer	Mismatch repair intact
+CDC42	Breast Cancer	Mismatch repair intact
+SDC2	Breast Cancer	Mismatch repair intact
+GNB1	Breast Cancer	Mismatch repair intact
+MAPK1	Breast Cancer	Mismatch repair intact
+EPS15L1	Breast Cancer	Mismatch repair intact
+RAB5C	Breast Cancer	Mismatch repair intact
+SRC	Breast Cancer	Mismatch repair intact
+DNM2	Breast Cancer	Mismatch repair intact
+DNM2	Lung Cancer	Mismatch repair intact
+EGFR	Breast Cancer	Mismatch repair intact
+PRKAR2B	Breast Cancer	Mismatch repair intact
+RFC4	Breast Cancer	Mismatch repair deficient
+PSMD8	Breast Cancer	Mismatch repair deficient
+H2AFV	Breast Cancer	Mismatch repair deficient
+RPA1	Breast Cancer	Mismatch repair deficient
+H2AFZ	Breast Cancer	Mismatch repair deficient
+HIST1H2BK	Breast Cancer	Mismatch repair deficient
+PSMD1	Breast Cancer	Mismatch repair deficient
+HIST1H2BJ	Breast Cancer	Mismatch repair deficient
+HIST1H2BN	Breast Cancer	Mismatch repair deficient
+POLR2B	Breast Cancer	Mismatch repair deficient
+CENPE	Breast Cancer	Mismatch repair deficient
+CENPT	Breast Cancer	Mismatch repair deficient
+HIST1H2BO	Breast Cancer	Mismatch repair deficient
+HIST1H2AC	Breast Cancer	Mismatch repair deficient
+CCNB1	Breast Cancer	Mismatch repair deficient
+HIST1H2AB	Breast Cancer	Mismatch repair deficient
+POLR2A	Breast Cancer	Mismatch repair deficient
+CENPA	Breast Cancer	Mismatch repair deficient
+CENPP	Breast Cancer	Mismatch repair deficient
+RAD51C	Breast Cancer	Mismatch repair deficient
+POLR2H	Breast Cancer	Mismatch repair deficient
+HIST1H2BL	Breast Cancer	Mismatch repair deficient
+PPP2CA	Breast Cancer	Mismatch repair deficient
+DSN1	Breast Cancer	Mismatch repair deficient
+HIST2H2BE	Breast Cancer	Mismatch repair deficient
+BUB1	Breast Cancer	Mismatch repair deficient
+MAD2L1	Breast Cancer	Mismatch repair deficient
+CDC5L	Breast Cancer	Mismatch repair deficient
+UBA52	Breast Cancer	Mismatch repair deficient
+PSMB2	Breast Cancer	Mismatch repair deficient
+NDC80	Breast Cancer	Mismatch repair deficient
+CENPL	Breast Cancer	Mismatch repair deficient
+ANAPC4	Breast Cancer	Mismatch repair deficient
+CASC5	Breast Cancer	Mismatch repair deficient
+CDK1	Breast Cancer	Mismatch repair deficient
+CENPH	Breast Cancer	Mismatch repair deficient
+AURKB	Breast Cancer	Mismatch repair deficient
+TBP	Breast Cancer	Mismatch repair deficient
+ULBP2	Colorectal Adenocarcinoma	Mutated BRAF
+PTAFR	Colorectal Adenocarcinoma	Mutated BRAF
+EVA1A	Colorectal Adenocarcinoma	Mutated BRAF
+GNG13	Colorectal Adenocarcinoma	Mutated BRAF
+MMP8	Colorectal Adenocarcinoma	Mutated BRAF
+CST3	Colorectal Adenocarcinoma	Mutated BRAF
+RPL11	Colorectal Adenocarcinoma	Mutated BRAF
+APP	Colorectal Adenocarcinoma	Mutated BRAF
+CKAP4	Colorectal Adenocarcinoma	Mutated BRAF
+ORM1	Colorectal Adenocarcinoma	Mutated BRAF
+RARA	Colorectal Adenocarcinoma	Mutated BRAF
+NOTUM	Colorectal Adenocarcinoma	Mutated BRAF
+HIST1H2BB	Colorectal Adenocarcinoma	Mutated BRAF
+CDH1	Colorectal Adenocarcinoma	Mutated BRAF
+CD44	Colorectal Adenocarcinoma	Mutated BRAF
+PLG	Colorectal Adenocarcinoma	Mutated BRAF
+TP53	Colorectal Adenocarcinoma	Mutated BRAF
+AJUBA	Colorectal Adenocarcinoma	Mutated BRAF
+ALDOA	Colorectal Adenocarcinoma	Mutated BRAF
+MEPE	Colorectal Adenocarcinoma	Mutated BRAF
+F5	Colorectal Adenocarcinoma	Mutated BRAF
+SPP2	Colorectal Adenocarcinoma	Mutated BRAF
+TMEM132A	Colorectal Adenocarcinoma	Mutated BRAF
+ITGB1	Colorectal Adenocarcinoma	Mutated BRAF
+PF4	Colorectal Adenocarcinoma	Mutated BRAF
+BMP4	Colorectal Adenocarcinoma	Mutated BRAF
+MDM2	Colorectal Adenocarcinoma	Mutated BRAF
+B2M	Colorectal Adenocarcinoma	Mutated BRAF
+THY1	Colorectal Adenocarcinoma	Mutated BRAF
+UBA52	Colorectal Adenocarcinoma	Mutated BRAF
+CBFB	Colorectal Adenocarcinoma	Mutated BRAF
+CSNK1D	Colorectal Adenocarcinoma	Mutated BRAF
+TCN1	Colorectal Adenocarcinoma	Mutated BRAF
+JUP	Colorectal Adenocarcinoma	Mutated BRAF
+GRIA1	Colorectal Adenocarcinoma	Mutated BRAF
+P4HB	Colorectal Adenocarcinoma	Mutated BRAF
+PRKCG	Colorectal Adenocarcinoma	Mutated BRAF
+CDK1	Colorectal Adenocarcinoma	Mutated BRAF
+COL7A1	Colorectal Adenocarcinoma	Mutated BRAF
+COL11A1	Colorectal Adenocarcinoma	Mutated BRAF
+MFI2	Colorectal Adenocarcinoma	Mutated BRAF
+SPP1	Colorectal Adenocarcinoma	Mutated BRAF
+GAPDH	Colorectal Adenocarcinoma	Mutated BRAF
+NPSR1	Colorectal Adenocarcinoma	Mutated BRAF
+MSLN	Colorectal Adenocarcinoma	Mutated BRAF
+ERBB2	Colorectal Adenocarcinoma	Chromosomal Instability
+FGFR2	Colorectal Adenocarcinoma	Chromosomal Instability
+HSPA8	Colorectal Adenocarcinoma	Chromosomal Instability
+PTAFR	Colorectal Adenocarcinoma	Chromosomal Instability
+GP1BA	Colorectal Adenocarcinoma	Chromosomal Instability
+NUP153	Colorectal Adenocarcinoma	Chromosomal Instability
+POLR2C	Colorectal Adenocarcinoma	Chromosomal Instability
+RAE1	Colorectal Adenocarcinoma	Chromosomal Instability
+CCNH	Colorectal Adenocarcinoma	Chromosomal Instability
+HNRNPK	Colorectal Adenocarcinoma	Chromosomal Instability
+FGA	Colorectal Adenocarcinoma	Chromosomal Instability
+PPARA	Colorectal Adenocarcinoma	Chromosomal Instability
+POLR2D	Colorectal Adenocarcinoma	Chromosomal Instability
+PTK2	Colorectal Adenocarcinoma	Chromosomal Instability
+F2	Colorectal Adenocarcinoma	Chromosomal Instability
+NCBP2	Colorectal Adenocarcinoma	Chromosomal Instability
+MAPK3	Colorectal Adenocarcinoma	Chromosomal Instability
+NOTUM	Colorectal Adenocarcinoma	Chromosomal Instability
+ITGAV	Colorectal Adenocarcinoma	Chromosomal Instability
+NXF1	Colorectal Adenocarcinoma	Chromosomal Instability
+ATP11A	Colorectal Adenocarcinoma	Chromosomal Instability
+HRAS	Colorectal Adenocarcinoma	Chromosomal Instability
+TP53	Colorectal Adenocarcinoma	Chromosomal Instability
+HSP90AA1	Colorectal Adenocarcinoma	Chromosomal Instability
+LAMB1	Colorectal Adenocarcinoma	Chromosomal Instability
+PLCG1	Colorectal Adenocarcinoma	Chromosomal Instability
+TFDP1	Colorectal Adenocarcinoma	Chromosomal Instability
+RBM8A	Colorectal Adenocarcinoma	Chromosomal Instability
+AGO2	Colorectal Adenocarcinoma	Chromosomal Instability
+YBX1	Colorectal Adenocarcinoma	Chromosomal Instability
+U2AF2	Colorectal Adenocarcinoma	Chromosomal Instability
+GTF2F2	Colorectal Adenocarcinoma	Chromosomal Instability
+IHH	Colorectal Adenocarcinoma	Chromosomal Instability
+UBE2I	Colorectal Adenocarcinoma	Chromosomal Instability
+CDC5L	Colorectal Adenocarcinoma	Chromosomal Instability
+ABL1	Colorectal Adenocarcinoma	Chromosomal Instability
+RANBP2	Colorectal Adenocarcinoma	Chromosomal Instability
+CBFB	Colorectal Adenocarcinoma	Chromosomal Instability
+SNW1	Colorectal Adenocarcinoma	Chromosomal Instability
+RNPS1	Colorectal Adenocarcinoma	Chromosomal Instability
+SRC	Colorectal Adenocarcinoma	Chromosomal Instability
+EP300	Colorectal Adenocarcinoma	Chromosomal Instability
+ADAM10	Colorectal Adenocarcinoma	Chromosomal Instability
+AKT1	Colorectal Adenocarcinoma	Chromosomal Instability
+RANGAP1	Colorectal Adenocarcinoma	Chromosomal Instability
+TBP	Colorectal Adenocarcinoma	Chromosomal Instability
+PTAFR	Colorectal Adenocarcinoma	Genome Stable
+LTF	Colorectal Adenocarcinoma	Genome Stable
+PTK2B	Colorectal Adenocarcinoma	Genome Stable
+GNG13	Colorectal Adenocarcinoma	Genome Stable
+TIMP1	Colorectal Adenocarcinoma	Genome Stable
+CST3	Colorectal Adenocarcinoma	Genome Stable
+PTK2	Colorectal Adenocarcinoma	Genome Stable
+LYZ	Colorectal Adenocarcinoma	Genome Stable
+APP	Colorectal Adenocarcinoma	Genome Stable
+NOTUM	Colorectal Adenocarcinoma	Genome Stable
+RARA	Colorectal Adenocarcinoma	Genome Stable
+FN1	Colorectal Adenocarcinoma	Genome Stable
+CDH1	Colorectal Adenocarcinoma	Genome Stable
+CD44	Colorectal Adenocarcinoma	Genome Stable
+GPC3	Colorectal Adenocarcinoma	Genome Stable
+AJUBA	Colorectal Adenocarcinoma	Genome Stable
+PLCG1	Colorectal Adenocarcinoma	Genome Stable
+MMP9	Colorectal Adenocarcinoma	Genome Stable
+QSOX1	Colorectal Adenocarcinoma	Genome Stable
+TMEM132A	Colorectal Adenocarcinoma	Genome Stable
+ITGB1	Colorectal Adenocarcinoma	Genome Stable
+CXCL1	Colorectal Adenocarcinoma	Genome Stable
+VCL	Colorectal Adenocarcinoma	Genome Stable
+IL6	Colorectal Adenocarcinoma	Genome Stable
+B2M	Colorectal Adenocarcinoma	Genome Stable
+UBA52	Colorectal Adenocarcinoma	Genome Stable
+GNB1	Colorectal Adenocarcinoma	Genome Stable
+TCN1	Colorectal Adenocarcinoma	Genome Stable
+JUP	Colorectal Adenocarcinoma	Genome Stable
+NMUR2	Colorectal Adenocarcinoma	Genome Stable
+PRKCG	Colorectal Adenocarcinoma	Genome Stable
+TUBB	Colorectal Adenocarcinoma	Genome Stable
+C3	Colorectal Adenocarcinoma	Genome Stable
+PRKCD	Colorectal Adenocarcinoma	Genome Stable
+RETN	Colorectal Adenocarcinoma	Genome Stable
+PRKAR2B	Colorectal Adenocarcinoma	Genome Stable
+PIK3R1	Colorectal Adenocarcinoma	Genome Stable
+SPP1	Colorectal Adenocarcinoma	Genome Stable
+ADRBK1	Colorectal Adenocarcinoma	Genome Stable
+NPSR1	Colorectal Adenocarcinoma	Genome Stable
+ERBB2	Colorectal Adenocarcinoma	Microsatellite Instability
+CTSZ	Colorectal Adenocarcinoma	Microsatellite Instability
+MMP8	Colorectal Adenocarcinoma	Microsatellite Instability
+CST3	Colorectal Adenocarcinoma	Microsatellite Instability
+AURKA	Colorectal Adenocarcinoma	Microsatellite Instability
+ORM1	Colorectal Adenocarcinoma	Microsatellite Instability
+EZH2	Colorectal Adenocarcinoma	Microsatellite Instability
+ITGAV	Colorectal Adenocarcinoma	Microsatellite Instability
+CDH1	Colorectal Adenocarcinoma	Microsatellite Instability
+CD44	Colorectal Adenocarcinoma	Microsatellite Instability
+HSP90AA1	Colorectal Adenocarcinoma	Microsatellite Instability
+TP53	Colorectal Adenocarcinoma	Microsatellite Instability
+PLG	Colorectal Adenocarcinoma	Microsatellite Instability
+AJUBA	Colorectal Adenocarcinoma	Microsatellite Instability
+F5	Colorectal Adenocarcinoma	Microsatellite Instability
+TMEM132A	Colorectal Adenocarcinoma	Microsatellite Instability
+QSOX1	Colorectal Adenocarcinoma	Microsatellite Instability
+MIA3	Colorectal Adenocarcinoma	Microsatellite Instability
+ITGB1	Colorectal Adenocarcinoma	Microsatellite Instability
+PF4	Colorectal Adenocarcinoma	Microsatellite Instability
+NR3C1	Colorectal Adenocarcinoma	Microsatellite Instability
+UBE2I	Colorectal Adenocarcinoma	Microsatellite Instability
+AR	Colorectal Adenocarcinoma	Microsatellite Instability
+B2M	Colorectal Adenocarcinoma	Microsatellite Instability
+CBFB	Colorectal Adenocarcinoma	Microsatellite Instability
+CSNK1D	Colorectal Adenocarcinoma	Microsatellite Instability
+CBX2	Colorectal Adenocarcinoma	Microsatellite Instability
+TCN1	Colorectal Adenocarcinoma	Microsatellite Instability
+MAPK1	Colorectal Adenocarcinoma	Microsatellite Instability
+JUP	Colorectal Adenocarcinoma	Microsatellite Instability
+TUBB	Colorectal Adenocarcinoma	Microsatellite Instability
+C3	Colorectal Adenocarcinoma	Microsatellite Instability
+CDK1	Colorectal Adenocarcinoma	Microsatellite Instability
+RETN	Colorectal Adenocarcinoma	Microsatellite Instability
+COL7A1	Colorectal Adenocarcinoma	Microsatellite Instability
+CYFIP1	Colorectal Adenocarcinoma	Microsatellite Instability
+SPP1	Colorectal Adenocarcinoma	Microsatellite Instability
+HDAC1	Colorectal Adenocarcinoma	Metastatic
+NUP153	Colorectal Adenocarcinoma	Metastatic
+SKIV2L2	Colorectal Adenocarcinoma	Metastatic
+NCBP1	Colorectal Adenocarcinoma	Metastatic
+POLR2D	Colorectal Adenocarcinoma	Metastatic
+POLR2J	Colorectal Adenocarcinoma	Metastatic
+PTK2	Colorectal Adenocarcinoma	Metastatic
+AURKA	Colorectal Adenocarcinoma	Metastatic
+NCBP2	Colorectal Adenocarcinoma	Metastatic
+EZH2	Colorectal Adenocarcinoma	Metastatic
+GTF2H1	Colorectal Adenocarcinoma	Metastatic
+SMARCA5	Colorectal Adenocarcinoma	Metastatic
+HDAC2	Colorectal Adenocarcinoma	Metastatic
+GTF2H4	Colorectal Adenocarcinoma	Metastatic
+HIST1H2BB	Colorectal Adenocarcinoma	Metastatic
+EIF4A3	Colorectal Adenocarcinoma	Metastatic
+HSP90AA1	Colorectal Adenocarcinoma	Metastatic
+TP53	Colorectal Adenocarcinoma	Metastatic
+POLR1B	Colorectal Adenocarcinoma	Metastatic
+AJUBA	Colorectal Adenocarcinoma	Metastatic
+DHX15	Colorectal Adenocarcinoma	Metastatic
+RBM8A	Colorectal Adenocarcinoma	Metastatic
+AGO2	Colorectal Adenocarcinoma	Metastatic
+SMARCC2	Colorectal Adenocarcinoma	Metastatic
+UBE2I	Colorectal Adenocarcinoma	Metastatic
+CDC5L	Colorectal Adenocarcinoma	Metastatic
+AR	Colorectal Adenocarcinoma	Metastatic
+RANBP2	Colorectal Adenocarcinoma	Metastatic
+CBFB	Colorectal Adenocarcinoma	Metastatic
+POLR2L	Colorectal Adenocarcinoma	Metastatic
+WDR3	Colorectal Adenocarcinoma	Metastatic
+SP1	Colorectal Adenocarcinoma	Metastatic
+POLR1E	Colorectal Adenocarcinoma	Metastatic
+RUNX1	Colorectal Adenocarcinoma	Metastatic
+RNPS1	Colorectal Adenocarcinoma	Metastatic
+SRC	Colorectal Adenocarcinoma	Metastatic
+CTNNA1	Colorectal Adenocarcinoma	Metastatic
+CDK1	Colorectal Adenocarcinoma	Metastatic
+ERBB2	Colorectal Adenocarcinoma	Non-metastatic
+FBXW10	Colorectal Adenocarcinoma	Non-metastatic
+CBX4	Colorectal Adenocarcinoma	Non-metastatic
+PTAFR	Colorectal Adenocarcinoma	Non-metastatic
+RBX1	Colorectal Adenocarcinoma	Non-metastatic
+TRIM21	Colorectal Adenocarcinoma	Non-metastatic
+AURKA	Colorectal Adenocarcinoma	Non-metastatic
+CUL1	Colorectal Adenocarcinoma	Non-metastatic
+ORM1	Colorectal Adenocarcinoma	Non-metastatic
+EZH2	Colorectal Adenocarcinoma	Non-metastatic
+CDC27	Colorectal Adenocarcinoma	Non-metastatic
+CDH1	Colorectal Adenocarcinoma	Non-metastatic
+CD44	Colorectal Adenocarcinoma	Non-metastatic
+TP53	Colorectal Adenocarcinoma	Non-metastatic
+HSP90AA1	Colorectal Adenocarcinoma	Non-metastatic
+AJUBA	Colorectal Adenocarcinoma	Non-metastatic
+MMP9	Colorectal Adenocarcinoma	Non-metastatic
+F5	Colorectal Adenocarcinoma	Non-metastatic
+TMEM132A	Colorectal Adenocarcinoma	Non-metastatic
+QSOX1	Colorectal Adenocarcinoma	Non-metastatic
+UBE2I	Colorectal Adenocarcinoma	Non-metastatic
+KNG1	Colorectal Adenocarcinoma	Non-metastatic
+AR	Colorectal Adenocarcinoma	Non-metastatic
+B2M	Colorectal Adenocarcinoma	Non-metastatic
+STUB1	Colorectal Adenocarcinoma	Non-metastatic
+UBA52	Colorectal Adenocarcinoma	Non-metastatic
+CBFB	Colorectal Adenocarcinoma	Non-metastatic
+RING1	Colorectal Adenocarcinoma	Non-metastatic
+CSNK1D	Colorectal Adenocarcinoma	Non-metastatic
+RPS27A	Colorectal Adenocarcinoma	Non-metastatic
+TCN1	Colorectal Adenocarcinoma	Non-metastatic
+MAPK1	Colorectal Adenocarcinoma	Non-metastatic
+JUP	Colorectal Adenocarcinoma	Non-metastatic
+CDK1	Colorectal Adenocarcinoma	Non-metastatic
+CYFIP1	Colorectal Adenocarcinoma	Non-metastatic
+PIK3R1	Colorectal Adenocarcinoma	Non-metastatic
+SPP1	Colorectal Adenocarcinoma	Non-metastatic
+MSLN	Colorectal Adenocarcinoma	Non-metastatic
+NPSR1	Colorectal Adenocarcinoma	Non-metastatic
+ADCY2	Cholangiocarcinoma	Cholangiocarcinoma
+GNAS	Cholangiocarcinoma	Cholangiocarcinoma
+CXCL12	Cholangiocarcinoma	Cholangiocarcinoma
+JUN	Cholangiocarcinoma	Cholangiocarcinoma
+APBB1	Cholangiocarcinoma	Cholangiocarcinoma
+APP	Cholangiocarcinoma	Cholangiocarcinoma
+LAMC1	Cholangiocarcinoma	Cholangiocarcinoma
+MAPK3	Cholangiocarcinoma	Cholangiocarcinoma
+CHRM2	Cholangiocarcinoma	Cholangiocarcinoma
+ARRB1	Cholangiocarcinoma	Cholangiocarcinoma
+RAB5A	Cholangiocarcinoma	Cholangiocarcinoma
+EPS15	Cholangiocarcinoma	Cholangiocarcinoma
+PLK1	Cholangiocarcinoma	Cholangiocarcinoma
+STAT1	Cholangiocarcinoma	Cholangiocarcinoma
+TACR1	Cholangiocarcinoma	Cholangiocarcinoma
+CHRM1	Cholangiocarcinoma	Cholangiocarcinoma
+DNM1	Cholangiocarcinoma	Cholangiocarcinoma
+TGOLN2	Cholangiocarcinoma	Cholangiocarcinoma
+SNAP91	Cholangiocarcinoma	Cholangiocarcinoma
+IL6	Cholangiocarcinoma	Cholangiocarcinoma
+HIST1H2BH	Cholangiocarcinoma	Cholangiocarcinoma
+UBA52	Cholangiocarcinoma	Cholangiocarcinoma
+RPS27A	Cholangiocarcinoma	Cholangiocarcinoma
+TBXA2R	Cholangiocarcinoma	Cholangiocarcinoma
+CREBBP	Cholangiocarcinoma	Cholangiocarcinoma
+RAB11A	Cholangiocarcinoma	Cholangiocarcinoma
+SRC	Cholangiocarcinoma	Cholangiocarcinoma
+GCG	Cholangiocarcinoma	Cholangiocarcinoma
+EGFR	Cholangiocarcinoma	Cholangiocarcinoma
+QRFP	Cholangiocarcinoma	Cholangiocarcinoma
+MEN1	Cholangiocarcinoma	Cholangiocarcinoma
+FGFR1OP	Cholangiocarcinoma	Cholangiocarcinoma
+PRKAR2B	Cholangiocarcinoma	Cholangiocarcinoma
+PTAFR	Lung Adenocarcinoma	Bronchioloalveolar
+GNGT1	Lung Adenocarcinoma	Bronchioloalveolar
+FGF23	Lung Adenocarcinoma	Bronchioloalveolar
+OPRD1	Lung Adenocarcinoma	Bronchioloalveolar
+FGA	Lung Adenocarcinoma	Bronchioloalveolar
+UBR4	Lung Adenocarcinoma	Bronchioloalveolar
+CTNNB1	Lung Adenocarcinoma	Bronchioloalveolar
+EGF	Lung Adenocarcinoma	Bronchioloalveolar
+FPR1	Lung Adenocarcinoma	Bronchioloalveolar
+ATG7	Lung Adenocarcinoma	Bronchioloalveolar
+PENK	Lung Adenocarcinoma	Bronchioloalveolar
+RTP2	Lung Adenocarcinoma	Bronchioloalveolar
+HIST1H2BO	Lung Adenocarcinoma	Bronchioloalveolar
+MAPK3	Lung Adenocarcinoma	Bronchioloalveolar
+AGT	Lung Adenocarcinoma	Bronchioloalveolar
+CRH	Lung Adenocarcinoma	Bronchioloalveolar
+CHRM2	Lung Adenocarcinoma	Bronchioloalveolar
+TF	Lung Adenocarcinoma	Bronchioloalveolar
+UBC	Lung Adenocarcinoma	Bronchioloalveolar
+CDH2	Lung Adenocarcinoma	Bronchioloalveolar
+ALB	Lung Adenocarcinoma	Bronchioloalveolar
+KNG1	Lung Adenocarcinoma	Bronchioloalveolar
+NPY	Lung Adenocarcinoma	Bronchioloalveolar
+C3AR1	Lung Adenocarcinoma	Bronchioloalveolar
+CD59	Lung Adenocarcinoma	Bronchioloalveolar
+GNB1	Lung Adenocarcinoma	Bronchioloalveolar
+GNG4	Lung Adenocarcinoma	Bronchioloalveolar
+POMC	Lung Adenocarcinoma	Bronchioloalveolar
+RLN3	Lung Adenocarcinoma	Bronchioloalveolar
+GPR84	Lung Adenocarcinoma	Bronchioloalveolar
+SST	Lung Adenocarcinoma	Bronchioloalveolar
+SRC	Lung Adenocarcinoma	Bronchioloalveolar
+GCG	Lung Adenocarcinoma	Bronchioloalveolar
+C3	Lung Adenocarcinoma	Bronchioloalveolar
+CEACAM8	Lung Adenocarcinoma	Bronchioloalveolar
+FPR2	Lung Adenocarcinoma	Bronchioloalveolar
+OPRM1	Lung Adenocarcinoma	Bronchioloalveolar
+PDYN	Lung Adenocarcinoma	Bronchioloalveolar
+RTP1	Lung Adenocarcinoma	Acinar Papillary
+GNGT1	Lung Adenocarcinoma	Acinar Papillary
+PROK1	Lung Adenocarcinoma	Acinar Papillary
+GNG13	Lung Adenocarcinoma	Acinar Papillary
+OPRD1	Lung Adenocarcinoma	Acinar Papillary
+SSTR4	Lung Adenocarcinoma	Acinar Papillary
+APP	Lung Adenocarcinoma	Acinar Papillary
+PENK	Lung Adenocarcinoma	Acinar Papillary
+RTP2	Lung Adenocarcinoma	Acinar Papillary
+CHRM2	Lung Adenocarcinoma	Acinar Papillary
+ARRB1	Lung Adenocarcinoma	Acinar Papillary
+GAST	Lung Adenocarcinoma	Acinar Papillary
+CCK	Lung Adenocarcinoma	Acinar Papillary
+ALB	Lung Adenocarcinoma	Acinar Papillary
+KNG1	Lung Adenocarcinoma	Acinar Papillary
+CHRM1	Lung Adenocarcinoma	Acinar Papillary
+GNAT3	Lung Adenocarcinoma	Acinar Papillary
+AVP	Lung Adenocarcinoma	Acinar Papillary
+GNB1	Lung Adenocarcinoma	Acinar Papillary
+POMC	Lung Adenocarcinoma	Acinar Papillary
+TAS2R8	Lung Adenocarcinoma	Acinar Papillary
+TAS2R60	Lung Adenocarcinoma	Acinar Papillary
+SST	Lung Adenocarcinoma	Acinar Papillary
+EDN1	Lung Adenocarcinoma	Acinar Papillary
+GCG	Lung Adenocarcinoma	Acinar Papillary
+C3	Lung Adenocarcinoma	Acinar Papillary
+CHRM4	Lung Adenocarcinoma	Acinar Papillary
+QRFP	Lung Adenocarcinoma	Acinar Papillary
+NMS	Lung Adenocarcinoma	Acinar Papillary
+OR2L2	Lung Adenocarcinoma	Acinar Papillary
+CASR	Lung Adenocarcinoma	Acinar Papillary
+OPRM1	Lung Adenocarcinoma	Acinar Papillary
+PDYN	Lung Adenocarcinoma	Acinar Papillary
+RFC2	Lung Adenocarcinoma	Basaloid
+RFC4	Lung Adenocarcinoma	Basaloid
+POLR2C	Lung Adenocarcinoma	Basaloid
+H2AFZ	Lung Adenocarcinoma	Basaloid
+RBX1	Lung Adenocarcinoma	Basaloid
+INTS1	Lung Adenocarcinoma	Basaloid
+RBBP7	Lung Adenocarcinoma	Basaloid
+POLR2G	Lung Adenocarcinoma	Basaloid
+HIST1H2BO	Lung Adenocarcinoma	Basaloid
+CDC27	Lung Adenocarcinoma	Basaloid
+HDAC2	Lung Adenocarcinoma	Basaloid
+RBBP4	Lung Adenocarcinoma	Basaloid
+HIST1H2AC	Lung Adenocarcinoma	Basaloid
+DDB1	Lung Adenocarcinoma	Basaloid
+RCHY1	Lung Adenocarcinoma	Basaloid
+CCNB1	Lung Adenocarcinoma	Basaloid
+EIF4A3	Lung Adenocarcinoma	Basaloid
+POLR2A	Lung Adenocarcinoma	Basaloid
+PRPF19	Lung Adenocarcinoma	Basaloid
+RBM8A	Lung Adenocarcinoma	Basaloid
+ATM	Lung Adenocarcinoma	Basaloid
+UBC	Lung Adenocarcinoma	Basaloid
+CENPA	Lung Adenocarcinoma	Basaloid
+RAD51C	Lung Adenocarcinoma	Basaloid
+POLR2H	Lung Adenocarcinoma	Basaloid
+HIST2H2AA4	Lung Adenocarcinoma	Basaloid
+UBE2I	Lung Adenocarcinoma	Basaloid
+ANAPC7	Lung Adenocarcinoma	Basaloid
+HIST2H2BE	Lung Adenocarcinoma	Basaloid
+CDC5L	Lung Adenocarcinoma	Basaloid
+PCNA	Lung Adenocarcinoma	Basaloid
+MAD2L1	Lung Adenocarcinoma	Basaloid
+UBA52	Lung Adenocarcinoma	Basaloid
+RANBP2	Lung Adenocarcinoma	Basaloid
+CENPI	Lung Adenocarcinoma	Basaloid
+RPS27A	Lung Adenocarcinoma	Basaloid
+POLR2E	Lung Adenocarcinoma	Basaloid
+MSH6	Lung Adenocarcinoma	Basaloid
+CENPL	Lung Adenocarcinoma	Basaloid
+RANGAP1	Lung Adenocarcinoma	Basaloid
+SMC3	Lung Adenocarcinoma	Basaloid
+PPP2R5D	Lung Adenocarcinoma	Papillary
+RACGAP1	Lung Adenocarcinoma	Papillary
+NDE1	Lung Adenocarcinoma	Papillary
+H2AFV	Lung Adenocarcinoma	Papillary
+HSP90B1	Lung Adenocarcinoma	Papillary
+H2AFZ	Lung Adenocarcinoma	Papillary
+HIST1H2BK	Lung Adenocarcinoma	Papillary
+H2AFX	Lung Adenocarcinoma	Papillary
+HIST1H2BJ	Lung Adenocarcinoma	Papillary
+HIST1H2BN	Lung Adenocarcinoma	Papillary
+RUVBL1	Lung Adenocarcinoma	Papillary
+HIST1H2AD	Lung Adenocarcinoma	Papillary
+HIST1H2BO	Lung Adenocarcinoma	Papillary
+HIST1H2AC	Lung Adenocarcinoma	Papillary
+ITGAV	Lung Adenocarcinoma	Papillary
+CENPU	Lung Adenocarcinoma	Papillary
+FN1	Lung Adenocarcinoma	Papillary
+HIST1H2AB	Lung Adenocarcinoma	Papillary
+PROC	Lung Adenocarcinoma	Papillary
+HIST1H2BM	Lung Adenocarcinoma	Papillary
+TP53BP1	Lung Adenocarcinoma	Papillary
+CENPA	Lung Adenocarcinoma	Papillary
+HIST1H2AJ	Lung Adenocarcinoma	Papillary
+HIST1H2BL	Lung Adenocarcinoma	Papillary
+HIST1H3F	Lung Adenocarcinoma	Papillary
+HIST1H4H	Lung Adenocarcinoma	Papillary
+CDC5L	Lung Adenocarcinoma	Papillary
+CDC42	Lung Adenocarcinoma	Papillary
+RPS27A	Lung Adenocarcinoma	Papillary
+P4HB	Lung Adenocarcinoma	Papillary
+ITGB2	Lung Adenocarcinoma	Papillary
+KDM1A	Lung Adenocarcinoma	Papillary
+CDK1	Lung Adenocarcinoma	Papillary
+MEN1	Lung Adenocarcinoma	Papillary
+H2AFY	Lung Adenocarcinoma	Papillary
+HIST3H2A	Lung Adenocarcinoma	Papillary
+ERBB2	Pancreatic Adenocarcinoma	Adenocarcinoma
+HSPA8	Pancreatic Adenocarcinoma	Adenocarcinoma
+SUMO1	Pancreatic Adenocarcinoma	Adenocarcinoma
+YWHAZ	Pancreatic Adenocarcinoma	Adenocarcinoma
+CTNNB1	Pancreatic Adenocarcinoma	Adenocarcinoma
+RHOA	Pancreatic Adenocarcinoma	Adenocarcinoma
+HIST1H2BN	Pancreatic Adenocarcinoma	Adenocarcinoma
+POLR2B	Pancreatic Adenocarcinoma	Adenocarcinoma
+MKL1	Pancreatic Adenocarcinoma	Adenocarcinoma
+PPP2R1A	Pancreatic Adenocarcinoma	Adenocarcinoma
+TCEA1	Pancreatic Adenocarcinoma	Adenocarcinoma
+FN1	Pancreatic Adenocarcinoma	Adenocarcinoma
+HSP90AA1	Pancreatic Adenocarcinoma	Adenocarcinoma
+POLR2A	Pancreatic Adenocarcinoma	Adenocarcinoma
+PSMC5	Pancreatic Adenocarcinoma	Adenocarcinoma
+UBE2K	Pancreatic Adenocarcinoma	Adenocarcinoma
+GNB2L1	Pancreatic Adenocarcinoma	Adenocarcinoma
+UBC	Pancreatic Adenocarcinoma	Adenocarcinoma
+ARHGDIA	Pancreatic Adenocarcinoma	Adenocarcinoma
+HNRNPC	Pancreatic Adenocarcinoma	Adenocarcinoma
+ARPC4	Pancreatic Adenocarcinoma	Adenocarcinoma
+VCL	Pancreatic Adenocarcinoma	Adenocarcinoma
+UBB	Pancreatic Adenocarcinoma	Adenocarcinoma
+CDC5L	Pancreatic Adenocarcinoma	Adenocarcinoma
+PARD3	Pancreatic Adenocarcinoma	Adenocarcinoma
+UBA52	Pancreatic Adenocarcinoma	Adenocarcinoma
+CDC42	Pancreatic Adenocarcinoma	Adenocarcinoma
+PSMC6	Pancreatic Adenocarcinoma	Adenocarcinoma
+POLR1E	Pancreatic Adenocarcinoma	Adenocarcinoma
+RPS27A	Pancreatic Adenocarcinoma	Adenocarcinoma
+POLR2E	Pancreatic Adenocarcinoma	Adenocarcinoma
+CREBBP	Pancreatic Adenocarcinoma	Adenocarcinoma
+SRC	Pancreatic Adenocarcinoma	Adenocarcinoma
+HSF1	Pancreatic Adenocarcinoma	Adenocarcinoma
+EGFR	Pancreatic Adenocarcinoma	Adenocarcinoma
+PKN2	Pancreatic Adenocarcinoma	Adenocarcinoma
+AKT1	Pancreatic Adenocarcinoma	Adenocarcinoma
+PAK2	Pancreatic Adenocarcinoma	Adenocarcinoma
+HDAC1	Prostate Adenocarcinoma	ERG
+CCNA2	Prostate Adenocarcinoma	ERG
+ADRB2	Prostate Adenocarcinoma	ERG
+HSPA8	Prostate Adenocarcinoma	ERG
+ARF6	Prostate Adenocarcinoma	ERG
+CDC6	Prostate Adenocarcinoma	ERG
+ARF1	Prostate Adenocarcinoma	ERG
+DYNLL1	Prostate Adenocarcinoma	ERG
+TRIM28	Prostate Adenocarcinoma	ERG
+EGF	Prostate Adenocarcinoma	ERG
+PAFAH1B1	Prostate Adenocarcinoma	ERG
+RHOA	Prostate Adenocarcinoma	ERG
+APP	Prostate Adenocarcinoma	ERG
+PPP2R1A	Prostate Adenocarcinoma	ERG
+RBBP4	Prostate Adenocarcinoma	ERG
+PPP2R1B	Prostate Adenocarcinoma	ERG
+TP53	Prostate Adenocarcinoma	ERG
+PIK3CA	Prostate Adenocarcinoma	ERG
+GNAQ	Prostate Adenocarcinoma	ERG
+RAB5A	Prostate Adenocarcinoma	ERG
+UBC	Prostate Adenocarcinoma	ERG
+ATM	Prostate Adenocarcinoma	ERG
+CENPA	Prostate Adenocarcinoma	ERG
+PIK3R2	Prostate Adenocarcinoma	ERG
+PLK1	Prostate Adenocarcinoma	ERG
+ARHGDIA	Prostate Adenocarcinoma	ERG
+CDK2	Prostate Adenocarcinoma	ERG
+CDC20	Prostate Adenocarcinoma	ERG
+TGOLN2	Prostate Adenocarcinoma	ERG
+PTGDR	Prostate Adenocarcinoma	ERG
+CREB1	Prostate Adenocarcinoma	ERG
+UBB	Prostate Adenocarcinoma	ERG
+CDC5L	Prostate Adenocarcinoma	ERG
+CDC42	Prostate Adenocarcinoma	ERG
+GNB1	Prostate Adenocarcinoma	ERG
+CREBBP	Prostate Adenocarcinoma	ERG
+KRAS	Prostate Adenocarcinoma	ERG
+RAB11A	Prostate Adenocarcinoma	ERG
+MAPK8	Prostate Adenocarcinoma	ERG
+RHO	Prostate Adenocarcinoma	ERG
+PTAFR	Prostate Adenocarcinoma	SPOP
+AGTR1	Prostate Adenocarcinoma	SPOP
+TIMP1	Prostate Adenocarcinoma	SPOP
+FGA	Prostate Adenocarcinoma	SPOP
+EGF	Prostate Adenocarcinoma	SPOP
+F2	Prostate Adenocarcinoma	SPOP
+STAT3	Prostate Adenocarcinoma	SPOP
+APOA1	Prostate Adenocarcinoma	SPOP
+APP	Prostate Adenocarcinoma	SPOP
+APOB	Prostate Adenocarcinoma	SPOP
+NOTUM	Prostate Adenocarcinoma	SPOP
+FN1	Prostate Adenocarcinoma	SPOP
+AGT	Prostate Adenocarcinoma	SPOP
+PROC	Prostate Adenocarcinoma	SPOP
+PLG	Prostate Adenocarcinoma	SPOP
+AFP	Prostate Adenocarcinoma	SPOP
+AHSG	Prostate Adenocarcinoma	SPOP
+NOS3	Prostate Adenocarcinoma	SPOP
+VTN	Prostate Adenocarcinoma	SPOP
+ARRB1	Prostate Adenocarcinoma	SPOP
+C5	Prostate Adenocarcinoma	SPOP
+CPB2	Prostate Adenocarcinoma	SPOP
+MMP9	Prostate Adenocarcinoma	SPOP
+QSOX1	Prostate Adenocarcinoma	SPOP
+HP	Prostate Adenocarcinoma	SPOP
+PTPN11	Prostate Adenocarcinoma	SPOP
+SERPINC1	Prostate Adenocarcinoma	SPOP
+CFP	Prostate Adenocarcinoma	SPOP
+PF4	Prostate Adenocarcinoma	SPOP
+ALB	Prostate Adenocarcinoma	SPOP
+KNG1	Prostate Adenocarcinoma	SPOP
+VEGFA	Prostate Adenocarcinoma	SPOP
+SRC	Prostate Adenocarcinoma	SPOP
+EDN1	Prostate Adenocarcinoma	SPOP
+C3	Prostate Adenocarcinoma	SPOP
+ITGAM	Prostate Adenocarcinoma	SPOP
+TLR3	Thyroid Carcinoma	Follicular
+ADRB2	Thyroid Carcinoma	Follicular
+HSPA8	Thyroid Carcinoma	Follicular
+HSPA1A	Thyroid Carcinoma	Follicular
+HSPA5	Thyroid Carcinoma	Follicular
+HSP90B1	Thyroid Carcinoma	Follicular
+ADCY9	Thyroid Carcinoma	Follicular
+PRKACB	Thyroid Carcinoma	Follicular
+ATP6V1D	Thyroid Carcinoma	Follicular
+AP1M1	Thyroid Carcinoma	Follicular
+GNAI1	Thyroid Carcinoma	Follicular
+UBR4	Thyroid Carcinoma	Follicular
+APP	Thyroid Carcinoma	Follicular
+RHOA	Thyroid Carcinoma	Follicular
+VAMP8	Thyroid Carcinoma	Follicular
+CKAP4	Thyroid Carcinoma	Follicular
+WNT5A	Thyroid Carcinoma	Follicular
+PENK	Thyroid Carcinoma	Follicular
+SH3GL2	Thyroid Carcinoma	Follicular
+GAK	Thyroid Carcinoma	Follicular
+FN1	Thyroid Carcinoma	Follicular
+PRKCA	Thyroid Carcinoma	Follicular
+HSP90AA1	Thyroid Carcinoma	Follicular
+CHRM2	Thyroid Carcinoma	Follicular
+NFKB1	Thyroid Carcinoma	Follicular
+TGOLN2	Thyroid Carcinoma	Follicular
+SNAP91	Thyroid Carcinoma	Follicular
+C3AR1	Thyroid Carcinoma	Follicular
+UBB	Thyroid Carcinoma	Follicular
+KEAP1	Thyroid Carcinoma	Follicular
+DNAJC3	Thyroid Carcinoma	Follicular
+CD3D	Thyroid Carcinoma	Follicular
+GNB1	Thyroid Carcinoma	Follicular
+MAPK1	Thyroid Carcinoma	Follicular
+PDIA6	Thyroid Carcinoma	Follicular
+ADAM10	Thyroid Carcinoma	Follicular
+AKT1	Thyroid Carcinoma	Follicular
+FPR2	Thyroid Carcinoma	Follicular
+HSPD1	Thyroid Carcinoma	Follicular
+OPRM1	Thyroid Carcinoma	Follicular
+HSPA9	Thyroid Carcinoma	Follicular
+CXCL11	Thyroid Carcinoma	Papillary
+PTAFR	Thyroid Carcinoma	Papillary
+IRF9	Thyroid Carcinoma	Papillary
+IFIT1	Thyroid Carcinoma	Papillary
+EGR1	Thyroid Carcinoma	Papillary
+MX1	Thyroid Carcinoma	Papillary
+TRIM21	Thyroid Carcinoma	Papillary
+IRF7	Thyroid Carcinoma	Papillary
+JUN	Thyroid Carcinoma	Papillary
+IFIT3	Thyroid Carcinoma	Papillary
+OASL	Thyroid Carcinoma	Papillary
+OAS1	Thyroid Carcinoma	Papillary
+UBE2L6	Thyroid Carcinoma	Papillary
+CD3G	Thyroid Carcinoma	Papillary
+RSAD2	Thyroid Carcinoma	Papillary
+CD44	Thyroid Carcinoma	Papillary
+TP53	Thyroid Carcinoma	Papillary
+PIK3CA	Thyroid Carcinoma	Papillary
+UBE2A	Thyroid Carcinoma	Papillary
+HLA-A	Thyroid Carcinoma	Papillary
+PPBP	Thyroid Carcinoma	Papillary
+STAT1	Thyroid Carcinoma	Papillary
+PML	Thyroid Carcinoma	Papillary
+CXCR4	Thyroid Carcinoma	Papillary
+B2M	Thyroid Carcinoma	Papillary
+ISG15	Thyroid Carcinoma	Papillary
+CDC42	Thyroid Carcinoma	Papillary
+GNB1	Thyroid Carcinoma	Papillary
+EIF2AK2	Thyroid Carcinoma	Papillary
+CREBBP	Thyroid Carcinoma	Papillary
+CD80	Thyroid Carcinoma	Papillary
+EP300	Thyroid Carcinoma	Papillary
+MAPK14	Thyroid Carcinoma	Papillary
+IFNG	Thyroid Carcinoma	Papillary
+MAPK8	Thyroid Carcinoma	Papillary
+FPR2	Thyroid Carcinoma	Papillary
+ADRBK1	Thyroid Carcinoma	Papillary
+RAP1A	Thyroid Carcinoma	Papillary

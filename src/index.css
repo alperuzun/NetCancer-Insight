@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+span.Resizer.vertical {
+  width: 20px;
+  background: black;
+  cursor: row-resize;
+}

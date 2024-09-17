@@ -1,0 +1,20 @@
+/* Navbar.css */
+.navbar {
+    background-color: #333;
+    padding: 1rem;
+}
+
+.nav-categories {
+    list-style-type: none; /* Remove bullet points */
+    display: flex; /* Arrange items horizontally */
+    justify-content: center; /* Center the items horizontally */
+    gap: 2rem; /* Space between items */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+}
+
+.nav-categories li {
+    color: white;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+}
