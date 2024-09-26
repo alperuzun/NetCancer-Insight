@@ -1,70 +1,67 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# NetCancer-Insight
 
-## Available Scripts
+NetCancer-Insight is a robust computational tool for analyzing Protein-Protein Interaction (PPI) networks, focusing particularly on cancer-related genes.
 
-In the project directory, you can run:
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Interactive, colored graph representations of PPI networks
+- Handles touch screen functionality like zoom and drag
+- Provides data from reliable sources about the proteins/interactions in network
+- Allows user to filter for proteins that match criteria
+- Collapsible/Expandable panel to upload two networks
+- Graph Theory Metrics for Networks
+- Comparative Analysis Tab to compare two different networks
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+## Installation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Download this program and unzip it. Open the folder in a React based IDE with the following dependencies installed.
 
-### `npm run build`
+### Dependencies
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [d3](https://www.npmjs.com/package/d3) (> v7.9.0)
+- [rehcarts](https://www.npmjs.com/package/recharts) (> 2.12.7)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+For more information of the dependencies of this program, please look at the `package.json` file
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### Dependency Installation
+In the terminal in your React based IDE, type the following:
 
-### `npm run eject`
+```bash
+  npm i d3
+  npm i recharts
+```
+    
+After the dependencies have been installed, you can press the run button or simply type in the following command to run the program:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+npm start
+```
+## Usage/Examples
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+NetCancer-Insight currently only supports two input data types:
+a tsv file or a JSON file with a data structure that has each row representing an interaction and the columns being the `soruce`, `target`, and the `weight`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Inputs
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+For more information and details on the specific support for input files, please look in the repository for test inputs in the `public/examples/inputs` folder.
 
-## Learn More
+### Analysis
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+NetCancer-Insight provides valuable qualitative and quantitative analysis of the networks. 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Qualitative Analysis:
+The program inherently increases the size of protein hubs in the networks and distinctly colors proteins/genes that are closely associated with multiple types of cancer. 
 
-### Code Splitting
+Quantitative Analysis:
+Certain graph theory metrics are calculated to describe the network and displayed in a radar chart. When two different networks have been uploaded, it will provide an overlayed radar chart comparing the metrics of both networks. It also computes a separation score which characterizes how distinct two networks are.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+## Authors
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- [@AbhinavChede](https://github.com/AbhinavChede)
 
-### Making a Progressive Web App
+To report any bugs or issues, please contact abhinav_chede@brown.edu. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
