@@ -1,24 +1,10 @@
 import React from 'react';
 import {
     Radar, RadarChart, PolarGrid,
-    PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend
+    PolarAngleAxis, PolarRadiusAxis, Legend
 } from 'recharts';
 
 const SpiderGraph = ({data, isComparative}) => {
-
-    // Sample data
-    // const data = [
-    //     { name: 'Graph density', x: 21 },
-    //     { name: 'Clustering Coefficient', x: 22 },
-    //     { name: 'Centralization', x: -32 },
-    //     { name: 'D', x: -14 },
-    //     { name: 'E', x: -51 },
-    //     { name: 'F', x: 16 },
-    //     { name: 'G', x: 7 },
-    //     { name: 'H', x: -8 },
-    //     { name: 'Eccentricity Centrality', x: 9 },
-    // ];
-
     return (
             <RadarChart
                     height={400} width={500}

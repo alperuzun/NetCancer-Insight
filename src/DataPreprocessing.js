@@ -1,9 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import * as d3 from 'd3';
 
 const DataPreprocessing = ({onNodes, onLinks, onGraphMetrics, onNodeEdges}) => {
-    // const [interactions, setInteractions] = useState({})
-
     function parseTSV(inputString) {
         var rawData = splitText(inputString);
         const data = addNodesAndEdges(rawData);
@@ -58,54 +56,15 @@ const DataPreprocessing = ({onNodes, onLinks, onGraphMetrics, onNodeEdges}) => {
                     })
             }))
 
-        // return (interaction_df)
     }
 
-
-    // let all_data = {}
-    // let interaction_df = {}
-    // interaction_df["string"] = {}
-    // return new Promise(resolve =>
-    //     d3.csv('string_ppis_final.csv')
-    //         .then(data => {
-    //             all_data["string"] = data
-    //             d3.csv('intact_final_unique_interactions.csv')
-    //                 .then(data2 => {
-    //                     all_data["intact"] = data2
-    //                     d3.csv('bio')
-    //
-    //                     // console.log(data)
-    //                     for (let row of data) {
-    //                         let gene1_key = "gene1"
-    //                         let gene2_key = "gene2"
-    //                         let gene1 = row[gene1_key]
-    //                         let gene2 = row[gene2_key]
-    //
-    //                         if (!(gene1 in interaction_df["string"])) {
-    //                             interaction_df["string"][gene1] = new Set()
-    //                         }
-    //                         if (!(gene2 in interaction_df["string"])) {
-    //                             interaction_df["string"][gene2] = new Set()
-    //                         }
-    //
-    //                         interaction_df["string"][gene1].add(gene2)
-    //                         interaction_df["string"][gene2].add(gene1)
-    //                     }
-    //                     return (interaction_df)
-    //                 })
-    //         }))
-
     function calculateGraphMetrics(nodes_set, edges_from_node) {
-        // console.log(nodes_set)
-        // console.log(edges_from_node)
-        let graphMetrics = {}
         let num_nodes = nodes_set.size
         let total_edges = 0
         let clustering_coefficient = 0
         let max_k = -1
         for (let node of nodes_set) {
             let num_edges = edges_from_node[node].size
-            // console.log(num_edges)
             total_edges += num_edges
             clustering_coefficient += (2*num_edges) / ( (num_nodes) * (num_nodes - 1) )
             if (num_edges > max_k) {
@@ -156,14 +115,12 @@ const DataPreprocessing = ({onNodes, onLinks, onGraphMetrics, onNodeEdges}) => {
             }
 
             let count = new Set()
-            // console.log(interactions)
             for (let key in interactions) {
                 if( (node1 in interactions[key] && interactions[key][node1].has(node2))
                     || (node2 in interactions[key] && interactions[key][node2].has(node1) )) {
                     count.add(key)
                 }
             }
-            // console.log(count)
             edges_from_node[node1].add(node2)
             edges_from_node[node2].add(node1)
             edges.push({"source": node1, "target": node2, "value": df[row][2], "weight": count.size, "interactions": count})
@@ -174,8 +131,6 @@ const DataPreprocessing = ({onNodes, onLinks, onGraphMetrics, onNodeEdges}) => {
     const handleFileUpload = (event) => {
         const file = event.target.files[0];
         const fileType = file.type;
-        // console.log(fileType)
-        // == "text/tab-separated-values")
         if (file) {
             const reader = new FileReader();
 
@@ -190,25 +145,12 @@ const DataPreprocessing = ({onNodes, onLinks, onGraphMetrics, onNodeEdges}) => {
                     }
                 }
                 else if(fileType == "text/tab-separated-values") {
-                    // const interaction_data = await getInteractionData()
-                    // setInteractions(interaction_data)
-                    // console.log(interaction_data)
                     parseTSV(e.target.result).then( (data) => {
                         calculateGraphMetrics(data.node_set, data.edges_from_node)
-                        // console.log(findShortestPath(data.edges_from_node, "PLCG2", "GNB1"))
-                        // console.log(JSON.stringify(findAllPathLengths(data.edges_from_node, data.node_set)))
                         onNodes(data.nodes || []);
                         onLinks(data.links || []);
                         onNodeEdges(data.edges_from_node || []);
                     })
-                    // getInteractionData().then( (interactions) => {
-                    //     setTimeout(() => {
-                    //         const data = parseTSV(e.target.result, interactions)
-                    //         onNodes(data.nodes || []);
-                    //         onLinks(data.links || []);
-                    //     }, 10000)
-                    //     console.log(interactions)
-                    // })
                 }
                 else {
                     console.log("Please upload a valid file type")

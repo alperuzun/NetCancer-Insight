@@ -3,19 +3,10 @@ import * as d3 from 'd3';
 import Filter from "./Filter";
 import './styles.css'
 import SpiderGraph from "./SpiderGraph";
-// import SpiderGraph from "./SpiderGraph";
-
-
-// Hashmap of nodes with their respective values
-// Edges and nodes should change with hover
 
 let shouldRerender = true;
 let colorsInUse = new Set();
 let dataDict = {};
-// let annotations = {};
-let geneInfo = new Map();
-// let filter = null;
-// let selectedNode = null;
 
 const ForceGraph  =({ nodes, links, graphMetrics }) => {
     const svgRef = useRef();
@@ -27,13 +18,7 @@ const ForceGraph  =({ nodes, links, graphMetrics }) => {
     const [tsvData, setTsvData] = useState(null);
     const [annotations, setAnnotations] = useState({});
     const [cancerDriverData, setCancerDriverData] = useState(null);
-    // const [colorsInUse, setColorsInUse] = useState(new Set());
-    // const [shouldRerender, setShouldRerender] = useState(true);
     const [filter, setFilter] = useState(["","","",""]);
-
-    function setColorsInUse(colors) {
-        colorsInUse = colors;
-    }
 
     function translateColors(color) {
         if (color === "rgb(255, 0, 0)") {
@@ -51,9 +36,6 @@ const ForceGraph  =({ nodes, links, graphMetrics }) => {
         }
     }
 
-
-
-
     useEffect(() => {
         let genes = new Set();
         d3.tsv('appic_gene_data.tsv')
@@ -70,60 +52,36 @@ const ForceGraph  =({ nodes, links, graphMetrics }) => {
             .catch(error => {
                 console.error('Error loading TSV file:', error);
             });
-        // d3.tsv('CancerDrivers.tsv')
-        //     .then(data => {
-        //         dataDict.set("cancer_driver", data);
-        //     })
-        //     .catch(error => {
-        //         console.error('Error loading TSV file:', error);
-        //     });
         d3.csv('biogrid_all_interactions_final.csv')
             .then(data => {
-                // console.log(data)
-                // dataDict.set("interactions_biogrid", data);
                 dataDict["interactions_biogrid"] = data
                 d3.csv('go_biological_process_with_semicolons.csv')
                     .then(data => {
-                        console.log(data)
-                        // dataDict.set("annotations_go_biological", data);
                         dataDict["annotations_go_biological"] = data
                         d3.csv('go_cellular_component_annotations2.csv')
                             .then(data => {
-                                // console.log(data)
-                                // dataDict.set("annotations_go_cellular", data);
                                 dataDict["annotations_go_cellular"] = data
                                 d3.csv('go_molecular_activity_annotations2.csv')
                                     .then(data => {
-                                        // console.log(data)
-                                        // dataDict.set("annotations_go_molecular", data);
                                         dataDict["annotations_go_molecular"] = data
                                         d3.csv('intact_final_unique_interactions.csv')
                                             .then(data => {
-                                                // console.log(data)
-                                                // dataDict.set("intact_interactions", data);
                                                 dataDict["intact_interactions"] = data
                                                 d3.csv('reactome_compartment_annotations.csv')
                                                     .then(data => {
-                                                        // console.log(data)
-                                                        // dataDict.set("annotations_reactome", data);
                                                         dataDict["reactome_compartment"] = data
                                                         d3.csv('reactome_summation_annotations.csv')
                                                             .then(data => {
-                                                                // console.log(data)
-                                                                // dataDict.set("annotations_reactome_sum", data);
                                                                 dataDict["reactome_summation"] = data
                                                                 annotationInitialize(dataDict["annotations_go_biological"], "go_biological", "gene", "annotation")
                                                                 annotationInitialize(dataDict["annotations_go_cellular"], "go_cellular", "gene_name", "cellular_component")
                                                                 annotationInitialize(dataDict["annotations_go_molecular"], "go_molecular", "gene_name", "molecular_activity")
                                                                 annotationInitialize(dataDict["reactome_compartment"], "reactome_compartment", "gene_name", "annotation")
                                                                 annotationInitialize(dataDict["reactome_summation"], "reactome_summation", "gene_name", "annotation")
-                                                                // console.log(annotations)
                                                                 for(let key in dataDict) {
                                                                     for(let row in dataDict[key]) {
                                                                         genes.add(row["gene_name"])
-                                                                        // console.log(genes)
                                                                     }
-                                                                    // console.log(key)
                                                                 }
                                                             })
                                                             .catch(error => {
@@ -153,130 +111,43 @@ const ForceGraph  =({ nodes, links, graphMetrics }) => {
             .catch(error => {
                 console.error('Error loading TSV file:', error);
             });
+
         function annotationInitialize(data, type, key, column_id) {
             let ann = {"go_biological": "", "go_molecular": "",
                                                 "go_cellular": ""};
-            // ann.set("go_biological", new Set())
-            // console.log(dataDict)
-            // console.log(data[0][column_id])
-            let count= 0
-
             for (let i= 0; i < data.length; i++) {
                 // console.log(data[i][column_id])
                 let gene = data[i][key]
                 if(gene in annotations) {
-
                     annotations[gene][type] = data[i][column_id]
-                    // console.log(JSON.stringify(annotations[gene]))
-                    // console.log(gene)
-                    // if(gene === "BABAM2") {
-                    //     console.log(gene)
-                    //     annotations[gene][type] = "hello"
-                    // }
-                    // console.log(gene)
-                    // console.log(JSON.stringify(annotations))
-                    // console.log(data[i][column_id])
-                    // break
                 }
                 else {
                     annotations[gene] = {"go_biological": "N/A", "go_molecular": "N/A",
                         "go_cellular": "N/A", "reactome_summation": "N/A", "reactome_compartment": "N/A"}
-                    // console.log(JSON.stringify(annotations[gene][type]))
                     annotations[gene][type] = data[i][column_id]
-                    // if(gene === "BABAM2") {
-                    //     console.log(gene)
-                    //     annotations[gene][type] = "hello"
-                    // }
-                    // ann["go_molecular"] = ""
-                    // ann["go_cellular"] = ""
-                    // console.log(JSON.stringify(annotations))
-                    // ann.set("go_biological", new Set())
                 }
-                // console.log(annotations)
-                // count++
-                // if (count === 2) {
-                //     break
-                // }
             }
-            // console.log(annotations.toString())
         }
-        // d3.csv('go_biological_process_annotations2_modified.csv')
-        //     .then(data => {
-        //         console.log(data)
-        //         dataDict.set("annotations_go_biological", data);
-        //     })
-        //     .catch(error => {
-        //         console.error('Error loading TSV file:', error);
-        //     });
-        // d3.csv('go_cellular_component_annotations2.csv')
-        //     .then(data => {
-        //         console.log(data)
-        //         dataDict.set("annotations_go_cellular", data);
-        //     })
-        //     .catch(error => {
-        //         console.error('Error loading TSV file:', error);
-        //     });
-        // d3.csv('go_molecular_activity_annotations2.csv')
-        //     .then(data => {
-        //         console.log(data)
-        //         dataDict.set("annotations_go_molecular", data);
-        //     })
-        //     .catch(error => {
-        //         console.error('Error loading TSV file:', error);
-        //     });
-        // d3.csv('intact_final_unique_interactions.csv')
-        //     .then(data => {
-        //         console.log(data)
-        //         dataDict.set("intact_interactions", data);
-        //     })
-        //     .catch(error => {
-        //         console.error('Error loading TSV file:', error);
-        //     });
-        // d3.csv('reactome_compartment_annotations.csv')
-        //     .then(data => {
-        //         console.log(data)
-        //         dataDict.set("annotations_reactome", data);
-        //     })
-        //     .catch(error => {
-        //         console.error('Error loading TSV file:', error);
-        //     });
-        // d3.csv('reactome_summation_annotations.csv')
-        //     .then(data => {
-        //         console.log(data)
-        //         dataDict.set("annotations_reactome_sum", data);
-        //     })
-        //     .catch(error => {
-        //         console.error('Error loading TSV file:', error);
-        //     });
-        // console.log(dataDict.keys())
-
     }, []); // Empty dependency array to run the effect only once on mount
     // Empty dependency array to run the effect only once on mount
 
 
     useEffect(() => {
-        // const colorsInUse = null;
         const svg = d3.select(svgRef.current);
         const graph = d3.select(graphRef.current);
         const description = d3.selectAll(descriptionRef.current);
 
-
         const width = window.screen.availWidth;
         const height = window.screen.availHeight;
-
 
         const zoom = d3.zoom()
             .scaleExtent([0.1, 4])
             .on('zoom', handleZoom);
-
-
         svg.call(zoom);
-
 
         function handleZoom(event) {
             graph.attr('transform', event.transform);
         }
-
 
         const simulation = d3.forceSimulation(nodes)
             .force('link', d3.forceLink(links).id(d => d.id).distance(120))
@@ -290,7 +161,6 @@ const ForceGraph  =({ nodes, links, graphMetrics }) => {
         else {
             simulationRef.current = null;
         }
-
 
         const updateGraph = () => {
             colorsInUse = new Set();
@@ -345,9 +215,7 @@ const ForceGraph  =({ nodes, links, graphMetrics }) => {
                 .attr('text-anchor', 'middle')
                 .style('font-size', '10px');
 
-
             simulation.nodes(nodes);
-            // simulation.force('link').links(links);
             simulation.alpha(1).restart();
             simulation.on('tick', () => {
                 node.attr('transform', d => `translate(${d.x},${d.y})`);
@@ -390,19 +258,7 @@ const ForceGraph  =({ nodes, links, graphMetrics }) => {
             d.fy = null;
         };
 
-        // function updateValues(filterChoice) {
-        //     setFilter(filterChoice)
-        //     setColorsInUse(new Set())
-        // }
-
         const getColor = (d) => {
-            // updateLegend(d);
-            const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-            // if(links.filter(link => link.source === d || link.target === d).length > 3) {
-            // console.log(selectedDropdownValue == d.id)
-            // if (selectedDropdownValue && d.cancer.indexOf(selectedDropdownValue) >= 0) {
-            //     return "rgb(255, 255, 0)";
-            // }
             if(JSON.stringify(filter) !== JSON.stringify(["","","",""]) && (d.cancer.join(", ").toLowerCase().includes(filter[0].toLowerCase()) && d.cancerType.toLowerCase().includes(filter[1].toLowerCase())
                 && d.organSystem.toLowerCase().includes(filter[2].toLowerCase()) && d.primarySite.toLowerCase().includes(filter[3].toLowerCase()))) {
                 return "rgb(255, 255, 0)";
@@ -416,9 +272,7 @@ const ForceGraph  =({ nodes, links, graphMetrics }) => {
             else {
                 return "rgb(255,119,0)";
             }
-            return colorScale(d.name);
         };
-
 
         const getRadius = (d) => {
             const baselineSize = 15;
@@ -432,7 +286,6 @@ const ForceGraph  =({ nodes, links, graphMetrics }) => {
                 return;
             }
             const matchingEntries = tsvData.filter(entry => entry.gene === String(d.id));
-
 
             if (matchingEntries.length > 0) {
                 const extractedAttribute = matchingEntries.map(entry => entry.cancer); // Replace 'someAttribute' with the actual attribute you want to extract
@@ -470,14 +323,10 @@ const ForceGraph  =({ nodes, links, graphMetrics }) => {
             const newWidth = window.screen.availWidth;
             const newHeight = window.screen.availHeight;
             svg.attr('width', newWidth).attr('height', newHeight);
-            // simulation.force('center', d3.forceCenter(newWidth / 2, newHeight / 2));
             simulation.restart();
         };
 
-
         window.addEventListener('resize', handleResize);
-        // handleResize();
-
 
         return () => {
             handleResize();
@@ -490,7 +339,6 @@ const ForceGraph  =({ nodes, links, graphMetrics }) => {
 
 
     return (
-
         <div>
             {selectedNode && <div
                 ref={descriptionRef}
@@ -553,7 +401,7 @@ const ForceGraph  =({ nodes, links, graphMetrics }) => {
                         zIndex: 0,
                         position: "relative"
                     }}>
-                <Filter onSubmit={setFilter} changeColor={setColorsInUse}/>
+                <Filter onSubmit={setFilter}/>
                 {/*<SpiderGraph></SpiderGraph>*/}
                 {shouldRerender = false}
                         <div style={{
@@ -574,16 +422,13 @@ const ForceGraph  =({ nodes, links, graphMetrics }) => {
                                 ))}
 
                         </div>
-                        <svg ref={svgRef} width="50%" height="100%" style={{position: "relative"}}>
+                        <svg ref={svgRef} width="100%" height="100%" style={{position: "relative"}}>
                             <g ref={graphRef}></g>
                         </svg>
                         <div style={{position: 'absolute', top: '420px', left:'-30px'}}>
                             <SpiderGraph data={graphMetrics} isComparative={false}></SpiderGraph>
                         </div>
             </div>
-
-            {/*{(nodes !== [] && links !== []) &&*/}
-            {/*    <SpiderGraph/>}*/}
         </div>
 
     );

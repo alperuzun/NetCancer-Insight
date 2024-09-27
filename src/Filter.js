@@ -1,8 +1,7 @@
-
 import React, {useState} from "react";
 import './styles.css';
 
-const Filter = ({onSubmit, changeColor}) => {
+const Filter = ({onSubmit}) => {
     const [selectedDropdownValue, setSelectedDropdownValue] = useState("");
     const [selectedCancerType, setSelectedCancerType] = useState("");
     const [selectedOrganSystem, setSelectedOrganSystem] = useState("");
@@ -28,13 +27,11 @@ const Filter = ({onSubmit, changeColor}) => {
     };
 
     const handleFilter = (event, d) => {
-        // changeColor(new Set());
         onSubmit([selectedDropdownValue, selectedCancerType, selectedOrganSystem, selectedPrimarySite])
     }
 
     return (
         <div className="overlay">
-            {/*<form onSubmit={this.handleSubmit}>*/}
             <form>
                 <p>Cancer Type: </p>
                 <input

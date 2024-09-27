@@ -1,19 +1,4 @@
-/*
-Into both force graphs pass in a state setter for the panel that provides node info and make both force graphs
-use that so that when you render the info panel there is no duplicates
-*/
-
-
-
 import React, { useState } from 'react';
-import {PanelGroup, Panel, PanelResizeHandle} from "react-resizable-panels";
-// import {
-//     BrowserRouter as Router,
-//     Routes,
-//     Route,
-// } from "react-router-dom";
-import DataPreprocessing from "./DataPreprocessing";
-import ForceGraph from "./ForceGraph";
 import SpiderGraph from "./SpiderGraph";
 import InfoButton from "./InfoButton";
 
@@ -46,7 +31,6 @@ function getNodes(nodes_attrs) {
 
 function findShortestPath(graph, startNode, targetNode) {
     // If start and target nodes are the same, distance is 0
-    // console.log(startNode)
     if (startNode === targetNode) return 0;
 
     // Initialize a queue for BFS
@@ -66,8 +50,6 @@ function findShortestPath(graph, startNode, targetNode) {
         let currentNode = queue.shift();
 
         // Get all neighbors of the current node
-        // console.log(graph)
-        // console.log(currentNode)
         for (let neighbor of graph[currentNode]) {
             if (!visited.has(neighbor)) {
                 // Mark neighbor as visited
@@ -107,21 +89,6 @@ function calcSingleDistance(graph, genes) {
     return (sum / count)
 }
 
-function combineGeneSet(gene_set1, gene_set2) {
-    const all_genes = new Set()
-    for (var gene in gene_set1) {
-        if (! (gene in all_genes)) {
-            all_genes.add(gene)
-        }
-    }
-    for (var gene in gene_set2) {
-        if (! (gene in all_genes)) {
-            all_genes.add(gene)
-        }
-    }
-    return all_genes
-}
-
 function constructCombinedGraph(graph1, graph2) {
     const result = {}
 
@@ -129,7 +96,6 @@ function constructCombinedGraph(graph1, graph2) {
         if (!result[key]) {
             result[key] = new Set();
         }
-        console.log(neighbors)
         if (neighbors) {
             for (const neighbor of neighbors) {
                 result[key].add(neighbor); // Add elements to the set, avoiding duplicates
@@ -138,7 +104,6 @@ function constructCombinedGraph(graph1, graph2) {
     }
 
     for (const key in graph1) {
-        console.log(graph1)
         mergeNeighbors(key, graph1[key])
     }
 
@@ -254,9 +219,6 @@ const ComparativeAnalysis = ({nodes1, nodes2, graphMetrics1, graphMetrics2, node
             <button onClick={handleButtonClick}>Show Comparative Analysis</button>
             {analysisExpanded && showAnalysis()}
         </>
-
-
-
     );
 };
 
