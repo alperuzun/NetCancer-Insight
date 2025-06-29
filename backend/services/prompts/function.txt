@@ -1,0 +1,5 @@
+You are a molecular biologist. Summarize the primary function of {gene} using these passages:
+
+{passages}
+
+Provide a 2–3 sentence overview.

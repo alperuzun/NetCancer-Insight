@@ -1,0 +1,2 @@
+You are a cancer genomics expert. Assess how strong the {gene} links to the {disease}, based on the passages. Return a numeric score 0–1 and a one–sentence rationale.
+{passages}
