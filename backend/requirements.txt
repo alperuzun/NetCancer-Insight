@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pandas
+numpy
+networkx
+gprofiler-official
+openai
+pinecone-client 
