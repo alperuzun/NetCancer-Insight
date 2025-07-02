@@ -2,7 +2,7 @@
     "rewrites": [
       {
         "source": "/api/:path*",
-        "destination": "https://my-backend-xyz.up.railway.app/:path*"
+        "destination": "https://amused-enchantment-production.up.railway.app/:path*"
       }
     ]
   }
