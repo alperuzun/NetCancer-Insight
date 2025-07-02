@@ -30,14 +30,14 @@ export default function DraggableGeneInfo({ gene, data, onClose }: Props) {
     <Rnd
       size={{ width: bounds.width, height: bounds.height }}
       position={{ x: bounds.x, y: bounds.y }}
-      onDragStop={(_e, d) => {
+      onDragStop={( _ , d: any) => {
         setBounds(prevBounds => ({
           ...prevBounds,
           x: d.x,
           y: d.y,
         }));
       }}
-      onResizeStop={(_e, _direction, ref, _delta, position) => {
+      onResizeStop={(_, _direction, ref, _delta, position) => {
         setBounds({
           width: ref.offsetWidth,
           height: ref.offsetHeight,

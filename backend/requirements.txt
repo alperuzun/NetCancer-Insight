@@ -5,4 +5,4 @@ numpy
 networkx
 gprofiler-official
 openai
-pinecone-client 
+pinecone
