@@ -38,6 +38,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+api_url = "http://localhost:8000"
+
 # Store multiple graphs
 original_graphs = [
     {"nodes": [], "links": []},  # First graph
@@ -58,7 +60,7 @@ graph_theory_metrics = [
 
 # Load CSV gene annotation data into memory
 gene_info_db = {}
-data_dirs = ["backend/data/annotations", "backend/data/general"]
+data_dirs = ["./data/annotations", "./data/general"]
 for data_dir in data_dirs:
     for fname in os.listdir(data_dir):
         if fname.endswith(".csv"):
@@ -66,7 +68,7 @@ for data_dir in data_dirs:
         elif fname.endswith(".tsv"):
             update_gene_data_dict(gene_info_db, data_dir, fname, sep="\t")
 
-interaction_dir = "backend/data/interactions"
+interaction_dir = "./data/interactions"
 interaction_info_db = {}
 for fname in os.listdir(interaction_dir):
     if fname.endswith(".csv"):
@@ -274,7 +276,7 @@ def search_genes(keyword: str = "", min_degree: int = 0, max_degree: int = 20, g
                 
     return JSONResponse(
             content={"gene": list(results)},
-            headers={"Access-Control-Allow-Origin": "http://localhost:5173"}
+            headers={"Access-Control-Allow-Origin": api_url}
         )
 
 @app.get("/gene-enrichment/{gene_symbol}")
@@ -307,7 +309,7 @@ def get_gene_enrichment(gene_symbol: str):
                 
         return JSONResponse(
             content={"gene": gene_symbol, "results": enrichment_results},
-            headers={"Access-Control-Allow-Origin": "http://localhost:5173"}
+            headers={"Access-Control-Allow-Origin": api_url}
         )
         
     except Exception as e:
@@ -328,20 +330,20 @@ def get_gene_details(gene_name: str):
                 "data": {"Information": None},
                 "message": "Gene not found in database."
             },
-            headers={"Access-Control-Allow-Origin": "http://localhost:5173"}
+            headers={"Access-Control-Allow-Origin": api_url}
         )
 
     try:
         cleaned = clean_gene_info(info)
         return JSONResponse(
             content={"gene": gene, "data": cleaned},
-            headers={"Access-Control-Allow-Origin": "http://localhost:5173"}
+            headers={"Access-Control-Allow-Origin": api_url}
         )
     except Exception as e:
         return JSONResponse(
             status_code=500,
             content={"error": str(e), "gene": gene_name},
-            headers={"Access-Control-Allow-Origin": "http://localhost:5173"}
+            headers={"Access-Control-Allow-Origin": api_url}
         )
     
 @app.get("/interaction/{gene1}/{gene2}")
@@ -349,13 +351,13 @@ def get_interaction(gene1: str, gene2: str):
     if gene1 not in interaction_info_db or gene2 not in interaction_info_db[gene1]:
         return JSONResponse(
             content={"message": "No interaction found between the two genes"},
-            headers={"Access-Control-Allow-Origin": "http://localhost:5173"}
+            headers={"Access-Control-Allow-Origin": api_url}
         )
     return JSONResponse(
             content={
                 "sources": list(set(interaction_info_db[gene1][gene2]))
             },
-            headers={"Access-Control-Allow-Origin": "http://localhost:5173"}
+            headers={"Access-Control-Allow-Origin": api_url}
         )
 
 
@@ -669,14 +671,14 @@ def get_shared_genes():
     if shared_genes_cache is not None:
         return JSONResponse(
             content={"genes": list(shared_genes_cache)},
-            headers={"Access-Control-Allow-Origin": "http://localhost:5173"}
+            headers={"Access-Control-Allow-Origin": api_url}
         )
     
     # Check if both graphs have nodes
     if not current_graphs[0]["nodes"] or not current_graphs[1]["nodes"]:
         return JSONResponse(
             content={"genes": []},
-            headers={"Access-Control-Allow-Origin": "http://localhost:5173"}
+            headers={"Access-Control-Allow-Origin": api_url}
         )
     
     # Get sets of genes from both graphs
@@ -688,7 +690,7 @@ def get_shared_genes():
     
     return JSONResponse(
         content={"genes": list(shared_genes_cache)},
-        headers={"Access-Control-Allow-Origin": "http://localhost:5173"}
+        headers={"Access-Control-Allow-Origin": api_url}
     )
 
 # New function to calculate graph theory metrics
