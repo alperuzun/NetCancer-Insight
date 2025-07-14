@@ -22,7 +22,7 @@ const GradientLegend: React.FC<GradientLegendProps> = ({ min, max, title }) => {
         padding: '10px',
         borderRadius: '5px',
         boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)',
-        zIndex: 1000,
+        zIndex: 100,
       }}
     >
       <h4 style={{ margin: '0 0 10px 0', fontSize: '14px' }}>{title}</h4>

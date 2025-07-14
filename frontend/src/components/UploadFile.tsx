@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import axios from 'axios'
-// import { uploadFile } from '@/services/api';
+import { uploadFileDirect } from '../services/api';
 
 interface UploadFileProps {
   onUploadSuccess: () => void;
@@ -32,12 +31,7 @@ const UploadFile: React.FC<UploadFileProps> = ({ onUploadSuccess, graphIndex = 0
     formData.append('file', file)
 
     try {
-      const response = await axios.post(`http://localhost:8000/upload?graph_index=${graphIndex}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-
+      const response = await uploadFileDirect(file, graphIndex);
       console.log('Upload successful:', response.data)
       onUploadSuccess()
       setFile(null)

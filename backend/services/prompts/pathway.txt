@@ -1,0 +1,13 @@
+You are a genomics expert analyzing the biological pathways associated with the gene {gene}.
+
+Based on the following KEGG pathway information, provide a brief list analysis of the pathways this gene is involved in:
+
+{passages}
+
+Please provide a list of up to 5 areas of pathways this gene is involved in (No need to put astericks around the pathway name). 
+
+Focus on providing clear, scientifically accurate information that would be useful for researchers studying this gene. 
+The response should like:
+1. Pathway Name (without any astericks): Pathway Description
+\n
+2. Pathway Name (without any astericks): Pathway Description

@@ -4,8 +4,7 @@ import ForceGraph from './ForceGraph'
 import GeneTableModal from './GeneTableModal'
 import GraphletAnalysis from './GraphletAnalysis'
 import ComparativeAnalysis from './ComparativeAnalysis'
-import { fetchGraph, getExpressionData } from '../services/api'
-import axios from 'axios'
+import { fetchGraph, getExpressionData, uploadFileDirect } from '../services/api'
 import FilterPanel from './FilterPanel'
 import html2canvas from 'html2canvas-pro'
 // Import Canvas2Image - adjust import based on actual package export if needed
@@ -294,12 +293,8 @@ const Program = forwardRef<any, ProgramProps>(({
     }
     const file = files[0];
     setUploading(true);
-    const formData = new FormData();
-    formData.append('file', file);
     try {
-      const response = await axios.post(`http://localhost:8000/upload?graph_index=${panelIndex}`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      const response = await uploadFileDirect(file, panelIndex);
       console.log('Upload successful:', response.data);
       await refreshGraph();
     } catch (err) {

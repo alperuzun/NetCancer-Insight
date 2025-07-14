@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API = axios.create({ baseURL: 'http://localhost:8000' })
+const API = axios.create({ baseURL: 'https://netcancer-insight.onrender.com' })
 
 // Add request interceptor for logging
 API.interceptors.request.use(request => {
@@ -39,6 +39,17 @@ export const uploadFile = (file: File, graphIndex: number) => {
   form.append('file', file)
   return API.post('/upload', { file: form, graph_index: graphIndex })
 }
+
+export const uploadFileDirect = async (file: File, graphIndex: number) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  const response = await axios.post(`https://netcancer-insight.onrender.com/upload?graph_index=${graphIndex}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return response;
+};
 
 export const fetchGraph = async (graphIndex: number = 0) => {
   const response = await API.get(`/graph-data/${graphIndex}`)
@@ -129,4 +140,36 @@ export const getExpressionData = async (graphIndex: number) => {
 
 export const uploadExpressionData = async (graphIndex: number, data: any) => {
   return await API.post(`/expression-data/${graphIndex}`, data);
+};
+
+export const getAllGeneAnnotations = async (gene: string, k: number = 5) => {
+  const response = await API.post('/annotate_all_views?k=' + k, { gene });
+  return response;
+};
+
+export const sendGeneChatMessage = async (gene: string, message: string, conversation_history: string) => {
+  const response = await API.post('/chat', {
+    gene,
+    message,
+    conversation_history
+  });
+  return response;
+};
+
+export const sendMultiGeneChatMessage = async (
+  genes: string[],
+  message: string,
+  conversation_history: string
+) => {
+  const response = await API.post('/chat', {
+    gene: genes.join(','),
+    message,
+    conversation_history
+  });
+  return response;
+};
+
+export const postMultiAnnotate = async (genes: string[]) => {
+  const response = await API.post('/multi-annotate', { genes });
+  return response;
 };

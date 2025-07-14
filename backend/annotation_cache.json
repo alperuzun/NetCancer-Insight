@@ -1,0 +1,188 @@
+{
+  "CP": {
+    "function": {
+      "gene": "CP",
+      "view": "function",
+      "retrieved_passages": [
+        "Multifunctional blue, copper-binding (6-7 atoms per molecule) glycoprotein. It has ferroxidase activity oxidizing Fe(2+) to Fe(3+) without releasing radical oxygen species. It is involved in iron transport across the cell membrane (PubMed:16150804). Copper ions provide a large number of enzymatic activites. Oxidizes highly toxic ferrous ions to the ferric state for further incorporation onto apo-transferrins, catalyzes Cu(+) oxidation and promotes the oxidation of biogenic amines such as norepinephrin and serotonin (PubMed:14623105, PubMed:4643313, PubMed:5912351). Provides Cu(2+) ions for the ascorbate-mediated deaminase degradation of the heparan sulfate chains of GPC1 (By similarity). Has glutathione peroxidase-like activity, can remove both hydrogen peroxide and lipid hydroperoxide in the presence of thiols (PubMed:10481051). Also shows NO-oxidase and NO2 synthase activities that determine endocrine NO homeostasis (PubMed:16906150)."
+      ],
+      "summary": "Ceruloplasmin (CP) is a multifunctional glycoprotein primarily known for its ferroxidase activity, which oxidizes ferrous iron (Fe\u00b2\u207a) to ferric iron (Fe\u00b3\u207a) without generating reactive oxygen species, facilitating iron transport across cell membranes. Additionally, CP plays a crucial role in copper ion metabolism, catalyzing the oxidation of toxic ferrous ions and biogenic amines, while also exhibiting antioxidant properties by removing hydrogen peroxide and lipid hydroperoxides. Its diverse enzymatic activities contribute to maintaining iron and copper homeostasis and regulating nitric oxide levels in the body."
+    },
+    "disease": {
+      "gene": "CP",
+      "view": "disease",
+      "retrieved_passages": [
+        "Aceruloplasminemia: An autosomal recessive disorder of iron metabolism characterized by iron accumulation in the brain as well as visceral organs. Clinical features consist of the triad of retinal degeneration, diabetes mellitus and neurological disturbances.."
+      ],
+      "summary": "1. Aceruloplasminemia: \n    - An autosomal recessive disorder of iron metabolism characterized by iron accumulation in the brain and visceral organs, with clinical features including retinal degeneration, diabetes mellitus, and neurological disturbances."
+    },
+    "pathway": {
+      "gene": "CP",
+      "view": "pathway",
+      "retrieved_passages": [
+        "Porphyrin metabolism: Porphyrins are a group of chemical compounds with the backbone ring structure consisting of four linked pyrrole units. Metal complexes of porphyrins, as well as those of corrinoids with the one-carbon shorter ring structure, play important biological roles. They include iron-containing heme, magnesium-containing chlorophyll, nickel-containing coenzyme F430 and cobalt-containing cobamide (such as vitamin B12 coenzyme) as shown in this map.",
+        "Ferroptosis: Ferroptosis is a regulated form of cell death and characterized by a production of reactive oxygen species (ROS) from accumulated iron and lipid peroxidation. It can be induced by experimental compounds (e.g.,erastin, RSL3) or clinical drugs(e.g., sulfasalazine, sorafenib) in cancer cell and certain normal cells. It is involved in multiple physiological and pathological processes, such as cancer cell death, neurodegenerative disease, tissue damage and acute renal failure."
+      ],
+      "summary": "1. Porphyrin metabolism: This pathway involves the synthesis and degradation of porphyrins, which are essential for the formation of heme and other metal-containing cofactors. The pathway plays a critical role in various biological processes, including oxygen transport and electron transfer in cellular respiration.\n\n2. Ferroptosis: This pathway is characterized by iron-dependent lipid peroxidation leading to a specific form of regulated cell death. Ferroptosis is implicated in various diseases, including cancer and neurodegenerative disorders, highlighting its significance in both physiological and pathological contexts.\n\n3. Heme biosynthesis: This pathway is a subset of porphyrin metabolism, focusing specifically on the production of heme, an essential component of hemoglobin and various enzymes. Disruptions in heme biosynthesis can lead to disorders such as porphyrias.\n\n4. Iron homeostasis: This pathway regulates the uptake, storage, and utilization of iron within cells, which is crucial for maintaining cellular function and preventing oxidative stress. The gene CP may play a role in maintaining iron balance, influencing both porphyrin metabolism and ferroptosis.\n\n5. Oxidative stress response: This pathway encompasses the cellular mechanisms that respond to oxidative damage, including the detoxification of reactive oxygen species (ROS). Given the involvement of CP in ferroptosis, it may also contribute to the cellular defense against oxidative stress."
+    }
+  },
+  "SERPINA10": {
+    "function": {
+      "gene": "SERPINA10",
+      "view": "function",
+      "retrieved_passages": [
+        "Inhibits activity of the coagulation protease factor Xa in the presence of PROZ, calcium and phospholipids. Also inhibits factor XIa in the absence of cofactors."
+      ],
+      "summary": "SERPINA10 primarily functions as a serine protease inhibitor, specifically inhibiting the activity of coagulation protease factor Xa when in the presence of PROZ, calcium, and phospholipids. Additionally, it can inhibit factor XIa independently of any cofactors, playing a crucial role in regulating blood coagulation processes."
+    },
+    "disease": {
+      "error": "No disease passages found for gene 'SERPINA10'."
+    },
+    "pathway": {
+      "error": "No pathway passages found for gene 'SERPINA10'."
+    }
+  },
+  "SERPINC1": {
+    "function": {
+      "gene": "SERPINC1",
+      "view": "function",
+      "retrieved_passages": [
+        "Most important serine protease inhibitor in plasma that regulates the blood coagulation cascade (PubMed:15140129, PubMed:15853774). AT-III inhibits thrombin, matriptase-3/TMPRSS7, as well as factors IXa, Xa and XIa (PubMed:15140129). Its inhibitory activity is greatly enhanced in the presence of heparin."
+      ],
+      "summary": "SERPINC1, also known as antithrombin III, is the primary serine protease inhibitor in plasma that plays a crucial role in regulating the blood coagulation cascade. It inhibits key proteases involved in coagulation, including thrombin and factors IXa, Xa, and XIa, with its activity significantly enhanced by heparin. This regulation is essential for maintaining hemostasis and preventing excessive blood clotting."
+    },
+    "disease": {
+      "gene": "SERPINC1",
+      "view": "disease",
+      "retrieved_passages": [
+        "Antithrombin III deficiency: An important risk factor for hereditary thrombophilia, a hemostatic disorder characterized by a tendency to recurrent thrombosis. Antithrombin-III deficiency is classified into 4 types. Type I: characterized by a 50% decrease in antigenic and functional levels. Type II: has defects affecting the thrombin-binding domain. Type III: alteration of the heparin-binding domain. Plasma AT-III antigen levels are normal in type II and III. Type IV: consists of miscellaneous group of unclassifiable mutations.."
+      ],
+      "summary": "1. Antithrombin III deficiency: \n    - An important risk factor for hereditary thrombophilia, characterized by a tendency to recurrent thrombosis, with four types based on the nature of the deficiency."
+    },
+    "pathway": {
+      "gene": "SERPINC1",
+      "view": "pathway",
+      "retrieved_passages": [
+        "Complement and coagulation cascades: The complement system is a proteolytic cascade in blood plasma and a mediator of innate immunity, a nonspecific defense mechanism against pathogens. There are three pathways of complement activation: the classical pathway, the lectin pathway, and the alternative pathway. All of these pathways generate a crucial enzymatic activity that, in turn, generates the effector molecules of complement. The main consequences of complement activation are the opsonization of pathogens, the recruitment of inflammatory and immunocompetent cells, and the direct killing of pathogens. Blood coagulation is another series of proenzyme-to-serine protease conversions, culminating the formation of thrombin, the enzyme responsible for the conversion of soluble fibrinogen to the insoluble fibrin clot. Protease-activated receptors, such as those activated by thrombin, are members of G protein-coupled receptors and function as a mediator of innate immunity. The kallikrein-kinin system is an endogenous metabolic cascade, triggering of which results in the release of vasoactive kinins (bradykinin-related peptides). Kinin peptides are implicated in many physiological and pathological processes including the regulation of blood pressure and sodium homeostasis, inflammatory processes, and the cardioprotective effects of preconditioning."
+      ],
+      "summary": "1. Complement and coagulation cascades: This pathway involves a series of proteolytic cascades that mediate innate immunity and blood coagulation. It includes the activation of the complement system, which enhances opsonization of pathogens and recruitment of immune cells, as well as the conversion of fibrinogen to fibrin, essential for blood clot formation.\n\n2. Kallikrein-kinin system: This endogenous metabolic cascade is responsible for the release of vasoactive kinins, which play critical roles in regulating blood pressure, sodium homeostasis, and inflammatory responses, as well as providing cardioprotective effects.\n\n3. Hemostasis: This pathway encompasses the processes that prevent and stop bleeding, involving the interaction of platelets, coagulation factors, and the vascular system, where SERPINC1 plays a role in regulating the coagulation cascade.\n\n4. Inflammatory response: SERPINC1 is implicated in the modulation of inflammatory processes through its involvement in the complement system and the regulation of protease-activated receptors, which mediate various immune responses.\n\n5. Thrombin signaling pathway: This pathway highlights the role of thrombin as a key enzyme in coagulation, where SERPINC1 contributes to the regulation of thrombin activity and its downstream effects on clot formation and inflammation."
+    }
+  },
+  "ALB": {
+    "function": {
+      "gene": "ALB",
+      "view": "function",
+      "retrieved_passages": [
+        "Keratin-binding protein required for epithelial cell polarization. Involved in apical junction complex (AJC) assembly via its interaction with PARD3. Required for ciliogenesis."
+      ],
+      "summary": "ALB is a keratin-binding protein essential for the polarization of epithelial cells. It plays a crucial role in the assembly of the apical junction complex (AJC) through its interaction with PARD3 and is also required for the process of ciliogenesis."
+    },
+    "disease": {
+      "error": "No disease passages found for gene 'ALB'."
+    },
+    "pathway": {
+      "gene": "ALB",
+      "view": "pathway",
+      "retrieved_passages": [
+        "Thyroid hormone synthesis: Thyroid hormones triiodothyronine (T3) and thyroxine (T4) are essential for normal development, growth and metabolic homeostasis in all vertebrates, and synthesized in the thyroid gland. The functional unit of the thyroid gland is the follicle, delimited by a monolayer of thyrocytes. Polarized thyrocytes surround the follicular lumen; with their basal and apical surfaces facing the bloodstream and the lumen, respectively. To synthesize thyroid hormones, thyrocytes take up iodide at their basal side and concentrate it into the lumen. They also secrete in this lumen the specialized protein thyroglobulin (TG) which serves as a store for the hormones. In the follicular lumen oxidation of iodine, iodination of tyrosines (MIT, 3-monoiodotyrosine; DIT, 3,5-diiodotyrosine) and coupling of iodotyrosines takes place on tyrosine residues in TG, resulting in T3 and T4 synthesis. Iodinated TG is resorbed through the apical membrane and degraded to form T3/T4 in lysosomes; the T3/T4 is then secreted through the basal membrane."
+      ],
+      "summary": "1. Thyroid hormone synthesis: This pathway involves the production of thyroid hormones T3 and T4 in the thyroid gland, which are crucial for development, growth, and metabolic regulation. The process includes iodide uptake, thyroglobulin secretion, iodination of tyrosines, and the coupling of iodotyrosines to form the active hormones.\n\n2. Metabolism of xenobiotics by cytochrome P450: This pathway encompasses the enzymatic processes that modify foreign compounds (xenobiotics) in the body, including drugs and environmental toxins, facilitating their excretion. ALB may play a role in transporting these compounds.\n\n3. Albumin synthesis and degradation: This pathway details the synthesis of albumin in the liver and its subsequent degradation. Albumin is a key protein in maintaining oncotic pressure and transporting various substances in the blood.\n\n4. Fatty acid metabolism: This pathway involves the breakdown and synthesis of fatty acids, which are essential for energy production and cellular function. ALB is involved in the transport of fatty acids in the bloodstream.\n\n5. Drug metabolism: This pathway includes the processes by which the body metabolizes pharmaceutical compounds, affecting their efficacy and clearance. ALB's role in binding and transporting drugs is critical for their distribution and metabolism."
+    }
+  },
+  "TF": {
+    "function": {
+      "gene": "TF",
+      "view": "function",
+      "retrieved_passages": [
+        "Transferrins are iron binding transport proteins which can bind two Fe(3+) ions in association with the binding of an anion, usually bicarbonate. It is responsible for the transport of iron from sites of absorption and heme degradation to those of storage and utilization. Serum transferrin may also have a further role in stimulating cell proliferation. (Microbial infection) Serves as an iron source for Neisseria species, which capture the protein and extract its iron for their own use. (Microbial infection) Serves as an iron source for parasite T.brucei (strain 427), which capture TF via its own transferrin receptor ESAG6:ESAG7 and extract its iron for its own use."
+      ],
+      "summary": "Transferrins are iron-binding transport proteins that play a crucial role in transporting iron from absorption and heme degradation sites to areas of storage and utilization, binding two Fe(3+) ions along with an anion, typically bicarbonate. Additionally, transferrins may stimulate cell proliferation and serve as an iron source for certain pathogens, such as Neisseria species and the parasite Trypanosoma brucei, which exploit transferrin to extract iron for their own needs."
+    },
+    "disease": {
+      "gene": "TF",
+      "view": "disease",
+      "retrieved_passages": [
+        "Atransferrinemia: A rare autosomal recessive disorder characterized by abnormal synthesis of transferrin leading to iron overload and microcytic hypochromic anemia.."
+      ],
+      "summary": "1. Atransferrinemia: \n    - A rare autosomal recessive disorder characterized by abnormal synthesis of transferrin leading to iron overload and microcytic hypochromic anemia."
+    },
+    "pathway": {
+      "gene": "TF",
+      "view": "pathway",
+      "retrieved_passages": [
+        "TGF-beta signaling pathway: The transforming growth factor-beta (TGF-beta) family members, which include TGF-betas, activins and bone morphogenetic proteins (BMPs), are structurally related secreted cytokines found in species ranging from worms and insects to mammals. A wide spectrum of cellular functions such as proliferation, apoptosis, differentiation and migration are regulated by TGF-beta family members. TGF-beta family member binds to the Type II receptor and recruits Type I, whereby Type II receptor phosphorylates and activates Type I. The Type I receptor, in turn, phosphorylates receptor-activated Smads ( R-Smads: Smad1, Smad2, Smad3, Smad5, and Smad8). Once phosphorylated, R-Smads associate with the co-mediator Smad, Smad4, and the heteromeric complex then translocates into the nucleus. In the nucleus, Smad complexes activate specific genes through cooperative interactions with other DNA-binding and coactivator (or co-repressor) proteins.",
+        "HIF-1 signaling pathway: Hypoxia-inducible factor 1 (HIF-1) is a transcription factor that functions as a master regulator of oxygen homeostasis. It consists of two subunits: an inducibly-expressed HIF-1alpha subunit and a constitutively-expressed HIF-1beta subunit. Under normoxia, HIF-1 alpha undergoes hydroxylation at specific prolyl residues which leads to an immediate ubiquitination and subsequent proteasomal degradation of the subunit. In contrast, under hypoxia, HIF-1 alpha subunit becomes stable and interacts with coactivators such as p300/CBP to modulate its transcriptional activity. Eventually, HIF-1 acts as a master regulator of numerous hypoxia-inducible genes under hypoxic conditions. The target genes of HIF-1 encode proteins that increase O2 delivery and mediate adaptive responses to O2 deprivation. Despite its name, HIF-1 is induced not only in response to reduced oxygen availability but also by other stimulants, such as nitric oxide, or various growth factors.",
+        "Ferroptosis: Ferroptosis is a regulated form of cell death and characterized by a production of reactive oxygen species (ROS) from accumulated iron and lipid peroxidation. It can be induced by experimental compounds (e.g.,erastin, RSL3) or clinical drugs(e.g., sulfasalazine, sorafenib) in cancer cell and certain normal cells. It is involved in multiple physiological and pathological processes, such as cancer cell death, neurodegenerative disease, tissue damage and acute renal failure.",
+        "Mineral absorption: Minerals are one of the five fundamental groups of nutrients needed to sustain life. Of the minerals, calcium plays innumerable roles in our bodies, serving as a main component of bone as well as an intracellular messenger in muscle contraction/relaxation, neural networks, the immune system, and endocrine/exocrine cells. Iron, copper, and other metals are required for redox reactions (as cofactors) and for oxygen transport and binding (in hemoglobin and myoglobin). Many enzymes require specific metal atoms to complete their catalytic functions. Animal tissues need moderate quantities of some elements (Ca, P, K, Na, Mg, S, and Cl) and trace amounts of others (Mn, Fe, I, Co, Cr, Cu, Zn, and Se). The minerals are absorbed by either passive or active transport systems through the intestinal mucosa, often using specialized transport proteins, such as ferritin for Fe3+ and vitamin D-induced protein for calcium."
+      ],
+      "summary": "1. TGF-beta signaling pathway: This pathway involves the regulation of various cellular functions such as proliferation, apoptosis, differentiation, and migration through the action of TGF-beta family members. The pathway is initiated when TGF-beta binds to its Type II receptor, leading to the phosphorylation and activation of Type I receptors and subsequent activation of Smad proteins that regulate gene expression in the nucleus.\n\n2. HIF-1 signaling pathway: HIF-1 acts as a master regulator of oxygen homeostasis, responding to hypoxic conditions by stabilizing the HIF-1 alpha subunit. This stabilization allows HIF-1 to activate a range of hypoxia-inducible genes that facilitate adaptive responses to low oxygen levels, including those involved in increasing oxygen delivery and metabolic adaptation.\n\n3. Ferroptosis: This pathway describes a regulated form of cell death characterized by the accumulation of reactive oxygen species (ROS) and lipid peroxidation due to iron overload. Ferroptosis plays a significant role in various physiological and pathological processes, including cancer cell death and neurodegenerative diseases.\n\n4. Mineral absorption: This pathway encompasses the mechanisms by which essential minerals, such as calcium and iron, are absorbed in the body. It highlights the importance of minerals in various biological functions, including bone health, muscle contraction, and enzymatic reactions, and involves specialized transport proteins for their uptake in the intestinal mucosa.\n\n5. Cell signaling pathways: The gene TF is likely involved in various cell signaling pathways that regulate cellular responses"
+    }
+  },
+  "APOA1": {
+    "function": {
+      "gene": "APOA1",
+      "view": "function",
+      "retrieved_passages": [
+        "Participates in the reverse transport of cholesterol from tissues to the liver for excretion by promoting cholesterol efflux from tissues and by acting as a cofactor for the lecithin cholesterol acyltransferase (LCAT). As part of the SPAP complex, activates spermatozoa motility."
+      ],
+      "summary": "APOA1 plays a crucial role in the reverse transport of cholesterol, facilitating its movement from tissues to the liver for excretion. It promotes cholesterol efflux from tissues and serves as a cofactor for lecithin cholesterol acyltransferase (LCAT). Additionally, as part of the SPAP complex, APOA1 is involved in activating spermatozoa motility."
+    },
+    "disease": {
+      "gene": "APOA1",
+      "view": "disease",
+      "retrieved_passages": [
+        "Hypoalphalipoproteinemia, primary, 2: An autosomal recessive disorder of lipoprotein metabolism, biochemically characterized by severe apoA-I deficiency and severely reduced serum high-density lipoprotein cholesterol (HDL-C). Affected individuals have undetectable serum levels of apoA-I, and develop xanthomas and corneal opacities. The disease is generally associated with atherosclerosis and markedly increased cardiovascular risk.. Hypoalphalipoproteinemia, primary, 2, intermediate: An autosomal dominant disorder of lipoprotein metabolism, biochemically characterized by partial apoA-I deficiency and reduced serum high-density lipoprotein cholesterol (HDL-C). Affected individuals have half the normal plasma apoA-I and HDL-C levels, and may develop xanthomas and corneal opacities. Most patients do not have increased cardiovascular risk.. Familial apolipoprotein gene cluster deletion syndrome: An autosomal dominant disorder of lipoprotein metabolism. Affected individuals do not produce ApoA-I, ApoC-III and ApoA-IV lipoproteins, have marked plasma high density lipoprotein (HDL) deficiency, and manifest premature atherosclerosis and coronary artery disease.. Amyloidosis, hereditary systemic 3: A form of hereditary systemic amyloidosis, a disorder characterized by amyloid deposition in multiple tissues resulting in a wide clinical spectrum. AMYLD3 clinical features include amyloid neuropathy, nephropathy, hepatopathy, and cardiomyopathy. Inheritance is autosomal dominant.."
+      ],
+      "summary": "1. Hypoalphalipoproteinemia, primary, 2: \n    - An autosomal recessive disorder characterized by severe apoA-I deficiency and reduced serum HDL-C, leading to xanthomas, corneal opacities, and increased cardiovascular risk.\n\n2. Hypoalphalipoproteinemia, primary, 2, intermediate: \n    - An autosomal dominant disorder with partial apoA-I deficiency and reduced serum HDL-C, where affected individuals may develop xanthomas and corneal opacities, but generally do not have increased cardiovascular risk.\n\n3. Familial apolipoprotein gene cluster deletion syndrome: \n    - An autosomal dominant disorder resulting in the absence of ApoA-I, ApoC-III, and ApoA-IV lipoproteins, marked HDL deficiency, and premature atherosclerosis and coronary artery disease.\n\n4. Amyloidosis, hereditary systemic 3: \n    - An autosomal dominant hereditary systemic amyloidosis characterized by amyloid deposition in multiple tissues, leading to a range of clinical manifestations including neuropathy, nephropathy, hepatopathy, and cardiomyopathy."
+    },
+    "pathway": {
+      "gene": "APOA1",
+      "view": "pathway",
+      "retrieved_passages": [
+        "PPAR signaling pathway: Peroxisome proliferator-activated receptors (PPARs) are nuclear hormone receptors that are activated by fatty acids and their derivatives. PPAR has three subtypes (PPARalpha, beta/delta, and gamma) showing different expression patterns in vertebrates. Each of them is encoded in a separate gene and binds fatty acids and eicosanoids. PPARalpha plays a role in the clearance of circulating or cellular lipids via the regulation of gene expression involved in lipid metabolism in liver and skeletal muscle. PPARbeta/delta is involved in lipid oxidation and cell proliferation. PPARgamma promotes adipocyte differentiation to enhance blood glucose uptake.",
+        "Lipid and atherosclerosis: Atherosclerosis is a chronic inflammatory disease marked by a narrowing of the arteries from lipid-rich plaques present within the walls of arterial blood vessels. It represents the root cause of the majority of cardiovascular diseases (CVDs) and their complications, including conditions such as coronary artery disease, myocardial infarction and stroke.  An elevated level of low density lipoprotein (LDL) cholesterol constitutes a major risk factor for genesis of atherosclerosis. LDL can accumulate within the blood vessel wall and undergo modification by oxidation. Oxidized LDL (oxLDL) leads to endothelial dysfunction leading to expression of adhesion molecules and recruitment of monocyte in subendothelial space. The monocytes proliferate, differentiate into macrophages, and take up the lipoproteins, forming cholesterol-engorged \"foam cells.\" With the time, the foam cells die, leaving a 'necrotic core' of crystalline cholesterol and cell debris. Smooth muscle cells proliferate and migrate into the region, laying down a protective cap over the lesion. Lectin-like oxidized low-density lipoprotein receptor-1 (LOX-1), which mediates the recognition and internalization of oxLDL, is involved in all of these events critical in the pathogenesis of atherosclerosis.",
+        "Fat digestion and absorption: Fat is an important energy source from food. More than 95% of dietary fat is long-chain triacylglycerols (TAG), the remaining being phospholipids (4.5%) and sterols. In the small intestine lumen, dietary TAG is hydrolyzed to fatty acids (FA) and monoacylglycerols (MAG) by pancreatic lipase. These products are then emulsified with the help of phospholipids (PL) and bile acids (BA) present in bile to form micelles. Free FAs and MAGs are taken up by the enterocyte where they are rapidly resynthesized in endoplasmic reticulum (ER) to form TAG. PLs from the diet as well as bile - mainly LPA - too are absorbed by the enterocyte and are acylated to form phosphatidic acid (PA), which is also converted into TAG. Absorbed cholesterol (CL) is acylated to cholesterol esters (CE). Within the ER, TAG joins CE and apolipoprotein B (ApoB) to form chylomicrons that enter circulation through the lymph.",
+        "Cholesterol metabolism: Cholesterol is an essential component of mammalian cell membranes as well as a precursor of bile acids, vitamin D and steroid hormones. Cholesterol homeostasis in humans is regulated by well-balanced mechanisms of intestinal uptake, endogenous synthesis, transport in lipoprotein particles, and biliary excretion. Its abnormal metabolism can lead to increased risk for various endocrine disorders and cardiovascular diseases.",
+        "African trypanosomiasis: Trypanosoma brucei, the parasite responsible for African trypanosomiasis (sleeping sickness), are spread by the tsetse fly in sub-Saharan Africa. The parasites are able to pass through the blood-brain barrier and cause neurological damage by inducing cytokines like TNF alpha, IFN gamma, and IL1. These cytokines and other metabolites such as nitric oxide and somnogenic prostaglandin D2 disturb circadian rhythms in patients with African trypanosomiasis."
+      ],
+      "summary": "1. PPAR signaling pathway: This pathway involves nuclear hormone receptors that regulate lipid metabolism, with APOA1 playing a role in the clearance of circulating lipids and influencing gene expression related to lipid homeostasis.\n\n2. Lipid and atherosclerosis: APOA1 is implicated in the development of atherosclerosis, a condition characterized by lipid-rich plaque formation in arteries, which is a major contributor to cardiovascular diseases.\n\n3. Fat digestion and absorption: APOA1 is involved in the metabolism of dietary fats, facilitating the formation of chylomicrons in enterocytes, which are essential for the transport of dietary lipids in the bloodstream.\n\n4. Cholesterol metabolism: This pathway highlights the role of APOA1 in maintaining cholesterol homeostasis, influencing the transport and excretion of cholesterol, and thereby impacting cardiovascular health.\n\n5. African trypanosomiasis: Although less directly related, APOA1 may have a role in the immune response to Trypanosoma brucei infection, potentially influencing the inflammatory response and metabolic changes associated with the disease."
+    }
+  },
+  "APOL1": {
+    "function": {
+      "gene": "APOL1",
+      "view": "function",
+      "retrieved_passages": [
+        "May play a role in lipid exchange and transport throughout the body. May participate in reverse cholesterol transport from peripheral cells to the liver."
+      ],
+      "summary": "APOL1 is involved in lipid exchange and transport within the body, contributing to the movement of lipids between cells and tissues. It may also play a role in reverse cholesterol transport, facilitating the transfer of cholesterol from peripheral cells back to the liver for processing and excretion."
+    },
+    "disease": {
+      "gene": "APOL1",
+      "view": "disease",
+      "retrieved_passages": [
+        "Focal segmental glomerulosclerosis 4: A renal pathology defined by the presence of segmental sclerosis in glomeruli and resulting in proteinuria, reduced glomerular filtration rate and progressive decline in renal function. Renal insufficiency often progresses to end-stage renal disease, a highly morbid state requiring either dialysis therapy or kidney transplantation.."
+      ],
+      "summary": "1. Focal segmental glomerulosclerosis 4: \n    - A renal pathology characterized by segmental sclerosis in glomeruli, leading to proteinuria, reduced glomerular filtration rate, and progressive renal function decline, often resulting in end-stage renal disease requiring dialysis or kidney transplantation."
+    },
+    "pathway": {
+      "gene": "APOL1",
+      "view": "pathway",
+      "retrieved_passages": [
+        "African trypanosomiasis: Trypanosoma brucei, the parasite responsible for African trypanosomiasis (sleeping sickness), are spread by the tsetse fly in sub-Saharan Africa. The parasites are able to pass through the blood-brain barrier and cause neurological damage by inducing cytokines like TNF alpha, IFN gamma, and IL1. These cytokines and other metabolites such as nitric oxide and somnogenic prostaglandin D2 disturb circadian rhythms in patients with African trypanosomiasis."
+      ],
+      "summary": "1. African trypanosomiasis: APOL1 is involved in the immune response to Trypanosoma brucei infection, contributing to the host's defense mechanisms against the parasite and influencing the severity of the disease.\n\n2. Cytokine signaling pathway: APOL1 may play a role in modulating the production and activity of cytokines such as TNF alpha, IFN gamma, and IL1, which are critical in the inflammatory response during infection.\n\n3. Nitric oxide signaling: APOL1 is associated with the regulation of nitric oxide production, which is important for the immune response and can affect the pathophysiology of African trypanosomiasis.\n\n4. Circadian rhythm regulation: APOL1 may influence the disruption of circadian rhythms caused by inflammatory cytokines and metabolites, which can lead to sleep disturbances in patients with African trypanosomiasis.\n\n5. Apoptosis pathway: APOL1 has been implicated in apoptosis, which may be relevant in the context of host cell responses to infection and the survival of infected cells during Trypanosoma brucei invasion."
+    }
+  },
+  "C3": {
+    "function": {
+      "error": "Gene 'C3' is not indexed."
+    },
+    "disease": {
+      "error": "Gene 'C3' is not indexed."
+    },
+    "pathway": {
+      "error": "Gene 'C3' is not indexed."
+    }
+  }
+}

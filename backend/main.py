@@ -1,11 +1,17 @@
-from fastapi import FastAPI, File, UploadFile, Request, HTTPException, Query
+from fastapi import FastAPI, File, UploadFile, Request, HTTPException, Query, Body
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, JSONResponse
 import sys
 import os
+from dotenv import load_dotenv
+import threading
+
+# Load environment variables from .env file
+load_dotenv()
+
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from pydantic import BaseModel
-from typing import Dict, Optional
+from typing import Dict, Optional, List, Union
 
 from file_utils import update_gene_data_dict, update_link_data_dict
 import csv
@@ -17,9 +23,30 @@ import itertools
 from collections import Counter
 import numpy as np
 from gprofiler import GProfiler # Import GProfiler
+from bioservices import KEGG # Import BioServices KEGG
 from services.retriever import get_passages
 from services.prompts   import build_prompt
 from services.llm       import call_llm
+import json
+import re
+import ast
+
+ANNOTATION_CACHE_FILE = "backend/annotation_cache.json"
+annotation_cache_lock = threading.Lock()
+
+def load_annotation_cache():
+    if not os.path.exists(ANNOTATION_CACHE_FILE):
+        return {}
+    try:
+        with open(ANNOTATION_CACHE_FILE, "r") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+def save_annotation_cache(cache):
+    with annotation_cache_lock:
+        with open(ANNOTATION_CACHE_FILE, "w") as f:
+            json.dump(cache, f, indent=2)
 
 class NodeRequest(BaseModel):
     node_id: str
@@ -27,6 +54,11 @@ class NodeRequest(BaseModel):
 
 class GraphIndexRequest(BaseModel):
     graph_index: int
+
+class ChatRequest(BaseModel):
+    gene: str
+    message: str
+    conversation_history: str
 
 app = FastAPI()
 # Allow frontend dev server
@@ -38,7 +70,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-api_url = "http://localhost:8000"
+api_url = "https://netcancer-rh4m2e306-abhinavs-projects-599e34c1.vercel.app/"
 
 # Store multiple graphs
 original_graphs = [
@@ -60,7 +92,7 @@ graph_theory_metrics = [
 
 # Load CSV gene annotation data into memory
 gene_info_db = {}
-data_dirs = ["./data/annotations", "./data/general"]
+data_dirs = ["backend/data/annotations", "backend/data/general"]
 for data_dir in data_dirs:
     for fname in os.listdir(data_dir):
         if fname.endswith(".csv"):
@@ -68,7 +100,7 @@ for data_dir in data_dirs:
         elif fname.endswith(".tsv"):
             update_gene_data_dict(gene_info_db, data_dir, fname, sep="\t")
 
-interaction_dir = "./data/interactions"
+interaction_dir = "backend/data/interactions"
 interaction_info_db = {}
 for fname in os.listdir(interaction_dir):
     if fname.endswith(".csv"):
@@ -79,6 +111,21 @@ for fname in os.listdir(interaction_dir):
 # Add cache dictionary at the top level
 graphlet_cache = {}
 shared_genes_cache = None  # Will store the set of shared genes between graphs
+
+# Load indexed genes at startup
+INDEXED_GENE_FILE = "backend/indexed_gene.txt"
+NOT_INDEXED_GENE_FILE = "backend/not_indexed_gene.txt"
+indexed_genes = set()
+if os.path.exists(INDEXED_GENE_FILE):
+    with open(INDEXED_GENE_FILE, "r") as f:
+        indexed_genes = set(line.strip().upper() for line in f if line.strip())
+else:
+    print(f"Warning: {INDEXED_GENE_FILE} not found. No genes will be considered indexed.")
+
+def record_not_indexed_gene(gene):
+    gene = gene.upper()
+    with open(NOT_INDEXED_GENE_FILE, "a") as f:
+        f.write(gene + "\n")
 
 @app.get("/", response_class=HTMLResponse)
 def read_root():
@@ -282,41 +329,49 @@ def search_genes(keyword: str = "", min_degree: int = 0, max_degree: int = 20, g
 @app.get("/gene-enrichment/{gene_symbol}")
 def get_gene_enrichment(gene_symbol: str):
     """
-    Get gene enrichment (pathway) information for a given gene symbol.
+    Get the top 3 KEGG pathways for a given gene symbol using get_pathway_by_gene.
     """
     try:
-        gp = GProfiler(return_dataframe=True)
+        kegg = KEGG()
         
-        # Query g:Profiler for pathway terms associated with the gene
-        res_df = gp.profile(
-            organism="hsapiens",
-            query=[gene_symbol],
-            sources=["KEGG", "REAC"]
-        )
+        # Use get_pathway_by_gene to find pathways containing this gene
+        pathway_dict = kegg.get_pathway_by_gene(gene_symbol, "hsa")
         
-        # Filter for pathway sources (already done by sources, but good practice)
-        pathway_df = res_df[res_df["source"].isin(["KEGG", "REAC"])]
+        if not pathway_dict:
+            return JSONResponse(
+                content={"gene": gene_symbol, "results": [], "message": "No pathways found for this gene"},
+                headers={"Access-Control-Allow-Origin": api_url}
+            )
         
-        # Format the results as a list of dictionaries
-        enrichment_results = []
-        if not pathway_df.empty:
-            for _, row in pathway_df.iterrows():
-                enrichment_results.append({
-                    "source": row["source"],
-                    "term_id": row["term_id"],
-                    "term_name": row["name"]
-                })
-                
+        # Get the top 3 pathways with their details
+        results = []
+        for pathway_id in list(pathway_dict.keys())[:3]:
+            pathway_name = pathway_dict[pathway_id]
+            
+            # Get pathway information
+            pathway_info = kegg.get(pathway_id)
+            parsed_pathway = kegg.parse(pathway_info)
+            description = parsed_pathway.get("DESCRIPTION", "No description available") if parsed_pathway else "No description available"
+            
+            results.append({
+                "source": "KEGG",
+                "term_id": pathway_id,
+                "term_name": pathway_name,
+                "description": description
+            })
+        
         return JSONResponse(
-            content={"gene": gene_symbol, "results": enrichment_results},
+            content={"gene": gene_symbol, "results": results},
             headers={"Access-Control-Allow-Origin": api_url}
         )
         
     except Exception as e:
         print(f"Error fetching gene enrichment for {gene_symbol}: {e}")
+        import traceback
+        print(traceback.format_exc())
         return JSONResponse(
             status_code=500,
-            content={"message": f"Failed to fetch gene enrichment for {gene_symbol}"}
+            content={"message": f"Failed to fetch gene enrichment for {gene_symbol}: {str(e)}"}
         )
 
 @app.get("/gene/{gene_name}")
@@ -776,30 +831,32 @@ async def get_expression_data(graph_index: int):
         raise HTTPException(status_code=404, detail="Expression data not found for this graph.")
     return expression_data_store[graph_index]
 
-VALID_VIEWS = {"function", "disease", "pathway"}
+VALID_VIEWS = {"function", "pathway", "disease"}
 
 @app.get("/annotate")
 async def annotate(
     gene: str = Query(..., description="Gene symbol, e.g. TP53"),
-    view: str = Query(..., description="One of: function, disease, pathway"),
-    disease: Optional[str] = Query(None, description="Only for view=disease, e.g. 'ovarian cancer'"),
+    view: str = Query(..., description="One of: function, pathway, disease"),
     k: int = Query(5, ge=1, le=20, description="Number of passages to retrieve")
 ) -> dict:
     # 1) Validate inputs
     view = view.lower()
     if view not in VALID_VIEWS:
         raise HTTPException(400, f"Invalid view '{view}'. Choose from {', '.join(VALID_VIEWS)}.")
-    if view == "disease" and not disease:
-        raise HTTPException(400, "You must supply ?disease=<name> for disease view.")
 
-    # 2) Retrieve the top-k passages
+    # 1.5) Check if gene is indexed
+    if gene.upper() not in indexed_genes:
+        record_not_indexed_gene(gene)
+        raise HTTPException(404, f"Gene '{gene}' is not indexed. Added to not_indexed_gene.txt.")
+
+    # 2) For pathway view, use KEGG instead of vector search
+        # 2) Retrieve the top-k passages for function or disease view
     passages = get_passages(gene=gene, context=view, k=k)
     if not passages:
         raise HTTPException(404, f"No {view} passages found for gene '{gene}'.")
 
     # 3) Build the MCP prompt
-    extra = {"disease": disease} if view == "disease" else {}
-    prompt = build_prompt(gene=gene, view=view, passages=passages, extra=extra)
+    prompt = build_prompt(gene=gene, view=view, passages=passages, extra={})
 
     # 4) Call the LLM
     try:
@@ -811,9 +868,175 @@ async def annotate(
     return {
         "gene": gene,
         "view": view,
-        **({"disease": disease} if disease else {}),
-        "retrieved_passages": passages,
-        "prompt": prompt,            # optional: remove if you don't want to expose it
+        "retrieved_passages": passages,            # optional: remove if you don't want to expose it
         "summary": summary
     }
+
+@app.post("/annotate_all_views")
+async def annotate_all_views(gene: str = Body(..., embed=True), k: int = Query(5, ge=1, le=20)):
+    """
+    Given a gene, return all annotation types (function, disease, pathway) for that gene, using a persistent cache.
+    """
+    gene = gene.upper()
+    cache = load_annotation_cache()
+    gene_result = {"gene": gene}
+    cache_updated = False
+    if gene in cache and all(view in cache[gene] for view in ["function", "disease", "pathway"]):
+        # Return cached result
+        for view in ["function", "disease", "pathway"]:
+            gene_result[view] = cache[gene][view]
+        return gene_result
+    # Otherwise, compute missing views and update cache
+    cache.setdefault(gene, {})
+    for view in ["function", "disease", "pathway"]:
+        if view in cache[gene]:
+            gene_result[view] = cache[gene][view]
+            continue
+        try:
+            if gene.upper() not in indexed_genes:
+                record_not_indexed_gene(gene)
+                gene_result[view] = {"error": f"Gene '{gene}' is not indexed."}
+                cache[gene][view] = gene_result[view]
+                cache_updated = True
+                continue
+            passages = get_passages(gene=gene, context=view, k=k)
+            if not passages:
+                gene_result[view] = {"error": f"No {view} passages found for gene '{gene}'."}
+                cache[gene][view] = gene_result[view]
+                cache_updated = True
+                continue
+            prompt = build_prompt(gene=gene, view=view, passages=passages, extra={})
+            summary = call_llm(prompt)
+            gene_result[view] = {
+                "gene": gene,
+                "view": view,
+                "retrieved_passages": passages,
+                "summary": summary
+            }
+            cache[gene][view] = gene_result[view]
+            cache_updated = True
+        except Exception as e:
+            gene_result[view] = {"error": str(e)}
+            cache[gene][view] = gene_result[view]
+            cache_updated = True
+    if cache_updated:
+        save_annotation_cache(cache)
+    return gene_result
+
+@app.post("/multi-annotate")
+async def multi_annotate(genes: List[str] = Body(..., embed=True)):
+    """
+    Given a list of genes, aggregate their pathways and diseases, and use the LLM to score and summarize the most important pathways and disease for the set.
+    """
+    # 1. Aggregate pathways for the selected genes
+    pathway_file = "data/chunks/pathway.jsonl"
+    pathway_entries = []
+    try:
+        with open(pathway_file, "r") as f:
+            for line in f:
+                entry = json.loads(line)
+                if entry["gene"] in genes and entry["type"] == "pathway":
+                    pathway_entries.append(entry)
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": f"Failed to read pathway data: {e}"})
+
+    # 2. Aggregate diseases for the selected genes
+    disease_file = "backend/data/general/appic_gene_data.tsv"
+    disease_entries = []
+    try:
+        import pandas as pd
+        df = pd.read_csv(disease_file, sep="\t")
+        for gene in genes:
+            gene_rows = df[df["gene"].str.upper() == gene.upper()]
+            for _, row in gene_rows.iterrows():
+                disease_entries.append({
+                    "gene": row["gene"],
+                    "disease": row["cancer"] if "cancer" in row else row.get("subtype", ""),
+                    "subtype": row.get("subtype", "")
+                })
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": f"Failed to read disease data: {e}"})
+
+    # 3. Prepare prompt for LLM
+    pathway_texts = [f"{entry['gene']}: {entry['text']}" for entry in pathway_entries]
+    disease_texts = [f"{entry['gene']}: {entry['disease']} ({entry['subtype']})" for entry in disease_entries]
+    prompt = f"""
+You are a genomics expert. Given the following genes: {', '.join(genes)}, and their associated pathways and diseases, analyze and rank the 3 important pathways that all (or most) genes in the set are involved in. For each, provide a confidence score between 0 and 1, and a brief description.
+
+Pathway candidates:
+{chr(10).join(pathway_texts) if pathway_texts else 'None'}
+
+Disease candidates:
+{chr(10).join(disease_texts) if disease_texts else 'None'}
+
+Output JSON in the following format:
+{{
+  "pathways": [
+    {{"name": "<Pathway Name>", "description": "<desc>", "confidence": <float>}},
+    ...
+  ],
+  "disease": {{"name": "<Disease Name>", "description": "<desc>", "confidence": <float>}}
+}}
+"""
+    try:
+        llm_response = call_llm(prompt, system="You are a genomics expert.", model="gpt-4o-mini", temperature=0.2, max_tokens=600)
+        # Try to parse the LLM's JSON output
+        match = re.search(r'\{[\s\S]*\}', llm_response)
+        if match:
+            result_json = match.group(0)
+            try:
+                result = json.loads(result_json)
+            except Exception:
+                # Try ast.literal_eval as fallback
+                result = ast.literal_eval(result_json)
+            return result
+        else:
+            return {"error": "LLM did not return valid JSON.", "raw": llm_response}
+    except Exception as e:
+        return {"error": f"LLM error: {e}"}
+
+@app.post("/chat")
+async def chat_with_gene(request: ChatRequest) -> dict:
+    """
+    Chat with the AI about a specific gene, maintaining conversation context.
+    """
+    try:
+        # Get relevant passages for the gene
+        passages = get_passages(gene=request.gene, context="general", k=3)
+        
+        # Build a conversational prompt
+        system_prompt = f"""You are a helpful genomics assistant specializing in gene analysis. 
+        You have access to information about the gene {request.gene}. 
+        Answer questions conversationally and naturally, as if in a chat interface.
+        Use the provided passages to inform your responses, but also draw from your general knowledge.
+        Keep responses concise but informative."""
+        
+        user_prompt = f"""Gene: {request.gene}
+
+Available information:
+{chr(10).join(passages) if passages else "Limited specific information available."}
+
+Conversation history:
+{request.conversation_history}
+
+User: {request.message}
+
+Please provide a helpful, conversational response about {request.gene} based on the user's question."""
+
+        # Call the LLM
+        response = call_llm(
+            prompt=user_prompt,
+            system=system_prompt,
+            temperature=0.7,
+            max_tokens=500
+        )
+        
+        return {
+            "gene": request.gene,
+            "response": response,
+            "conversation_history": request.conversation_history
+        }
+        
+    except Exception as e:
+        raise HTTPException(502, f"Chat error: {e}")
 

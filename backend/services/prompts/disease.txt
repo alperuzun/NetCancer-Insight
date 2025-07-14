@@ -1,2 +1,11 @@
-You are a cancer genomics expert. Assess how strong the {gene} links to the {disease}, based on the passages. Return a numeric score 0–1 and a one–sentence rationale.
+You are a genomics expert specializing in gene-disease associations. Summarize the diseases most commonly associated with the gene {gene} using the following passages:
+
 {passages}
+
+Provide only a concise listwise summary of the main diseases or conditions linked to this gene, focusing on relevance to human health and research. (Don't put astericks around the name of the disease). 
+Your output should look like: 
+1. Disease Name: 
+    - Disease Description
+\n
+2. Disease Name: 
+    - Disease Description

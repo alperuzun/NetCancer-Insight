@@ -17,7 +17,8 @@ import GradientLegend from './GradientLegend'
 import DraggableInteractionInfo from './DraggableInteractionInfo'
 // import ReactDOM from 'react-dom/client'
 // import SvgForceGraph from './SvgForceGraph'
-// import GeneAnnotationModal from './GeneAnnotationModal'
+import UnifiedGeneAnnotationModal from './UnifiedGeneAnnotationModal'
+import PolygonSelector from './PolygonSelector'
 
 // interface NodeObject {
 //   id: string
@@ -132,8 +133,11 @@ const ForceGraph = forwardRef(
     const [_linksWithInteractions, setLinksWithInteractions] = useState<Set<string>>(new Set());
     const [expressionValueRange, setExpressionValueRange] = useState<{min: number, max: number} | null>(null);
     const [shouldZoomToFit, setShouldZoomToFit] = useState(false);
-    const [_showAnnotationModal, _setShowAnnotationModal] = useState(false);
-    const [_selectedGeneForAnnotation, _setSelectedGeneForAnnotation] = useState<string>('');
+    const [isPolygonSelectionActive, setIsPolygonSelectionActive] = useState(false);
+    const [selectedNodesFromPolygon, setSelectedNodesFromPolygon] = useState<string[]>([]);
+    const [isShiftPressed, setIsShiftPressed] = useState(false);
+    const [nodeUnderMouse, setNodeUnderMouse] = useState<any>(null);
+    const [showBulkAnnotationModal, setShowBulkAnnotationModal] = useState(false);
 
     // No longer using activeLegendColorsRef or clearing effect
     // const activeLegendColorsRef = useRef<{ [color: string]: string }>({});
@@ -142,6 +146,38 @@ const ForceGraph = forwardRef(
     useEffect(() => {
       console.log('ForceGraph: Search query changed:', searchQuery);
     }, [searchQuery]);
+
+    // Handle shift key events
+    useEffect(() => {
+      const handleKeyDown = (e: KeyboardEvent) => {
+        // console.log("Key pressed:", e.key, "Shift state:", e.shiftKey);
+        if (e.key === 'Shift') {
+          console.log("Shift key pressed");
+          setIsShiftPressed(true);
+        }
+      };
+
+      const handleKeyUp = (e: KeyboardEvent) => {
+        // console.log("Key released:", e.key);
+        if (e.key === 'Shift') {
+          console.log("Shift key released");
+          setIsShiftPressed(false);
+        }
+      };
+
+      // Add listeners to both document and window to ensure capture
+      document.addEventListener('keydown', handleKeyDown, true);
+      document.addEventListener('keyup', handleKeyUp, true);
+      window.addEventListener('keydown', handleKeyDown, true);
+      window.addEventListener('keyup', handleKeyUp, true);
+
+      return () => {
+        document.removeEventListener('keydown', handleKeyDown, true);
+        document.removeEventListener('keyup', handleKeyUp, true);
+        window.removeEventListener('keydown', handleKeyDown, true);
+        window.removeEventListener('keyup', handleKeyUp, true);
+      };
+    }, []);
 
     // Update search results when query changes
     useEffect(() => {
@@ -169,15 +205,33 @@ const ForceGraph = forwardRef(
       updateSearch();
     }, [searchQuery, minDegree, maxDegree, showSharedGenes, sharedGenes, graphIndex, graph.nodes.length]);
 
-    const handleNodeClick = useCallback(async (node: any) => {
-      // Show annotation modal instead of gene details
-      const res = await getGeneDetails(node.id)
-      setSelectedGene(
-        res.data ? { gene: node.id, data: res.data } : { gene: node.id, data: null }
-      )
-      // setSelectedGeneForAnnotation(node.id);
-      // setShowAnnotationModal(true);
-    }, [])
+    const handleNodeClick = useCallback(async (node: any, event?: any) => {
+      console.log("Node clicked, shift state:", isShiftPressed, "event shiftKey:", event?.shiftKey);
+      
+      // Check if shift is pressed (use both state and event property)
+      if (isShiftPressed || (event && event.shiftKey)) {
+        console.log("Activating polygon selection mode");
+        setIsPolygonSelectionActive(true);
+        return;
+      }
+
+      // Show unified annotation modal for single gene
+      setSelectedNodesFromPolygon([node.id]);
+      setShowBulkAnnotationModal(true);
+    }, [isShiftPressed])
+
+    // Handle background click for polygon selection
+    const handleBackgroundClick = useCallback((event?: any) => {
+      console.log("Background clicked, nodeUnderMouse:", nodeUnderMouse, "shift state:", isShiftPressed, "event shiftKey:", event?.shiftKey);
+      
+      // If no node is under mouse and shift is pressed, activate polygon selection
+      if (!nodeUnderMouse && (isShiftPressed || (event && event.shiftKey))) {
+        console.log("Shift+click on background, activating polygon selection");
+        setIsPolygonSelectionActive(true);
+      }
+    }, [nodeUnderMouse, isShiftPressed])
+
+
 
     // Function to get a unique key for a link
     const getLinkKey = (source: any, target: any) => {
@@ -262,16 +316,19 @@ const ForceGraph = forwardRef(
 
     const onHover2D = (node: any | null) => {
       setHoverNode(node)
+      setNodeUnderMouse(node)
     }
     const onHover3D = (node: any | null) => {
       setHoverNode(node)
+      setNodeUnderMouse(node)
     }
 
     // const handleMouseDown = (e: React.MouseEvent) => {
+    //   console.log("Mouse down on graph container")
     //   if (e.target === e.currentTarget) {
     //     console.log("Mouse down on graph container")
-    //     setIsDragging(true)
-    //     setLastMousePos({ x: e.clientX, y: e.clientY })
+    //     _setIsDragging(true)
+    //     _setLastMousePos({ x: e.clientX, y: e.clientY })
     //   }
     // }
 
@@ -322,41 +379,17 @@ const ForceGraph = forwardRef(
     //   }
     // }
 
-    // Updated getNodeColor with the specified logic (removed legend item collection)
-    const getNodeColor = useCallback((node: any) => {
-        // Expression data coloring takes precedence
-        if (selectedExpressionColumn && expressionData && expressionValueRange) {
-            const geneId = node.id.toUpperCase();
-            if (expressionData[geneId] && typeof expressionData[geneId][selectedExpressionColumn] === 'number') {
-                const value = expressionData[geneId][selectedExpressionColumn];
-                return getExpressionColor(value, expressionValueRange.min, expressionValueRange.max);
-            }
-            return '#FFFFFF'; // White for nodes without this expression data
-        }
-
-        const inSearchResults = searchResults.includes(node.id);
-        const inSharedGenes = sharedGenes.includes(node.id);
-
-        if (isFilterTouched) {
-            // Green/Yellow/Grey scheme when any filter is touched
-            if (inSearchResults && (inSharedGenes && showSharedGenes)) return '#33ff85'; // Green (In Search & Shared)
-            else if (inSearchResults) return '#ffff33'; // Yellow (In Search Only)
-            // No blue color
-            return '#d3d3d3'; // Grey (Filtered Out)
-        } else if (showSharedGenes) {
-            // Green/Grey scheme when ONLY Show Shared Genes is true
-            if (inSharedGenes) return '#33ff85'; // Green (In Shared Genes)
-            return '#d3d3d3'; // Grey (Not Shared)
-        } else {
-            // Default cancer driver coloring
-            const cancerDrivers = node.cancer_drivers || 0;
-            return getColorForCancerDrivers(cancerDrivers);
-        }
-    }, [isFilterTouched, showSharedGenes, searchResults, sharedGenes, expressionData, selectedExpressionColumn, expressionValueRange]);
-
     // Re-implement Effect to update legend items based on filter state
     useEffect(() => {
         const items: { color: string; label: string }[] = [];
+
+        // If there are selected nodes, only show cyan/white legend
+        if (selectedNodesFromPolygon.length > 0) {
+            items.push({ color: '#00ffff', label: 'Selected Genes' });
+            items.push({ color: '#ffffff', label: 'Other Genes' });
+            setLegendItems(items);
+            return;
+        }
 
         // If visualizing expression data, the GradientLegend is shown, so StaticLegend is not needed for it
         if (selectedExpressionColumn && expressionValueRange) {
@@ -400,7 +433,7 @@ const ForceGraph = forwardRef(
         }
         setLegendItems(uniqueItems);
 
-    }, [isFilterTouched, showSharedGenes, searchResults, sharedGenes, selectedExpressionColumn, expressionValueRange]); // Dependencies are filter states and search results
+    }, [isFilterTouched, showSharedGenes, searchResults, sharedGenes, selectedExpressionColumn, expressionValueRange, selectedNodesFromPolygon]);
 
     // Calculate expression value range when data changes
     useEffect(() => {
@@ -419,6 +452,48 @@ const ForceGraph = forwardRef(
             setExpressionValueRange(null);
         }
     }, [expressionData, selectedExpressionColumn]);
+
+    // Updated getNodeColor to use cyan for hovered node
+    const getNodeColor = useCallback((node: any) => {
+        // If this node is hovered, always show cyan
+        if (hoverNode && hoverNode.id === node.id) {
+            return '#00ffff';
+        }
+        // Highlight nodes selected by polygon - use cyan for selected nodes
+        if (selectedNodesFromPolygon.includes(node.id)) {
+            return '#00ffff'; // Cyan for selected nodes
+        }
+        // If there are selected nodes, make all other nodes white
+        if (selectedNodesFromPolygon.length > 0) {
+            return '#ffffff'; // White for non-selected nodes when there are selections
+        }
+        // Expression data coloring takes precedence
+        if (selectedExpressionColumn && expressionData && expressionValueRange) {
+            const geneId = node.id.toUpperCase();
+            if (expressionData[geneId] && typeof expressionData[geneId][selectedExpressionColumn] === 'number') {
+                const value = expressionData[geneId][selectedExpressionColumn];
+                return getExpressionColor(value, expressionValueRange.min, expressionValueRange.max);
+            }
+            return '#FFFFFF'; // White for nodes without this expression data
+        }
+        const inSearchResults = searchResults.includes(node.id);
+        const inSharedGenes = sharedGenes.includes(node.id);
+        if (isFilterTouched) {
+            // Green/Yellow/Grey scheme when any filter is touched
+            if (inSearchResults && (inSharedGenes && showSharedGenes)) return '#33ff85'; // Green (In Search & Shared)
+            else if (inSearchResults) return '#ffff33'; // Yellow (In Search Only)
+            // No blue color
+            return '#d3d3d3'; // Grey (Filtered Out)
+        } else if (showSharedGenes) {
+            // Green/Grey scheme when ONLY Show Shared Genes is true
+            if (inSharedGenes) return '#33ff85'; // Green (In Shared Genes)
+            return '#d3d3d3'; // Grey (Not Shared)
+        } else {
+            // Default cancer driver coloring
+            const cancerDrivers = node.cancer_drivers || 0;
+            return getColorForCancerDrivers(cancerDrivers);
+        }
+    }, [isFilterTouched, showSharedGenes, searchResults, sharedGenes, expressionData, selectedExpressionColumn, expressionValueRange, selectedNodesFromPolygon, hoverNode]);
 
     const nodeCanvasObject = useCallback(
       (node: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
@@ -761,6 +836,52 @@ const ForceGraph = forwardRef(
 
     return (
       <div className="relative w-full h-full" style={{background: "white"}}>
+        {/* Polygon Selection Controls */}
+        {/* <div className="absolute top-4 right-4 z-40">
+          <button
+            onClick={() => setIsPolygonSelectionActive(!isPolygonSelectionActive)}
+            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+              isPolygonSelectionActive
+                ? 'bg-red-600 text-white hover:bg-red-700'
+                : 'bg-blue-600 text-white hover:bg-blue-700'
+            }`}
+          >
+            {isPolygonSelectionActive ? 'Cancel Selection' : 'Polygon Select (Shift+Click)'}
+          </button>
+        </div> */}
+
+        {/* Clear Selection Button */}
+        {selectedNodesFromPolygon.length > 0 && (
+          <div className="absolute top-5 right-50 z-40">
+            <button
+              onClick={() => setSelectedNodesFromPolygon([])}
+              className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 text-sm font-medium"
+            >
+              Clear Selection ({selectedNodesFromPolygon.length})
+            </button>
+          </div>
+        )}
+
+        {/* Annotation Button */}
+        {selectedNodesFromPolygon.length > 0 && (
+          <div className="absolute top-5 right-100 z-40">
+            <button
+              onClick={() => setShowBulkAnnotationModal(true)}
+              className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 text-sm font-medium"
+            >
+              📊 Annotate {selectedNodesFromPolygon.length} Gene{selectedNodesFromPolygon.length > 1 ? 's' : ''}
+            </button>
+          </div>
+        )}
+
+        {/* Shift Key Indicator */}
+        {/* {isShiftPressed && (
+          <div className="absolute top-16 right-4 z-40">
+            <div className="px-3 py-1 bg-yellow-500 text-white rounded-md text-sm font-medium">
+              Shift Pressed
+            </div>
+          </div>
+        )} */}
         {is3D ? (
           <>
           <ForceGraph3D
@@ -774,6 +895,7 @@ const ForceGraph = forwardRef(
             linkWidth={(link: any) => getLinkStyle(link).width}
             onNodeHover={onHover3D}
             onLinkClick={handleLinkClick}
+            onBackgroundClick={handleBackgroundClick}
             nodeThreeObject={(node: any) => {
               const group = new THREE.Group()
               const nodeColor = getNodeColor(node);
@@ -823,6 +945,7 @@ const ForceGraph = forwardRef(
             onNodeClick={handleNodeClick}
             onNodeHover={onHover2D}
             onLinkClick={handleLinkClick}
+            onBackgroundClick={handleBackgroundClick}
             nodeCanvasObject={nodeCanvasObject}
             nodePointerAreaPaint={(node, color, ctx) => {
               const radius = 14
@@ -876,13 +999,26 @@ const ForceGraph = forwardRef(
           />
         )}
 
-        {/* {showAnnotationModal && (
-          <GeneAnnotationModal
-            isOpen={showAnnotationModal}
-            onClose={() => setShowAnnotationModal(false)}
-            geneName={selectedGeneForAnnotation}
-          />
-        )} */}
+        {/* Polygon Selector */}
+        <PolygonSelector
+          isActive={isPolygonSelectionActive}
+          onSelectionChange={setSelectedNodesFromPolygon}
+          graphRef={fgRef}
+          nodes={graph.nodes}
+          onClose={() => setIsPolygonSelectionActive(false)}
+          onAnnotate={() => {
+            if (selectedNodesFromPolygon.length > 0) {
+              setShowBulkAnnotationModal(true);
+            }
+          }}
+        />
+
+        {/* Unified Annotation Modal */}
+        <UnifiedGeneAnnotationModal
+          isOpen={showBulkAnnotationModal}
+          onClose={() => setShowBulkAnnotationModal(false)}
+          selectedGenes={selectedNodesFromPolygon}
+        />
       </div>
     )
   }
