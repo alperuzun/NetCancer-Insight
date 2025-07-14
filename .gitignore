@@ -16,7 +16,6 @@ env/
 # ┌───────────────────────────
 # │  Data & embeddings
 # └───────────────────────────
-/data/
-!backend/data/
+llm_data/
 *.sqlite
 .vercel

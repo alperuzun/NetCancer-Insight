@@ -92,7 +92,7 @@ graph_theory_metrics = [
 
 # Load CSV gene annotation data into memory
 gene_info_db = {}
-data_dirs = ["backend/data/annotations", "backend/data/general"]
+data_dirs = ["backend/gene_data/annotations", "backend/gene_data/general"]
 for data_dir in data_dirs:
     for fname in os.listdir(data_dir):
         if fname.endswith(".csv"):
@@ -100,7 +100,7 @@ for data_dir in data_dirs:
         elif fname.endswith(".tsv"):
             update_gene_data_dict(gene_info_db, data_dir, fname, sep="\t")
 
-interaction_dir = "backend/data/interactions"
+interaction_dir = "backend/gene_data/interactions"
 interaction_info_db = {}
 for fname in os.listdir(interaction_dir):
     if fname.endswith(".csv"):
@@ -941,7 +941,7 @@ async def multi_annotate(genes: List[str] = Body(..., embed=True)):
         return JSONResponse(status_code=500, content={"error": f"Failed to read pathway data: {e}"})
 
     # 2. Aggregate diseases for the selected genes
-    disease_file = "backend/data/general/appic_gene_data.tsv"
+    disease_file = "backend/gene_data/general/appic_gene_data.tsv"
     disease_entries = []
     try:
         import pandas as pd
