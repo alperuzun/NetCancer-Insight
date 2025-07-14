@@ -43,7 +43,7 @@ const UnifiedGeneAnnotationModal: React.FC<UnifiedGeneAnnotationModalProps> = ({
   const [singleChatGene, setSingleChatGene] = useState<string>('');
   
   // Cache for storing annotation results
-  const [annotationCache, setAnnotationCache] = useState<Map<string, AnnotationResult>>(new Map());
+//   const [annotationCache, setAnnotationCache] = useState<Map<string, AnnotationResult>>(new Map());
   // Selection annotations state
   const [selectionAnnotations, setSelectionAnnotations] = useState<SelectionAnnotations | null>(null);
   const [annotationsLoading, setAnnotationsLoading] = useState(false);
@@ -136,9 +136,9 @@ const UnifiedGeneAnnotationModal: React.FC<UnifiedGeneAnnotationModalProps> = ({
     return results.filter(r => r.annotations[selectedGenes.length === 1 ? 'function' : 'function'] && !r.loading && !r.error).length;
   };
 
-  const getErrorCount = () => {
-    return results.filter(r => r.error).length;
-  };
+//   const getErrorCount = () => {
+//     return results.filter(r => r.error).length;
+//   };
 
   const isSingleGene = selectedGenes.length === 1;
 
@@ -216,7 +216,7 @@ const UnifiedGeneAnnotationModal: React.FC<UnifiedGeneAnnotationModalProps> = ({
               <div>
                 <h3 className="text-lg font-semibold mb-3">Selected Genes</h3>
                 <div className="space-y-2 max-h-64 overflow-y-auto">
-                  {results.map((result, index) => (
+                  {results.map((result) => (
                     <div
                       key={result.gene}
                       className={`p-3 rounded-lg border ${

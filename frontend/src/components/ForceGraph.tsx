@@ -8,7 +8,7 @@ import React, {
 } from 'react'
 import ForceGraph2D from 'react-force-graph-2d'
 import ForceGraph3D from 'react-force-graph-3d'
-import { getGeneDetails, searchGenes, getInteraction } from '../services/api'
+import { searchGenes, getInteraction } from '../services/api'
 import DraggableGeneInfo from './DraggableGeneInfo'
 import * as THREE from 'three'
 import SpriteText from 'three-spritetext'

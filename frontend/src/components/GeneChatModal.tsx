@@ -24,7 +24,7 @@ const GeneChatModal: React.FC<GeneChatModalProps> = ({
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const [conversationContext, setConversationContext] = useState<string>('');
+  const [_conversationContext, setConversationContext] = useState<string>('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const typingIntervalRef = useRef<NodeJS.Timeout | null>(null);
 

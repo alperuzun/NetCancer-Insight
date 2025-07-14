@@ -2,7 +2,7 @@
     "rewrites": [
       {
         "source": "/api/:path*",
-        "destination": "https://test-backend-production-b406.up.railway.app/:path*"
+        "destination": "https://netcancer-insight.onrender.com/:path*"
       }
     ]
   }
