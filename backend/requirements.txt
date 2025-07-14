@@ -9,3 +9,4 @@ pinecone
 python-multipart
 pydantic
 bioservices
+dotenv
