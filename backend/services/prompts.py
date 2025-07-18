@@ -1,7 +1,7 @@
 # services/prompts.py
 import os
 
-TEMPLATE_DIR = "backend/services/prompts"
+TEMPLATE_DIR = "services/prompts"
 
 def build_prompt(gene: str, view: str, passages: list[str], extra: dict = None) -> str:
     """
