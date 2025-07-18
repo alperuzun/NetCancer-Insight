@@ -31,7 +31,7 @@ import json
 import re
 import ast
 
-ANNOTATION_CACHE_FILE = "backend/annotation_cache.json"
+ANNOTATION_CACHE_FILE = "annotation_cache.json"
 annotation_cache_lock = threading.Lock()
 
 def load_annotation_cache():
@@ -92,7 +92,7 @@ graph_theory_metrics = [
 
 # Load CSV gene annotation data into memory
 gene_info_db = {}
-data_dirs = ["backend/gene_data/annotations", "backend/gene_data/general"]
+data_dirs = ["gene_data/annotations", "gene_data/general"]
 for data_dir in data_dirs:
     for fname in os.listdir(data_dir):
         if fname.endswith(".csv"):
@@ -100,7 +100,7 @@ for data_dir in data_dirs:
         elif fname.endswith(".tsv"):
             update_gene_data_dict(gene_info_db, data_dir, fname, sep="\t")
 
-interaction_dir = "backend/gene_data/interactions"
+interaction_dir = "gene_data/interactions"
 interaction_info_db = {}
 for fname in os.listdir(interaction_dir):
     if fname.endswith(".csv"):
@@ -113,8 +113,8 @@ graphlet_cache = {}
 shared_genes_cache = None  # Will store the set of shared genes between graphs
 
 # Load indexed genes at startup
-INDEXED_GENE_FILE = "backend/indexed_gene.txt"
-NOT_INDEXED_GENE_FILE = "backend/not_indexed_gene.txt"
+INDEXED_GENE_FILE = "indexed_gene.txt"
+NOT_INDEXED_GENE_FILE = "not_indexed_gene.txt"
 indexed_genes = set()
 if os.path.exists(INDEXED_GENE_FILE):
     with open(INDEXED_GENE_FILE, "r") as f:
@@ -941,7 +941,7 @@ async def multi_annotate(genes: List[str] = Body(..., embed=True)):
         return JSONResponse(status_code=500, content={"error": f"Failed to read pathway data: {e}"})
 
     # 2. Aggregate diseases for the selected genes
-    disease_file = "backend/gene_data/general/appic_gene_data.tsv"
+    disease_file = "gene_data/general/appic_gene_data.tsv"
     disease_entries = []
     try:
         import pandas as pd
