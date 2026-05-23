@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 interface GradientLegendProps {
   min: number;
@@ -7,33 +8,37 @@ interface GradientLegendProps {
 }
 
 const GradientLegend: React.FC<GradientLegendProps> = ({ min, max, title }) => {
+  const { colors } = useTheme();
   const mid = (min + max) / 2;
-  // This gradient should match the getExpressionColor function in ForceGraph.tsx
-  const gradient = 'linear-gradient(to right, rgb(0, 0, 255), rgb(255, 255, 255), rgb(255, 0, 0))';
+  const gradient = 'linear-gradient(to right, rgb(0,0,255), rgb(255,255,255), rgb(255,0,0))';
 
   return (
     <div
-      className="graph-legend"
       style={{
         position: 'absolute',
-        top: '20px',
-        right: '20px',
-        background: 'rgba(255, 255, 255, 0.8)',
-        padding: '10px',
-        borderRadius: '5px',
-        boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)',
+        top: 12,
+        right: 12,
+        background: colors.bgPanel,
+        border: `1px solid ${colors.border}`,
+        borderRadius: 8,
+        padding: '8px 12px',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.18)',
+        backdropFilter: 'blur(6px)',
         zIndex: 100,
+        minWidth: 160,
       }}
     >
-      <h4 style={{ margin: '0 0 10px 0', fontSize: '14px' }}>{title}</h4>
-      <div className="w-full h-4 rounded-sm" style={{ background: gradient, minWidth: '150px' }}></div>
-      <div className="flex justify-between text-xs mt-1 w-full" style={{ fontSize: '12px' }}>
-        <span>{min.toFixed(2)}</span>
-        <span>{mid.toFixed(2)}</span>
-        <span>{max.toFixed(2)}</span>
+      <p style={{ margin: '0 0 6px', fontSize: 11, fontWeight: 700, color: colors.textFaint, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+        {title}
+      </p>
+      <div style={{ background: gradient, height: 12, borderRadius: 4, minWidth: 140 }} />
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 3 }}>
+        <span style={{ fontSize: 10, color: colors.textMuted }}>{min.toFixed(2)}</span>
+        <span style={{ fontSize: 10, color: colors.textMuted }}>{mid.toFixed(2)}</span>
+        <span style={{ fontSize: 10, color: colors.textMuted }}>{max.toFixed(2)}</span>
       </div>
     </div>
   );
 };
 
-export default GradientLegend; 
+export default GradientLegend;

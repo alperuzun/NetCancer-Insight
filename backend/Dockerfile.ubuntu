@@ -1,0 +1,40 @@
+# Use Ubuntu base image
+FROM ubuntu:20.04
+
+# Prevent interactive prompts during package installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies and Python
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-dev \
+    build-essential \
+    libboost-all-dev \
+    libcgal-dev \
+    libgmp-dev \
+    libsparsehash-dev \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install graph-tool from official repository
+RUN echo "deb http://downloads.skewed.de/apt focal main" > /etc/apt/sources.list.d/skewed.list && \
+    wget -O - https://downloads.skewed.de/gpg.4B7C4A79.gpg | apt-key add - && \
+    apt-get update && \
+    apt-get install -y python3-graph-tool
+
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Copy backend code
+COPY . .
+
+# Expose port
+EXPOSE 8000
+
+# Run the application
+CMD ["python3", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"] 

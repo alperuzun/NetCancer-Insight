@@ -19,6 +19,7 @@ import DraggableInteractionInfo from './DraggableInteractionInfo'
 // import SvgForceGraph from './SvgForceGraph'
 import UnifiedGeneAnnotationModal from './UnifiedGeneAnnotationModal'
 import PolygonSelector from './PolygonSelector'
+import { useTheme } from '../context/ThemeContext'
 
 // interface NodeObject {
 //   id: string
@@ -57,17 +58,17 @@ const getColorForCancerDrivers = (count: number) => {
   return `rgb(${r}, ${g}, ${b})`
 }
 
-// Color scale for expression data (blue -> white -> red)
+// Color scale for expression data (sky-blue -> white -> red)
 const getExpressionColor = (value: number, min: number, max: number) => {
   if (min === max) return '#ffffff'; // neutral if no variation
 
   const mid = (min + max) / 2;
   let t = (value - min) / (max - min); // normalize to 0-1
 
-  // Blue for low, white for mid, red for high
-  const blue = { r: 0, g: 0, b: 255 };
+  // Sky-blue for low (visible on dark bg), white for mid, red for high
+  const blue = { r: 56, g: 189, b: 248 };
   const white = { r: 255, g: 255, b: 255 };
-  const red = { r: 255, g: 0, b: 0 };
+  const red = { r: 239, g: 68, b: 68 };
 
   let from, to;
   if (value < mid) {
@@ -89,6 +90,23 @@ const getExpressionColor = (value: number, min: number, max: number) => {
   return `rgb(${r}, ${g}, ${b_})`;
 }
 
+// Exported color palette for clusters (20 distinct, background-safe colors)
+export const clusterColors = [
+  '#38bdf8', '#fb923c', '#4ade80', '#f87171', '#c084fc', '#f472b6', '#e879f9', '#a3e635', '#facc15', '#34d399',
+  '#818cf8', '#fb7185', '#2dd4bf', '#fbbf24', '#60a5fa', '#a78bfa', '#86efac', '#fca5a5', '#93c5fd', '#d8b4fe'
+];
+
+// Helper to generate legend items for clusters
+export function getClusterLegendItems(nodeClusters: { [nodeId: string]: number } | null) {
+  if (!nodeClusters) return [];
+  const clusterSet = new Set<number>(Object.values(nodeClusters));
+  const items = Array.from(clusterSet).sort((a, b) => a - b).map(clusterId => ({
+    color: clusterColors[clusterId % clusterColors.length],
+    label: `Cluster ${clusterId + 1}`
+  }));
+  return items;
+}
+
 const ForceGraph = forwardRef(
   (
     { 
@@ -104,6 +122,8 @@ const ForceGraph = forwardRef(
       isFilterTouched = false,
       expressionData = null,
       selectedExpressionColumn = null,
+      nodeClusters = null,
+      onSelectionChange,
     }: {
       graph: { nodes: any[]; links: any[] };
       is3D: boolean;
@@ -118,9 +138,12 @@ const ForceGraph = forwardRef(
       isFilterTouched?: boolean;
       expressionData?: any | null;
       selectedExpressionColumn?: string | null;
+      nodeClusters?: { [nodeId: string]: number } | null;
+      onSelectionChange?: (genes: string[]) => void;
     },
     ref: React.Ref<any>
   ) => {
+    const { colors } = useTheme()
     const [selectedGene, setSelectedGene] = useState<any | null>(null)
     const [hoverNode, setHoverNode] = useState<any>(null)
     const [_isDragging, _setIsDragging] = useState(false)
@@ -130,7 +153,7 @@ const ForceGraph = forwardRef(
     const [legendItems, setLegendItems] = useState<{ color: string; label: string }[]>([]);
     const [showInteractionInfo, setShowInteractionInfo] = useState(false);
     const [interactionData, setInteractionData] = useState<any>(null);
-    const [_linksWithInteractions, setLinksWithInteractions] = useState<Set<string>>(new Set());
+    const [linksWithInteractions, setLinksWithInteractions] = useState<Set<string>>(new Set());
     const [expressionValueRange, setExpressionValueRange] = useState<{min: number, max: number} | null>(null);
     const [shouldZoomToFit, setShouldZoomToFit] = useState(false);
     const [isPolygonSelectionActive, setIsPolygonSelectionActive] = useState(false);
@@ -139,20 +162,26 @@ const ForceGraph = forwardRef(
     const [nodeUnderMouse, setNodeUnderMouse] = useState<any>(null);
     const [showBulkAnnotationModal, setShowBulkAnnotationModal] = useState(false);
 
+    // Notify parent when polygon selection changes
+    useEffect(() => {
+      onSelectionChange?.(selectedNodesFromPolygon);
+    }, [selectedNodesFromPolygon]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    // Clear polygon selection when graph changes (drill-down, back, new upload)
+    useEffect(() => {
+      setSelectedNodesFromPolygon([]);
+      setIsPolygonSelectionActive(false);
+    }, [graph]); // eslint-disable-line react-hooks/exhaustive-deps
+
     // No longer using activeLegendColorsRef or clearing effect
     // const activeLegendColorsRef = useRef<{ [color: string]: string }>({});
 
-    // Log when search query changes
-    useEffect(() => {
-      console.log('ForceGraph: Search query changed:', searchQuery);
-    }, [searchQuery]);
 
     // Handle shift key events
     useEffect(() => {
       const handleKeyDown = (e: KeyboardEvent) => {
         // console.log("Key pressed:", e.key, "Shift state:", e.shiftKey);
         if (e.key === 'Shift') {
-          console.log("Shift key pressed");
           setIsShiftPressed(true);
         }
       };
@@ -160,7 +189,6 @@ const ForceGraph = forwardRef(
       const handleKeyUp = (e: KeyboardEvent) => {
         // console.log("Key released:", e.key);
         if (e.key === 'Shift') {
-          console.log("Shift key released");
           setIsShiftPressed(false);
         }
       };
@@ -181,36 +209,23 @@ const ForceGraph = forwardRef(
 
     // Update search results when query changes
     useEffect(() => {
-      console.log('ForceGraph useEffect - Dependencies changed:', {
-        searchQuery,
-        minDegree,
-        maxDegree,
-        showSharedGenes,
-        sharedGenesLength: sharedGenes.length,
-        graphIndex,
-        graphNodesLength: graph.nodes.length
-      });
       const updateSearch = async () => {
         const res = await searchGenes(searchQuery.trim().toLowerCase(), minDegree, maxDegree, graphIndex);
         let results = res.data.gene;
-        
+
         // If showSharedGenes is true, filter to only show shared genes
         // if (showSharedGenes) {
         //   results = results.filter((gene: string) => sharedGenes.includes(gene));
         // }
-        
+
         setSearchResults(results);
-        console.log('ForceGraph useEffect - searchResults updated:', results.length);
       };
       updateSearch();
     }, [searchQuery, minDegree, maxDegree, showSharedGenes, sharedGenes, graphIndex, graph.nodes.length]);
 
     const handleNodeClick = useCallback(async (node: any, event?: any) => {
-      console.log("Node clicked, shift state:", isShiftPressed, "event shiftKey:", event?.shiftKey);
-      
       // Check if shift is pressed (use both state and event property)
       if (isShiftPressed || (event && event.shiftKey)) {
-        console.log("Activating polygon selection mode");
         setIsPolygonSelectionActive(true);
         return;
       }
@@ -222,11 +237,8 @@ const ForceGraph = forwardRef(
 
     // Handle background click for polygon selection
     const handleBackgroundClick = useCallback((event?: any) => {
-      console.log("Background clicked, nodeUnderMouse:", nodeUnderMouse, "shift state:", isShiftPressed, "event shiftKey:", event?.shiftKey);
-      
       // If no node is under mouse and shift is pressed, activate polygon selection
       if (!nodeUnderMouse && (isShiftPressed || (event && event.shiftKey))) {
-        console.log("Shift+click on background, activating polygon selection");
         setIsPolygonSelectionActive(true);
       }
     }, [nodeUnderMouse, isShiftPressed])
@@ -269,12 +281,6 @@ const ForceGraph = forwardRef(
         }
         
         setLinksWithInteractions(newLinksWithInteractions);
-
-        // After setLinksWithInteractions(newLinksWithInteractions);
-        graph.links.forEach(link => {
-          const linkKey = getLinkKey(link.source, link.target);
-          link.hasInteraction = newLinksWithInteractions.has(linkKey);
-        });
       };
 
       if (graph.links.length > 0) {
@@ -283,7 +289,6 @@ const ForceGraph = forwardRef(
     }, [graph.links]);
 
     const handleLinkClick = useCallback(async (link: any) => {
-      console.log("Link clicked:", link);
       setShowInteractionInfo(true);
       
       try {
@@ -308,11 +313,13 @@ const ForceGraph = forwardRef(
 
     // Function to determine link color and width
     const getLinkStyle = useCallback((link: any) => {
+      const linkKey = getLinkKey(link.source, link.target);
+      const hasInteraction = linksWithInteractions.has(linkKey);
       return {
-        color: link.hasInteraction ? 'black' : 'gray',
-        width: link.hasInteraction ? 2 : 0.7
+        color: hasInteraction ? colors.accent : colors.borderStrong,
+        width: hasInteraction ? 2 : 0.7
       };
-    }, []);
+    }, [linksWithInteractions, colors]);
 
     const onHover2D = (node: any | null) => {
       setHoverNode(node)
@@ -455,6 +462,11 @@ const ForceGraph = forwardRef(
 
     // Updated getNodeColor to use cyan for hovered node
     const getNodeColor = useCallback((node: any) => {
+        // Cluster coloring takes highest precedence
+        if (nodeClusters && nodeClusters[node.id] !== undefined) {
+          const clusterId = nodeClusters[node.id];
+          return clusterColors[clusterId % clusterColors.length];
+        }
         // If this node is hovered, always show cyan
         if (hoverNode && hoverNode.id === node.id) {
             return '#00ffff';
@@ -493,7 +505,10 @@ const ForceGraph = forwardRef(
             const cancerDrivers = node.cancer_drivers || 0;
             return getColorForCancerDrivers(cancerDrivers);
         }
-    }, [isFilterTouched, showSharedGenes, searchResults, sharedGenes, expressionData, selectedExpressionColumn, expressionValueRange, selectedNodesFromPolygon, hoverNode]);
+    }, [
+        nodeClusters,
+        isFilterTouched, showSharedGenes, searchResults, sharedGenes, expressionData, selectedExpressionColumn, expressionValueRange, selectedNodesFromPolygon, hoverNode
+    ]);
 
     const nodeCanvasObject = useCallback(
       (node: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
@@ -523,20 +538,18 @@ const ForceGraph = forwardRef(
         ctx.font = `${fontSize}px Sans-Serif`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillStyle = 'black';
+        ctx.fillStyle = colors.textPrimary;
         ctx.fillText(label, node.x!, node.y!);
       },
-      [hoverNode, getNodeColor] // Dependencies for nodeCanvasObject
+      [hoverNode, getNodeColor, colors.textPrimary] // Dependencies for nodeCanvasObject
     );
 
     // Reverted handleEngineStop to its simpler form
     const handleEngineStop = useCallback(() => {
-        console.log("Engine stopped - calling onDrag");
         onDrag?.();
-        
+
         // If we're in 3D mode and should zoom to fit, do it now
         if (is3D && shouldZoomToFit && fgRef.current) {
-            console.log("Calling zoomToFit after engine stopped");
             fgRef.current.zoomToFit(1000, 50);
             setShouldZoomToFit(false);
         }
@@ -789,6 +802,7 @@ const ForceGraph = forwardRef(
       // Add other methods from the library instance that Program.tsx might need to call
       // ... (add any other methods called on fgRef.current in Program.tsx) ...
       exportAsSVG,
+      selectGenes: (genes: string[]) => setSelectedNodesFromPolygon(genes),
     }));
 
     // adjust forces and initial centering on data change
@@ -827,49 +841,51 @@ const ForceGraph = forwardRef(
         // When switching to 3D mode, wait a bit for the graph to render, then zoom to fit
         setTimeout(() => {
           if (fgRef.current) {
-            console.log("Calling zoomToFit after switching to 3D mode");
             fgRef.current.zoomToFit(1000, 50);
           }
         }, 200);
       }
     }, [is3D, graph.nodes.length]);
 
+    // Cluster legend items
+    const clusterLegendItems = nodeClusters ? getClusterLegendItems(nodeClusters) : null;
+
     return (
-      <div className="relative w-full h-full" style={{background: "white"}}>
-        {/* Polygon Selection Controls */}
-        {/* <div className="absolute top-4 right-4 z-40">
-          <button
-            onClick={() => setIsPolygonSelectionActive(!isPolygonSelectionActive)}
-            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-              isPolygonSelectionActive
-                ? 'bg-red-600 text-white hover:bg-red-700'
-                : 'bg-blue-600 text-white hover:bg-blue-700'
-            }`}
-          >
-            {isPolygonSelectionActive ? 'Cancel Selection' : 'Polygon Select (Shift+Click)'}
-          </button>
-        </div> */}
+      <div className="relative w-full h-full" style={{ background: colors.bgBase }}>
 
-        {/* Clear Selection Button */}
+        {/* Clear Selection + Annotate buttons — top-center, above legend z-index */}
         {selectedNodesFromPolygon.length > 0 && (
-          <div className="absolute top-5 right-50 z-40">
-            <button
-              onClick={() => setSelectedNodesFromPolygon([])}
-              className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 text-sm font-medium"
-            >
-              Clear Selection ({selectedNodesFromPolygon.length})
-            </button>
-          </div>
-        )}
-
-        {/* Annotation Button */}
-        {selectedNodesFromPolygon.length > 0 && (
-          <div className="absolute top-5 right-100 z-40">
+          <div style={{
+            position: 'absolute', top: 10, left: '50%', transform: 'translateX(-50%)',
+            zIndex: 200, display: 'flex', gap: 6,
+          }}>
             <button
               onClick={() => setShowBulkAnnotationModal(true)}
-              className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 text-sm font-medium"
+              style={{
+                display: 'flex', alignItems: 'center', gap: 5,
+                padding: '5px 11px', borderRadius: 7,
+                background: colors.accentFaint,
+                color: colors.accent,
+                border: `1px solid ${colors.accent}`,
+                fontSize: 12, fontWeight: 600, cursor: 'pointer',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+              }}
             >
-              📊 Annotate {selectedNodesFromPolygon.length} Gene{selectedNodesFromPolygon.length > 1 ? 's' : ''}
+              Annotate {selectedNodesFromPolygon.length} Gene{selectedNodesFromPolygon.length > 1 ? 's' : ''}
+            </button>
+            <button
+              onClick={() => { setSelectedNodesFromPolygon([]); setIsPolygonSelectionActive(false); }}
+              style={{
+                display: 'flex', alignItems: 'center', gap: 5,
+                padding: '5px 11px', borderRadius: 7,
+                background: colors.bgPanel,
+                color: colors.textMuted,
+                border: `1px solid ${colors.border}`,
+                fontSize: 12, fontWeight: 500, cursor: 'pointer',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+              }}
+            >
+              Clear Selection ({selectedNodesFromPolygon.length})
             </button>
           </div>
         )}
@@ -887,7 +903,7 @@ const ForceGraph = forwardRef(
           <ForceGraph3D
             ref={fgRef}
             graphData={graph}
-            backgroundColor="white"
+            backgroundColor={colors.bgBase}
             onNodeClick={handleNodeClick}
             nodeOpacity={1}
             nodeColor={(node: any) => getNodeColor(node)}
@@ -911,7 +927,7 @@ const ForceGraph = forwardRef(
               )
               const sprite = new SpriteText(node.id)
               sprite.material.depthWrite = false
-              sprite.color = node === hoverNode ? 'red' : 'black'
+              sprite.color = node === hoverNode ? '#ff7043' : colors.textPrimary
               sprite.textHeight = 5
               sprite.position.set(0, 15, 0)
               group.add(sphere)
@@ -928,10 +944,10 @@ const ForceGraph = forwardRef(
                   max={expressionValueRange.max}
                   title={selectedExpressionColumn}
                 />
+              ) : clusterLegendItems && clusterLegendItems.length > 0 ? (
+                <StaticLegend items={clusterLegendItems} />
               ) : (
-                <StaticLegend
-                  items={legendItems}
-                />
+                <StaticLegend items={legendItems} />
               )}
             </>
           )}
@@ -941,7 +957,7 @@ const ForceGraph = forwardRef(
           <ForceGraph2D
             ref={fgRef}
             graphData={graph}
-            backgroundColor="white"
+            backgroundColor={colors.bgBase}
             onNodeClick={handleNodeClick}
             onNodeHover={onHover2D}
             onLinkClick={handleLinkClick}
@@ -958,6 +974,7 @@ const ForceGraph = forwardRef(
             linkDirectionalParticles={0}
             d3AlphaDecay={0.03}
             d3VelocityDecay={0.2}
+            autoPauseRedraw={false}
             linkColor={(link: any) => getLinkStyle(link).color}
             linkWidth={(link: any) => getLinkStyle(link).width}
             onEngineStop={handleEngineStop}
@@ -971,10 +988,10 @@ const ForceGraph = forwardRef(
                   max={expressionValueRange.max}
                   title={selectedExpressionColumn}
                 />
+              ) : clusterLegendItems && clusterLegendItems.length > 0 ? (
+                <StaticLegend items={clusterLegendItems} />
               ) : (
-                <StaticLegend
-                  items={legendItems}
-                />
+                <StaticLegend items={legendItems} />
               )}
             </>
           )}
@@ -1018,6 +1035,7 @@ const ForceGraph = forwardRef(
           isOpen={showBulkAnnotationModal}
           onClose={() => setShowBulkAnnotationModal(false)}
           selectedGenes={selectedNodesFromPolygon}
+          graphIndex={graphIndex}
         />
       </div>
     )

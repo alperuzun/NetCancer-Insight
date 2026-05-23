@@ -1,23 +1,37 @@
-# services/prompts.py
 import os
+from typing import Dict, List, Optional
 
-TEMPLATE_DIR = "backend/services/prompts"
+TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), "prompts")
 
-def build_prompt(gene: str, view: str, passages: list[str], extra: dict = None) -> str:
-    """
-    - view: one of "function", "disease", "pathway"
-    - passages: list of text snippets
-    - extra: optional dict for additional template variables (e.g. {"disease": "ovarian cancer"})
-    """
-    # 1) Load the template file
+
+def build_prompt(gene: str, view: str, passages: List[str], extra: Optional[Dict] = None) -> str:
+    """Build an LLM prompt for the given gene and view using a view-specific text template."""
     path = os.path.join(TEMPLATE_DIR, f"{view}.txt")
-    template = open(path).read()
+    with open(path) as f:
+        template = f.read()
 
-    # 2) Prepare replacements
-    joined = "\n\n".join(passages)
-    data = {"gene": gene, "passages": joined}
+    data: Dict = {"gene": gene, "passages": "\n\n".join(passages)}
     if extra:
         data.update(extra)
-
-    # 3) Fill it in
     return template.format(**data)
+
+
+def build_unified_prompt(gene: str, passages: List[str], topology_context: str = "") -> str:
+    """
+    Build a single structured prompt that returns JSON covering function, pathways, and disease.
+    Optionally injects topology_context as a network role section.
+    """
+    path = os.path.join(TEMPLATE_DIR, "annotation.txt")
+    with open(path) as f:
+        template = f.read()
+
+    topology_section = (
+        f"\n[Network topology — see below]\n{topology_context}\n"
+        if topology_context.strip()
+        else ""
+    )
+    return template.format(
+        gene=gene,
+        passages="\n\n".join(passages),
+        topology_section=topology_section,
+    )

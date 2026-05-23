@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 interface Point {
   x: number;
@@ -22,6 +23,7 @@ const PolygonSelector: React.FC<PolygonSelectorProps> = ({
   onClose,
   onAnnotate
 }) => {
+  const { colors } = useTheme();
   const [isDrawing, setIsDrawing] = useState(false);
   const [polygonPoints, setPolygonPoints] = useState<Point[]>([]);
   const [selectedNodes, setSelectedNodes] = useState<string[]>([]);
@@ -214,35 +216,46 @@ const PolygonSelector: React.FC<PolygonSelectorProps> = ({
         style={{ cursor: 'crosshair' }}
       />
       
-      {/* Instructions */}
-      <div className="absolute top-4 left-4 bg-white bg-opacity-90 p-3 rounded-lg shadow-lg">
-        <div className="text-sm font-medium text-gray-700 mb-2">
-          Polygon Selection Mode
-        </div>
-        <div className="text-xs text-gray-600 space-y-1">
-          <div>• Shift+Click to add points</div>
-          <div>• Press Enter to complete</div>
-          <div>• Press ESC to cancel</div>
-          {selectedNodes.length > 0 && (
-            <div className="text-blue-600 font-medium mt-2">
-              Selected: {selectedNodes.length} nodes
-            </div>
-          )}
-        </div>
+      {/* Compact info pill — bottom-center */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 20,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 10,
+          padding: '7px 16px',
+          background: colors.bgPanel,
+          border: `1px solid ${colors.border}`,
+          borderRadius: 24,
+          boxShadow: '0 4px 16px rgba(0,0,0,0.25)',
+          backdropFilter: 'blur(8px)',
+          whiteSpace: 'nowrap',
+          pointerEvents: 'none',
+        }}
+      >
+        <span style={{ fontSize: 11, fontWeight: 700, color: colors.textPrimary, letterSpacing: '0.02em' }}>
+          Polygon Selection
+        </span>
+        <span style={{ width: 1, height: 12, background: colors.border, display: 'inline-block' }} />
+        <span style={{ fontSize: 11, color: colors.textMuted }}>
+          Shift+Click to add points
+        </span>
+        <span style={{ fontSize: 11, color: colors.textFaint }}>·</span>
+        <span style={{ fontSize: 11, color: colors.textMuted }}>Enter to confirm</span>
+        <span style={{ fontSize: 11, color: colors.textFaint }}>·</span>
+        <span style={{ fontSize: 11, color: colors.textMuted }}>Esc to cancel</span>
+        {selectedNodes.length > 0 && (
+          <>
+            <span style={{ width: 1, height: 12, background: colors.border, display: 'inline-block' }} />
+            <span style={{ fontSize: 11, fontWeight: 700, color: colors.accent }}>
+              {selectedNodes.length} selected
+            </span>
+          </>
+        )}
       </div>
-
-      {/* Selection info */}
-      {selectedNodes.length > 0 && (
-        <div className="absolute bottom-4 left-4 bg-white bg-opacity-90 p-3 rounded-lg shadow-lg max-w-md">
-          <div className="text-sm font-medium text-gray-700 mb-2">
-            Selected Nodes ({selectedNodes.length})
-          </div>
-          <div className="text-xs text-gray-600 max-h-32 overflow-y-auto">
-            {selectedNodes.slice(0, 10).join(', ')}
-            {selectedNodes.length > 10 && ` ... and ${selectedNodes.length - 10} more`}
-          </div>
-        </div>
-      )}
     </div>
   );
 };

@@ -1,0 +1,13 @@
+You are a molecular biology and genomics expert. Using the retrieved passages below, provide a structured annotation for the gene {gene}.
+{topology_section}
+Retrieved passages:
+{passages}
+
+Return ONLY valid JSON in this exact format with no surrounding text or markdown fences:
+{{
+  "function": "2-3 sentence description of the gene's primary molecular function and biological role",
+  "pathways": "numbered list of up to 5 biological pathways this gene participates in, each with a one-sentence description",
+  "disease": "numbered list of up to 5 diseases or conditions associated with this gene, each with a one-sentence description"
+}}
+
+If network topology context is provided, weave the gene's network role into the function and pathways fields where biologically relevant.

@@ -17,5 +17,22 @@ env/
 # │  Data & embeddings
 # └───────────────────────────
 llm_data/
-*.sqlite
 .vercel
+
+# ┌───────────────────────────
+# │  Runtime data (Docker volumes)
+# └───────────────────────────
+data/db.sqlite
+data/chroma/*
+!data/chroma/.gitkeep
+
+# ┌───────────────────────────
+# │  OS & editor
+# └───────────────────────────
+.DS_Store
+
+# ┌───────────────────────────
+# │  Derived cache files (regenerated at runtime)
+# └───────────────────────────
+backend/annotation_cache.json
+backend/gene_summary_cache.json

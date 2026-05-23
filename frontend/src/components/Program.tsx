@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react'
+import { Upload, Box, ZoomIn, BarChart2, Scissors, Download } from 'lucide-react'
 import UploadFile from './UploadFile'
 import ForceGraph from './ForceGraph'
 import GeneTableModal from './GeneTableModal'
 import GraphletAnalysis from './GraphletAnalysis'
 import ComparativeAnalysis from './ComparativeAnalysis'
-import { fetchGraph, getExpressionData, uploadFileDirect } from '../services/api'
+import { fetchGraph, getExpressionData, uploadFileDirect, clusterGraph } from '../services/api'
 import FilterPanel from './FilterPanel'
+import NetworkStatsPanel from './NetworkStatsPanel'
 import html2canvas from 'html2canvas-pro'
+import { useTheme } from '../context/ThemeContext'
 // Import Canvas2Image - adjust import based on actual package export if needed
 // import * as Canvas2Image from 'canvas2image-2'
 
@@ -34,6 +37,8 @@ interface ProgramProps {
   /** Callback to update the graph data in the parent */
   onGraphChange: (graph: { nodes: any[]; links: any[] }) => void;
   expressionDataVersion: number;
+  /** Called when user extracts a subgraph — parent can load it into the other panel */
+  onSubgraphCreate?: (graph: { nodes: any[]; links: any[] }) => void;
 }
 
 // Helper function to convert oklch to rgb
@@ -55,13 +60,13 @@ interface ProgramProps {
 //   }
 // }
 
-const Program = forwardRef<any, ProgramProps>(({ 
-  onUploaded, 
-  paneSplit = false, 
-  panelIndex = 0, 
-  searchQuery = '', 
-  onSearchChange, 
-  showGeneList, 
+const Program = forwardRef<any, ProgramProps>(({
+  onUploaded,
+  paneSplit = false,
+  panelIndex = 0,
+  searchQuery = '',
+  onSearchChange,
+  showGeneList,
   setShowGeneList,
   showSharedGenes,
   onShowSharedGenesChange,
@@ -69,8 +74,13 @@ const Program = forwardRef<any, ProgramProps>(({
   graph,
   onGraphChange,
   expressionDataVersion,
+  onSubgraphCreate: _onSubgraphCreate,
 }, ref) => {
+  const { colors } = useTheme()
   const [is3D, setIs3D] = useState(false)
+  const [selectedGenes, setSelectedGenes] = useState<string[]>([])
+  const [graphStack, setGraphStack] = useState<Array<{ nodes: any[]; links: any[] }>>([])
+
   const [showGraphletAnalysis, setShowGraphletAnalysis] = useState(false)
   const [showComparativeAnalysis, setShowComparativeAnalysis] = useState(false)
   const [genes, setGenes] = useState<string[]>([])
@@ -90,11 +100,41 @@ const Program = forwardRef<any, ProgramProps>(({
   const [expressionColumns, setExpressionColumns] = useState<string[]>([]);
   const [selectedExpressionColumn, setSelectedExpressionColumn] = useState<string | null>(null);
   const legendRef = useRef<HTMLDivElement>(null);
+  // Clustering state
+  const [selectedClustering, setSelectedClustering] = useState<string>('none');
+  const [nodeClusters, setNodeClusters] = useState<{ [nodeId: string]: number } | null>(null);
+  const [clusteringLoading, setClusteringLoading] = useState(false);
+  const clusteringOptions = ['none', 'louvain', 'leiden'];
 
-  // Log when search query changes
+  // Reset clustering when graph changes
   useEffect(() => {
-    console.log('Program: Search query changed:', { searchQuery, panelIndex });
-  }, [searchQuery, panelIndex]);
+    setSelectedClustering('none');
+    setNodeClusters(null);
+  }, [graph]);
+
+  // Handler for clustering change
+  const handleClusteringChange = async (algorithm: string) => {
+    setSelectedClustering(algorithm);
+    if (algorithm === 'none') {
+      setNodeClusters(null);
+      return;
+    }
+    setClusteringLoading(true);
+    try {
+      const res = await clusterGraph(panelIndex, algorithm);
+      if (res && res.clusters) {
+        setNodeClusters(res.clusters);
+      } else {
+        setNodeClusters(null);
+      }
+    } catch (err) {
+      setNodeClusters(null);
+      // Optionally show error
+    } finally {
+      setClusteringLoading(false);
+    }
+  };
+
 
   // Debounce localSearch updates to parent
   useEffect(() => {
@@ -148,7 +188,6 @@ const Program = forwardRef<any, ProgramProps>(({
             setSelectedExpressionColumn(null);
           }
         } catch (error) {
-          console.log(`No expression data for graph ${panelIndex}.`);
           setExpressionData(null);
           setExpressionColumns([]);
           setSelectedExpressionColumn(null);
@@ -160,22 +199,12 @@ const Program = forwardRef<any, ProgramProps>(({
 
   // Upload and notify parent
   const refreshGraph = async () => {
-    console.log('Program: Refreshing graph data for panel', panelIndex);
     const res = await fetchGraph(panelIndex)
-    console.log('Program: Received graph data:', res.data);
     onGraphChange(res.data) // Use the prop to update graph
     setGenes(res.data.nodes.map((n: any) => n.id))
     if (onUploaded) onUploaded()
   }
 
-  // Log when graphlet analysis is shown/hidden
-  useEffect(() => {
-    console.log('Program: Graphlet analysis visibility changed:', {
-      showGraphletAnalysis,
-      graphNodesCount: graph.nodes.length,
-      panelIndex
-    });
-  }, [showGraphletAnalysis, graph.nodes.length, panelIndex]);
 
   // When pane is split or container size changes, recenter the graph
   useEffect(() => {
@@ -193,8 +222,6 @@ const Program = forwardRef<any, ProgramProps>(({
           let centerY = 0
           let centerX // Set default value for centerY
           
-          console.log("Center position:", centerPosRef.current)
-          console.log("Last container width:", lastContainerWidthRef.current)
           // Second panel - keep existing centering logic
           if (centerPosRef.current && lastContainerWidthRef.current) {
             const widthDiff = containerWidth - lastContainerWidthRef.current
@@ -216,8 +243,6 @@ const Program = forwardRef<any, ProgramProps>(({
             }
           }
 
-          console.log(`Panel ${panelIndex} - Setting center to:`, centerX, centerY)
-          
           // Update the center position
           fgRef.current.centerAt(centerX, centerY)
           
@@ -263,18 +288,14 @@ const Program = forwardRef<any, ProgramProps>(({
     if (fgRef.current && !is3D) {
       const currentCenter = fgRef.current.centerAt();
       if (currentCenter) { // Check if currentCenter is defined
-        console.log("ForceGraph center:", currentCenter, "Panel:", panelIndex);
-        
-        centerPosRef.current = { 
+        centerPosRef.current = {
           x: currentCenter.x,
-          y: currentCenter.y 
+          y: currentCenter.y
         };
-        
+
         if (containerRef.current) {
           lastContainerWidthRef.current = containerRef.current.clientWidth;
         }
-
-        console.log("Center position updated:", centerPosRef.current);
       } else {
         console.warn("ForceGraph: centerAt did not return a valid center position.");
       }
@@ -294,8 +315,7 @@ const Program = forwardRef<any, ProgramProps>(({
     const file = files[0];
     setUploading(true);
     try {
-      const response = await uploadFileDirect(file, panelIndex);
-      console.log('Upload successful:', response.data);
+      await uploadFileDirect(file, panelIndex);
       await refreshGraph();
     } catch (err) {
       setError('Failed to upload file. Please try again.');
@@ -317,8 +337,51 @@ const Program = forwardRef<any, ProgramProps>(({
     setLocalSearch('');
     setMinDegree(0);
     setMaxDegree(20);
-    onShowSharedGenesChange(false); // Use the prop setter
+    onShowSharedGenesChange(false);
     setIsFilterTouched(false);
+  };
+
+  const handleBulkSelect = (genes: string[]) => {
+    const nodeIds = new Set(graph.nodes.map((n: any) => n.id.toUpperCase()));
+    const matched = genes.filter(g => nodeIds.has(g.toUpperCase()))
+                         .map(g => graph.nodes.find((n: any) => n.id.toUpperCase() === g.toUpperCase())?.id)
+                         .filter(Boolean) as string[];
+    if (matched.length > 0) fgRef.current?.selectGenes(matched);
+  };
+
+  const handleExtractSubgraph = () => {
+    if (selectedGenes.length === 0) return;
+    const selectedSet = new Set(selectedGenes);
+
+    // collect selected + 1-hop neighbors
+    const subNodeIds = new Set(selectedGenes);
+    graph.links.forEach((link: any) => {
+      const src = typeof link.source === 'object' ? link.source.id : link.source;
+      const tgt = typeof link.target === 'object' ? link.target.id : link.target;
+      if (selectedSet.has(src)) subNodeIds.add(tgt);
+      if (selectedSet.has(tgt)) subNodeIds.add(src);
+    });
+
+    const subNodes = graph.nodes.filter((n: any) => subNodeIds.has(n.id));
+    const subLinks = graph.links.filter((link: any) => {
+      const src = typeof link.source === 'object' ? link.source.id : link.source;
+      const tgt = typeof link.target === 'object' ? link.target.id : link.target;
+      return subNodeIds.has(src) && subNodeIds.has(tgt);
+    });
+    const subgraph = { nodes: subNodes, links: subLinks };
+
+    // Drill-down: push current graph onto stack and navigate into subgraph
+    setGraphStack(prev => [...prev, graph]);
+    onGraphChange(subgraph);
+    setSelectedGenes([]);
+
+  };
+
+  const handleGoBack = () => {
+    if (graphStack.length === 0) return;
+    const prev = graphStack[graphStack.length - 1];
+    setGraphStack(s => s.slice(0, -1));
+    onGraphChange(prev);
   };
 
   const handleExportGraph = async () => {
@@ -328,8 +391,6 @@ const Program = forwardRef<any, ProgramProps>(({
     }
     
     try {
-      console.log('Starting export process - compositing canvas and legend...');
-
       // Add a small delay to ensure the graph is fully rendered
       await new Promise(resolve => setTimeout(resolve, 100));
 
@@ -344,22 +405,17 @@ const Program = forwardRef<any, ProgramProps>(({
       const legendEl = legendRef.current;
       
       // C) Snapshot legend into its own canvas using html2canvas-pro
-      console.log('Snapshotting legend with html2canvas-pro...');
       const legendSnapshotCanvas = await html2canvas(legendEl, {
         backgroundColor: '#ffffff', // Use white background for legend snapshot
         useCORS: true,
         allowTaint: true,
         logging: true,
       });
-      console.log('Legend snapshot canvas created.', legendSnapshotCanvas);
 
       // D) Create a master canvas that fits both graph + legend
       const graphRect = graphCanvas.getBoundingClientRect();
       const legendRect = legendSnapshotCanvas.getBoundingClientRect();
       
-      console.log('Graph canvas dimensions:', { width: graphRect.width, height: graphRect.height });
-      console.log('Legend snapshot dimensions:', { width: legendRect.width, height: legendRect.height });
-
       // Calculate master canvas dimensions
       const masterWidth = graphRect.width; // Match graph width
       const spacing = 20; // Space between graph and legend
@@ -375,10 +431,7 @@ const Program = forwardRef<any, ProgramProps>(({
         return;
       }
 
-      console.log('Master canvas created, dimensions:', { width: masterCanvas.width, height: masterCanvas.height });
-
       // E) Draw the graph's pixels onto the master canvas
-      console.log('Drawing graph canvas onto master canvas...');
       ctx.drawImage(
         graphCanvas,
         0, // source x
@@ -390,10 +443,8 @@ const Program = forwardRef<any, ProgramProps>(({
         masterWidth * 2, // destination width (scaled)
         graphRect.height * 2 // destination height (scaled)
       );
-      console.log('Graph drawn.');
 
       // F) Draw the legend snapshot right below, with a gap
-      console.log('Drawing legend snapshot onto master canvas...');
       ctx.drawImage(
         legendSnapshotCanvas,
         0, // source x
@@ -405,21 +456,14 @@ const Program = forwardRef<any, ProgramProps>(({
         legendRect.width * 2, // destination width (scaled)
         legendRect.height * 2 // destination height (scaled)
       );
-      console.log('Legend drawn.');
 
       // G) Download the combined PNG
-      console.log('Generating final PNG data URL...');
       const dataUrl = masterCanvas.toDataURL('image/png');
-      
-      console.log('Final data URL generated (first 100 chars):', dataUrl.substring(0, 100));
-      console.log('Final data URL length:', dataUrl.length);
 
       const link = document.createElement('a');
       link.download = `graph-with-legend-${panelIndex}-${new Date().toISOString()}.png`;
       link.href = dataUrl;
       link.click();
-
-      console.log('Export completed successfully.');
 
       // No temporary container to clean up in this approach
 
@@ -439,110 +483,191 @@ const Program = forwardRef<any, ProgramProps>(({
   }));
 
   return (
-    <div 
+    <div
       ref={containerRef}
-      className={`relative flex-1 ${dragOver ? 'bg-gray-100' : ''} h-full`}
+      className="relative flex-1 h-full"
+      style={{ background: colors.bgBase, transition: 'background 0.2s' }}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
     >
       {graph.nodes.length === 0 ? (
-        <div className="flex-1 flex flex-col items-center justify-center" style={{height: "100%", backgroundColor: "white"}}>
+        <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div
-            className={`bg-white rounded-lg shadow flex flex-col items-center justify-center border-dashed border-4 border-gray-500 transition-colors duration-150 ${dragOver ? 'bg-blue-50 border-blue-500' : ''}`}
             style={{
-              width: "70%",
-              height: "80%",
+              width: '60%',
+              height: '70%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderStyle: 'dashed',
+              borderWidth: 2,
+              borderColor: dragOver ? colors.accent : colors.borderStrong,
+              borderRadius: 20,
+              background: dragOver ? colors.accentFaint : colors.bgPanel,
+              transition: 'all 0.18s',
               padding: 32,
-              borderStyle: "dashed",
-              borderColor: dragOver ? "#3b82f6" : "#6b7280",
-              borderWidth: 3,
-              borderRadius: "2rem"
             }}
           >
-            <div className="flex flex-col items-center justify-center w-full h-full">
-              <img src="https://img.icons8.com/ios/100/upload-to-cloud--v1.png" alt="Upload" className="mb-4 opacity-40" style={{ width: 100, height: 100 }} />
-              <div className="mb-4 text-gray-500">Drag and drop or</div>
-              <UploadFile onUploadSuccess={refreshGraph} graphIndex={panelIndex} />
-              {uploading && <div className="mt-2 text-blue-500">Uploading...</div>}
-              {error && <div className="mt-2 text-red-500">{error}</div>}
-            </div>
+            <Upload
+              size={64}
+              style={{ color: dragOver ? colors.accent : colors.textFaint, marginBottom: 16, transition: 'color 0.18s' }}
+              strokeWidth={1.25}
+            />
+            <p style={{ color: colors.textMuted, marginBottom: 16, fontSize: 14 }}>Drag & drop a file, or</p>
+            <UploadFile onUploadSuccess={refreshGraph} graphIndex={panelIndex} />
+            {uploading && <p style={{ marginTop: 10, color: colors.accent, fontSize: 13 }}>Uploading…</p>}
+            {error && <p style={{ marginTop: 10, color: colors.danger, fontSize: 13 }}>{error}</p>}
           </div>
         </div>
       ) : (
         <>
-          <div className="flex justify-between items-center p-1 bg-white z-10 border-b">
+          {/* Toolbar */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '4px 10px',
+              background: colors.bgPanel,
+              borderBottom: `1px solid ${colors.border}`,
+              zIndex: 10,
+              position: 'relative',
+              gap: 8,
+            }}
+          >
             <UploadFile onUploadSuccess={refreshGraph} graphIndex={panelIndex} />
-            <div className="flex items-center space-x-2">
-              <label className="flex items-center space-x-2">
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              {/* 3D toggle */}
+              <label style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer', userSelect: 'none' }}>
+                <Box size={14} style={{ color: colors.textMuted }} />
                 <input
                   type="checkbox"
                   checked={is3D}
                   onChange={e => setIs3D(e.target.checked)}
+                  style={{ accentColor: colors.accent }}
                 />
-                <span className="text-black">3D Mode</span>
+                <span style={{ fontSize: 12, color: colors.textMuted }}>3D</span>
               </label>
+
+              {/* Zoom to fit (3D only) */}
               {is3D && (
-                <button 
-                  onClick={() => {
-                    if (fgRef.current) {
-                      fgRef.current.zoomToFit(1000, 50);
-                    }
+                <button
+                  onClick={() => fgRef.current?.zoomToFit(1000, 50)}
+                  title="Zoom to Fit"
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: 5,
+                    padding: '4px 8px', borderRadius: 6,
+                    background: colors.accentFaint, color: colors.accent,
+                    border: `1px solid ${colors.accent}`, fontSize: 12, cursor: 'pointer',
                   }}
-                  className="bg-blue-500 text-white px-2 py-1 rounded text-sm hover:bg-blue-600"
                 >
+                  <ZoomIn size={13} />
                   Zoom to Fit
                 </button>
               )}
-              {expressionColumns.length > 0 && (
-                <div className="flex items-center space-x-2">
-                  <label htmlFor={`expression-selector-${panelIndex}`} className="text-sm font-medium text-black">Expression:</label>
-                  <select
-                    id={`expression-selector-${panelIndex}`}
-                    value={selectedExpressionColumn || ''}
-                    onChange={(e) => setSelectedExpressionColumn(e.target.value)}
-                    className="block w-full pl-2 pr-8 py-1 border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                  >
-                    {expressionColumns.map(col => (
-                      <option key={col} value={col}>{col}</option>
-                    ))}
-                  </select>
-                </div>
-              )}
-              {/* <button 
-                onClick={() => setShowGeneList(!showGeneList)}
-                className="bg-blue-500 text-white px-2 py-1 rounded text-sm"
-              >
-                {showGeneList ? 'Hide Genes' : 'Show Genes'}
-              </button> */}
-              <button 
-                onClick={() => {
-                  console.log('Program: Graphlet Analysis button clicked', {
-                    graphNodesCount: graph.nodes.length,
-                    panelIndex
-                  });
-                  setShowGraphletAnalysis(true);
+
+              {/* Graphlet Analysis */}
+              <button
+                onClick={() => setShowGraphletAnalysis(true)}
+                title="Graphlet Analysis"
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 5,
+                  padding: '4px 9px', borderRadius: 6,
+                  background: colors.bgPanelSecondary,
+                  color: colors.textPrimary,
+                  border: `1px solid ${colors.border}`,
+                  fontSize: 12, cursor: 'pointer',
                 }}
-                className="bg-green-500 text-white px-2 py-1 rounded text-sm"
               >
+                <BarChart2 size={13} style={{ color: colors.accent }} />
                 Graphlet Analysis
               </button>
-              {/* {paneSplit && (
-                <button 
-                  onClick={() => {
-                    console.log('Program: Comparative Analysis button clicked', { panelIndex });
-                    setShowComparativeAnalysis(true);
+
+              {/* Extract Subgraph — visible when genes are selected */}
+              {selectedGenes.length > 0 && (
+                <button
+                  onClick={handleExtractSubgraph}
+                  title="Extract selected genes + neighbors into a new subgraph"
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: 5,
+                    padding: '4px 9px', borderRadius: 6,
+                    background: colors.accentFaint,
+                    color: colors.accent,
+                    border: `1px solid ${colors.accent}`,
+                    fontSize: 12, fontWeight: 600, cursor: 'pointer',
                   }}
-                  className="bg-purple-500 text-white px-2 py-1 rounded text-sm"
                 >
-                  Comparative Analysis
+                  <Scissors size={13} />
+                  Extract Subgraph ({selectedGenes.length})
                 </button>
-              )} */}
+              )}
             </div>
           </div>
+          {/* Drill-down breadcrumb */}
+          {graphStack.length > 0 && (
+            <div
+              style={{
+                display: 'flex', alignItems: 'center', gap: 8,
+                padding: '4px 12px',
+                background: colors.accentFaint,
+                borderBottom: `1px solid ${colors.accent}44`,
+                fontSize: 12, flexShrink: 0,
+              }}
+            >
+              <button
+                onClick={handleGoBack}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 4,
+                  background: 'none', border: 'none', cursor: 'pointer',
+                  color: colors.accent, fontWeight: 600, fontSize: 12, padding: '2px 6px', borderRadius: 4,
+                }}
+              >
+                ← Back
+              </button>
+              <span style={{ color: colors.textFaint }}>Full Graph</span>
+              <span style={{ color: colors.textFaint }}>›</span>
+              <span style={{ color: colors.textPrimary, fontWeight: 600 }}>
+                Subgraph · {graph.nodes.length} nodes, {graph.links.length} edges
+              </span>
+              <button
+                onClick={() => {
+                  const rows = graph.links.map((link: any) => {
+                    const src = typeof link.source === 'object' ? link.source.id : link.source;
+                    const tgt = typeof link.target === 'object' ? link.target.id : link.target;
+                    return `${src},${tgt}`;
+                  });
+                  const csv = ['gene1,gene2', ...rows].join('\n');
+                  const blob = new Blob([csv], { type: 'text/csv' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `subgraph-${graph.nodes.slice(0, 3).map((n: any) => n.id).join('-')}.csv`;
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+                  URL.revokeObjectURL(url);
+                }}
+                style={{
+                  marginLeft: 'auto',
+                  display: 'flex', alignItems: 'center', gap: 5,
+                  padding: '3px 9px', borderRadius: 5,
+                  background: 'transparent',
+                  color: colors.accent,
+                  border: `1px solid ${colors.accent}55`,
+                  fontSize: 11, fontWeight: 600, cursor: 'pointer',
+                }}
+              >
+                <Download size={11} />
+                Save CSV
+              </button>
+            </div>
+          )}
+
           {/* Overlay FilterPanel in top-right of ForceGraph */}
           <div className="relative w-full h-full flex-1">
-            <div className="absolute top-4 left-4 z-30">
+            <div className="absolute top-4 left-4 z-30" style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               <FilterPanel
                 searchValue={localSearch}
                 onSearchChange={handleSearchChange}
@@ -558,7 +683,15 @@ const Program = forwardRef<any, ProgramProps>(({
                 expressionColumns={expressionColumns}
                 selectedExpressionColumn={selectedExpressionColumn}
                 onExpressionColumnChange={setSelectedExpressionColumn}
+                clusteringOptions={clusteringOptions}
+                selectedClustering={selectedClustering}
+                onClusteringChange={clusteringLoading ? () => {} : handleClusteringChange}
+                onBulkSelect={handleBulkSelect}
               />
+              {clusteringLoading && (
+                <div style={{ marginTop: 4, fontSize: 11, color: colors.accent }}>Clustering…</div>
+              )}
+              <NetworkStatsPanel graph={graph} />
             </div>
             <div className="w-full h-full">
               <ForceGraph
@@ -576,6 +709,8 @@ const Program = forwardRef<any, ProgramProps>(({
                 sharedGenes={sharedGenes}
                 expressionData={expressionData}
                 selectedExpressionColumn={selectedExpressionColumn}
+                nodeClusters={nodeClusters}
+                onSelectionChange={setSelectedGenes}
               />
             </div>
           </div>

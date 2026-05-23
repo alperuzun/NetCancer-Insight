@@ -1,0 +1,22 @@
+# Development override — hot-reload for both backend and frontend.
+# Usage: docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
+
+services:
+  backend:
+    command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
+    volumes:
+      - ./backend:/app
+      - ./data:/app/data
+      - ./llm_data:/app/llm_data:ro
+      - ./backend/gene_data:/app/gene_data:ro
+      - /app/__pycache__
+
+  frontend:
+    build:
+      context: ./frontend
+      target: dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public

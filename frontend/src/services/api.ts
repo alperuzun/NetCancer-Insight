@@ -1,6 +1,19 @@
 import axios from 'axios'
 
-const API = axios.create({ baseURL: 'https://netcancer-insight.onrender.com' })
+const inferDefaultApiBase = () => {
+  if (typeof window !== 'undefined') {
+    const { protocol, hostname } = window.location
+    return `${protocol}//${hostname}:8000`
+  }
+  return 'http://localhost:8000'
+}
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || inferDefaultApiBase()
+
+const API = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true,
+});
 
 // Add request interceptor for logging
 API.interceptors.request.use(request => {
@@ -34,16 +47,10 @@ API.interceptors.response.use(
   }
 );
 
-export const uploadFile = (file: File, graphIndex: number) => {
-  const form = new FormData()
-  form.append('file', file)
-  return API.post('/upload', { file: form, graph_index: graphIndex })
-}
-
 export const uploadFileDirect = async (file: File, graphIndex: number) => {
   const formData = new FormData();
   formData.append('file', file);
-  const response = await axios.post(`https://netcancer-insight.onrender.com/upload?graph_index=${graphIndex}`, formData, {
+  const response = await axios.post(`${API_BASE_URL}/upload?graph_index=${graphIndex}`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -142,18 +149,35 @@ export const uploadExpressionData = async (graphIndex: number, data: any) => {
   return await API.post(`/expression-data/${graphIndex}`, data);
 };
 
-export const getAllGeneAnnotations = async (gene: string, k: number = 5) => {
-  const response = await API.post('/annotate_all_views?k=' + k, { gene });
+export const getAllGeneAnnotations = async (gene: string, k: number = 5, graphIndex: number = -1) => {
+  const response = await API.post(`/annotate_all_views?k=${k}&graph_index=${graphIndex}`, { gene });
   return response;
 };
 
-export const sendGeneChatMessage = async (gene: string, message: string, conversation_history: string) => {
+export const sendGeneChatMessage = async (
+  gene: string,
+  message: string,
+  conversation_history: Array<{ role: string; content: string }>
+) => {
   const response = await API.post('/chat', {
     gene,
     message,
     conversation_history
   });
   return response;
+};
+
+export const streamChatMessage = (
+  gene: string,
+  message: string,
+  conversation_history: Array<{ role: string; content: string }>
+): Promise<Response> => {
+  return fetch(`${API_BASE_URL}/chat/stream`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ gene, message, conversation_history }),
+  });
 };
 
 export const sendMultiGeneChatMessage = async (
@@ -169,7 +193,40 @@ export const sendMultiGeneChatMessage = async (
   return response;
 };
 
+export const llmTest = async () => {
+  const response = await API.get('/llm-test')
+  return response
+};
+
 export const postMultiAnnotate = async (genes: string[]) => {
   const response = await API.post('/multi-annotate', { genes });
   return response;
+};
+
+export const promoteGraph = async () => {
+  const response = await API.post('/promote-graph');
+  return response.data;
+};
+
+export const clusterGraph = async (graphIndex: number, algorithm: string) => {
+  const response = await API.post(
+    '/cluster', {
+    graph_index: graphIndex,
+    algorithm: algorithm
+    }
+  );
+  return response.data;
+};
+
+export const getLLMSettings = async () => {
+  return await API.get('/settings/llm');
+};
+
+export const saveLLMSettings = async (config: {
+  provider: string;
+  api_key: string;
+  model: string;
+  base_url?: string;
+}) => {
+  return await API.post('/settings/llm', config);
 };
