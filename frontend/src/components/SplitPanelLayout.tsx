@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
 import {
-  Network, Settings, Sun, Moon, PanelLeftOpen, PanelLeftClose,
-  BarChart2, Upload, FileUp, X, Save, FolderOpen,
+  Network, Settings, Sun, Moon,
+  BarChart2, FileUp, X, Save, FolderOpen,
 } from 'lucide-react'
 import Program from './Program'
 import { getSharedGenes, uploadExpressionData, promoteGraph } from '../services/api'
@@ -459,8 +459,8 @@ export default function SplitPanelLayout() {
                     cursor: 'col-resize',
                     transition: 'background 0.15s',
                   }}
-                  onMouseEnter={e => (e.currentTarget.style.background = colors.accent)}
-                  onMouseLeave={e => (e.currentTarget.style.background = colors.border)}
+                  onMouseEnter={e => ((e.currentTarget as unknown as HTMLDivElement).style.background = colors.accent)}
+                  onMouseLeave={e => ((e.currentTarget as unknown as HTMLDivElement).style.background = colors.border)}
                 />
                 <Panel defaultSize={50} minSize={20} order={2}>
                   <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>

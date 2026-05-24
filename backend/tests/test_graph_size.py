@@ -348,7 +348,7 @@ class TestGraphletAnalysis:
     def test_3node_empty_graph_only_G0(self):
         """3 isolated nodes → exactly 1 G0 (independent triple), 0 others."""
         upload(make_csv(nx.empty_graph(3)), graph_index=0)
-        r = client.post("/graphlet-analysis", json={"graph_index": 0, "size": 3})
+        r = client.get("/graphlet-analysis", params={"graph_index": 0, "size": 3})
         assert r.status_code == 200
         c = r.json()["counts"]
         assert c["G0"] == 1
@@ -361,7 +361,7 @@ class TestGraphletAnalysis:
         G = nx.empty_graph(3)
         G.add_edge(0, 1)
         upload(make_csv(G), graph_index=0)
-        r = client.post("/graphlet-analysis", json={"graph_index": 0, "size": 3})
+        r = client.get("/graphlet-analysis", params={"graph_index": 0, "size": 3})
         assert r.status_code == 200
         c = r.json()["counts"]
         assert c["G1"] == 1
@@ -371,7 +371,7 @@ class TestGraphletAnalysis:
         """0-1-2 path → exactly 1 G2 (open wedge), 0 triangles."""
         G = nx.path_graph(3)  # edges: 0-1, 1-2
         upload(make_csv(G), graph_index=0)
-        r = client.post("/graphlet-analysis", json={"graph_index": 0, "size": 3})
+        r = client.get("/graphlet-analysis", params={"graph_index": 0, "size": 3})
         assert r.status_code == 200
         c = r.json()["counts"]
         assert c["G2"] == 1
@@ -380,7 +380,7 @@ class TestGraphletAnalysis:
     def test_3node_triangle_gives_G3(self):
         """Complete graph K3 → exactly 1 G3 (triangle), 0 G2."""
         upload(make_csv(nx.complete_graph(3)), graph_index=0)
-        r = client.post("/graphlet-analysis", json={"graph_index": 0, "size": 3})
+        r = client.get("/graphlet-analysis", params={"graph_index": 0, "size": 3})
         assert r.status_code == 200
         c = r.json()["counts"]
         assert c["G3"] == 1
@@ -389,7 +389,7 @@ class TestGraphletAnalysis:
     def test_3node_counts_sum_to_C_n_3(self):
         """Sum of all 3-node graphlet counts must equal C(n, 3)."""
         upload(scale_free_csv(LARGE), graph_index=0)
-        r = client.post("/graphlet-analysis", json={"graph_index": 0, "size": 3})
+        r = client.get("/graphlet-analysis", params={"graph_index": 0, "size": 3})
         assert r.status_code == 200
         c = r.json()["counts"]
         total = sum(c.values())
@@ -399,14 +399,14 @@ class TestGraphletAnalysis:
     def test_3node_no_negative_counts(self):
         """All graphlet counts must be non-negative."""
         upload(scale_free_csv(LARGE), graph_index=0)
-        r = client.post("/graphlet-analysis", json={"graph_index": 0, "size": 3})
+        r = client.get("/graphlet-analysis", params={"graph_index": 0, "size": 3})
         c = r.json()["counts"]
         assert all(v >= 0 for v in c.values())
 
     def test_3node_frequencies_sum_to_one(self):
         """Frequency distribution must sum to 1.0 (within floating-point tolerance)."""
         upload(scale_free_csv(LARGE), graph_index=0)
-        r = client.post("/graphlet-analysis", json={"graph_index": 0, "size": 3})
+        r = client.get("/graphlet-analysis", params={"graph_index": 0, "size": 3})
         freqs = r.json()["frequencies"]
         assert sum(freqs.values()) == pytest.approx(1.0, abs=1e-9)
 
@@ -414,8 +414,8 @@ class TestGraphletAnalysis:
         """A denser graph (m=4) should produce more G3 (triangles) than a sparse one (m=1)."""
         upload(scale_free_csv(LARGE, m=1, seed=7), graph_index=0)
         upload(scale_free_csv(LARGE, m=4, seed=7), graph_index=1)
-        r0 = client.post("/graphlet-analysis", json={"graph_index": 0, "size": 3})
-        r1 = client.post("/graphlet-analysis", json={"graph_index": 1, "size": 3})
+        r0 = client.get("/graphlet-analysis", params={"graph_index": 0, "size": 3})
+        r1 = client.get("/graphlet-analysis", params={"graph_index": 1, "size": 3})
         assert r1.json()["counts"]["G3"] > r0.json()["counts"]["G3"]
 
     # ── 4-node graphlets ──────────────────────────────────────────────────────
@@ -423,7 +423,7 @@ class TestGraphletAnalysis:
     def test_4node_complete_graph_only_G8(self):
         """K4 (6 edges) → all 4-node subgraphs are K4 (G8), count = 1."""
         upload(make_csv(nx.complete_graph(4)), graph_index=0)
-        r = client.post("/graphlet-analysis", json={"graph_index": 0, "size": 4})
+        r = client.get("/graphlet-analysis", params={"graph_index": 0, "size": 4})
         assert r.status_code == 200
         c = r.json()["counts"]
         assert c["G8"] == 1
@@ -431,7 +431,7 @@ class TestGraphletAnalysis:
     def test_4node_empty_graph_only_G0(self):
         """4 isolated nodes → 1 G0, all others 0."""
         upload(make_csv(nx.empty_graph(4)), graph_index=0)
-        r = client.post("/graphlet-analysis", json={"graph_index": 0, "size": 4})
+        r = client.get("/graphlet-analysis", params={"graph_index": 0, "size": 4})
         assert r.status_code == 200
         c = r.json()["counts"]
         assert c["G0"] == 1
@@ -440,14 +440,14 @@ class TestGraphletAnalysis:
     def test_4node_no_negative_counts(self):
         """All 4-node graphlet counts must be non-negative."""
         upload(scale_free_csv(LARGE), graph_index=0)
-        r = client.post("/graphlet-analysis", json={"graph_index": 0, "size": 4})
+        r = client.get("/graphlet-analysis", params={"graph_index": 0, "size": 4})
         c = r.json()["counts"]
         assert all(v >= 0 for v in c.values())
 
     def test_4node_frequencies_sum_to_one(self):
         """4-node frequency distribution must sum to 1.0."""
         upload(scale_free_csv(LARGE), graph_index=0)
-        r = client.post("/graphlet-analysis", json={"graph_index": 0, "size": 4})
+        r = client.get("/graphlet-analysis", params={"graph_index": 0, "size": 4})
         freqs = r.json()["frequencies"]
         assert sum(freqs.values()) == pytest.approx(1.0, abs=1e-9)
 
@@ -457,7 +457,7 @@ class TestGraphletAnalysis:
         """3-node graphlet analysis on 300 nodes must complete in under 1 second."""
         upload(scale_free_csv(LARGE), graph_index=0)
         t0 = time.perf_counter()
-        r = client.post("/graphlet-analysis", json={"graph_index": 0, "size": 3})
+        r = client.get("/graphlet-analysis", params={"graph_index": 0, "size": 3})
         elapsed = time.perf_counter() - t0
         assert r.status_code == 200
         assert elapsed < 1.0, f"3-node analysis took {elapsed:.2f}s — too slow"
@@ -466,7 +466,7 @@ class TestGraphletAnalysis:
         """4-node graphlet analysis (ORCA) on 300 nodes must complete in under 5 seconds."""
         upload(scale_free_csv(LARGE), graph_index=0)
         t0 = time.perf_counter()
-        r = client.post("/graphlet-analysis", json={"graph_index": 0, "size": 4})
+        r = client.get("/graphlet-analysis", params={"graph_index": 0, "size": 4})
         elapsed = time.perf_counter() - t0
         assert r.status_code == 200
         assert elapsed < 5.0, f"4-node analysis took {elapsed:.2f}s — too slow"
@@ -474,7 +474,7 @@ class TestGraphletAnalysis:
     def test_graphlet_endpoint_returns_required_fields(self):
         """Response must contain counts, frequencies, and total_graphlets."""
         upload(scale_free_csv(LARGE), graph_index=0)
-        r = client.post("/graphlet-analysis", json={"graph_index": 0, "size": 3})
+        r = client.get("/graphlet-analysis", params={"graph_index": 0, "size": 3})
         assert r.status_code == 200
         body = r.json()
         assert "counts" in body
@@ -488,4 +488,4 @@ class TestGraphletAnalysis:
         r = client.get("/compare-graphlets?size=3")
         assert r.status_code == 200
         body = r.json()
-        assert "similarity" in body or "graphlet_correlation_distance" in body or "distance" in body
+        assert "cosine_similarity" in body or "euclidean_distance" in body

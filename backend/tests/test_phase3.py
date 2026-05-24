@@ -348,14 +348,13 @@ class TestBackgroundTasks:
         """When gene_chat has no cached summary, it should enqueue via BackgroundTasks."""
         import db
         from services.chat import gene_chat
-        from services.retriever import get_jsonl_contexts_for_gene as orig_getter
         from services.llm import call_llm
 
         fake_entries = [{"type": "function", "source": "test", "text": "TP53 is a tumour suppressor."}]
 
         monkeypatch.setattr(db, "get_gene_summary", lambda gene: None)
         monkeypatch.setattr(
-            "services.chat.get_jsonl_contexts_for_gene",
+            "services.chat.get_passages_unified",
             lambda gene, **kw: fake_entries,
         )
         monkeypatch.setattr(
@@ -376,7 +375,7 @@ class TestBackgroundTasks:
 
         monkeypatch.setattr(db, "get_gene_summary", lambda gene: None)
         monkeypatch.setattr(
-            "services.chat.get_jsonl_contexts_for_gene",
+            "services.chat.get_passages_unified",
             lambda gene, **kw: fake_entries,
         )
         monkeypatch.setattr("services.chat.call_llm", lambda **kw: "Response.")

@@ -409,8 +409,7 @@ class TestChat503:
     def test_chat_returns_503_when_not_configured(self, client, monkeypatch):
         from services.llm import LLMNotConfiguredError
 
-        monkeypatch.setattr("services.chat.get_jsonl_contexts_for_gene", lambda *a, **kw: [])
-        monkeypatch.setattr("services.chat.get_passages", lambda **kw: [])
+        monkeypatch.setattr("services.chat.get_passages_unified", lambda *a, **kw: [])
         monkeypatch.setattr("services.chat.call_llm", _raise(LLMNotConfiguredError("Not configured")))
 
         r = client.post("/chat", json={"gene": "TP53", "message": "What does it do?", "conversation_history": []})
@@ -419,8 +418,7 @@ class TestChat503:
     def test_chat_returns_502_for_provider_error(self, client, monkeypatch):
         from services.llm import LLMError
 
-        monkeypatch.setattr("services.chat.get_jsonl_contexts_for_gene", lambda *a, **kw: [])
-        monkeypatch.setattr("services.chat.get_passages", lambda **kw: [])
+        monkeypatch.setattr("services.chat.get_passages_unified", lambda *a, **kw: [])
         monkeypatch.setattr("services.chat.call_llm", _raise(LLMError("timeout")))
 
         r = client.post("/chat", json={"gene": "TP53", "message": "test", "conversation_history": []})

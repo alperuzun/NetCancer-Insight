@@ -160,11 +160,6 @@ const UnifiedGeneAnnotationModal: React.FC<UnifiedGeneAnnotationModalProps> = ({
 
   if (!isOpen) return null;
 
-  const inputStyle: React.CSSProperties = {
-    width: '100%',
-    boxSizing: 'border-box',
-  };
-
   return (
     <>
       <div
