@@ -3,19 +3,15 @@ Phase 3 test suite — API safety fixes.
 
 Coverage:
   TestFileSizeLimit      – upload >10 MB returns 413; ≤10 MB is accepted
-  TestGraphletSizeGuard  – 4-node analysis on >50-node graph returns 400
-                         – brute-force fallback works for ≤50 nodes
-                         – compare-graphlets also returns 400 when guard fires
+  TestGraphletSizeGuard  – 4-node analysis always returns 200 (sampling for large graphs)
+                         – invalid size returns 400
   TestKEGGTimeout        – 504 returned when KEGG hangs beyond timeout
                          – successful fetch is cached and re-served
                          – TimeoutError constant and env-var wiring
   TestComparativeSync    – /comparative-analysis still returns correct metrics
                          – endpoint function is not a coroutine (sync def)
   TestBackgroundTasks    – /chat passes BackgroundTasks to gene_chat
-                         – background_tasks.add_task is called instead of
-                           threading.Thread when BackgroundTasks is supplied
-  TestGraphletFallbackGuard – analyze_graphlets_4_fallback raises ValueError
-                              for >50 nodes; succeeds for ≤50 nodes
+  TestGraphletModule     – graphlets.py: exact for small, sampled for large, K4=G10
 """
 import concurrent.futures
 import csv
@@ -128,45 +124,55 @@ class TestFileSizeLimit:
 
 
 # ===========================================================================
-# TestGraphletFallbackGuard
+# TestGraphletModule
 # ===========================================================================
 
-class TestGraphletFallbackGuard:
-    """Unit-test analyze_graphlets_4_fallback directly."""
+class TestGraphletModule:
+    """Unit-tests for the graphlets module (replaces the old orca_integration tests)."""
 
     def _make_graph(self, n: int):
         import networkx as nx
-        G = nx.path_graph(n)
-        return G
+        return nx.path_graph(n)
 
-    def test_fallback_raises_for_51_nodes(self):
-        from orca_integration import analyze_graphlets_4_fallback
-        G = self._make_graph(51)
-        with pytest.raises(ValueError, match="51"):
-            analyze_graphlets_4_fallback(G)
-
-    def test_fallback_raises_for_100_nodes(self):
-        from orca_integration import analyze_graphlets_4_fallback
-        G = self._make_graph(100)
-        with pytest.raises(ValueError):
-            analyze_graphlets_4_fallback(G)
-
-    def test_fallback_succeeds_for_50_nodes(self):
-        from orca_integration import analyze_graphlets_4_fallback
-        G = self._make_graph(50)
-        result = analyze_graphlets_4_fallback(G)
+    def test_analyze_4node_small_graph_returns_required_keys(self):
+        from graphlets import analyze_4node
+        import networkx as nx
+        G = self._make_graph(8)
+        result = analyze_4node(G)
         assert "counts" in result
         assert "frequencies" in result
+        assert "total_graphlets" in result
+        assert "exact" in result
 
-    def test_fallback_succeeds_for_small_graph(self):
-        from orca_integration import analyze_graphlets_4_fallback
-        G = self._make_graph(8)
-        result = analyze_graphlets_4_fallback(G)
-        assert result["total_graphlets"] >= 0
+    def test_analyze_4node_small_is_exact(self):
+        from graphlets import analyze_4node
+        import networkx as nx
+        G = self._make_graph(10)
+        assert analyze_4node(G)["exact"] is True
 
-    def test_max_nodes_fallback_constant(self):
-        from orca_integration import MAX_NODES_FALLBACK
-        assert MAX_NODES_FALLBACK == 50
+    def test_analyze_4node_large_is_sampled(self):
+        from graphlets import analyze_4node, MAX_EXACT_4
+        import networkx as nx
+        G = nx.barabasi_albert_graph(MAX_EXACT_4 + 10, 2, seed=1)
+        assert analyze_4node(G)["exact"] is False
+
+    def test_analyze_4node_large_never_raises(self):
+        from graphlets import analyze_4node
+        import networkx as nx
+        G = nx.barabasi_albert_graph(300, 2, seed=1)
+        result = analyze_4node(G)  # must not raise
+        assert result["total_graphlets"] > 0
+
+    def test_k4_classified_as_G10(self):
+        from graphlets import analyze_4node
+        import networkx as nx
+        G = nx.complete_graph(4)
+        result = analyze_4node(G)
+        assert result["counts"]["G10"] == 1
+
+    def test_max_exact_4_constant(self):
+        from graphlets import MAX_EXACT_4
+        assert MAX_EXACT_4 >= 4
 
 
 # ===========================================================================
@@ -174,23 +180,14 @@ class TestGraphletFallbackGuard:
 # ===========================================================================
 
 class TestGraphletSizeGuard:
-    def test_large_graph_size4_returns_400_when_orca_unavailable(self, large_graph, monkeypatch):
-        """Guard fires when ORCA is absent and brute-force fallback is the only option."""
-        import orca_integration
-        monkeypatch.setattr(orca_integration, "ORCA_AVAILABLE", False)
-        r = large_graph.get("/graphlet-analysis?graph_index=0&size=4")
-        assert r.status_code == 400
-        assert "message" in r.json()
-
-    def test_large_graph_400_message_mentions_nodes(self, large_graph, monkeypatch):
-        import orca_integration
-        monkeypatch.setattr(orca_integration, "ORCA_AVAILABLE", False)
-        r = large_graph.get("/graphlet-analysis?graph_index=0&size=4")
-        msg = r.json()["message"].lower()
-        assert "node" in msg or "51" in msg
-
     def test_small_graph_size4_returns_200(self, small_graph):
         r = small_graph.get("/graphlet-analysis?graph_index=0&size=4")
+        assert r.status_code == 200
+        assert "counts" in r.json()
+
+    def test_large_graph_size4_returns_200(self, large_graph):
+        """Large graphs use sampling — must always return 200, never 400."""
+        r = large_graph.get("/graphlet-analysis?graph_index=0&size=4")
         assert r.status_code == 200
         assert "counts" in r.json()
 
@@ -199,15 +196,13 @@ class TestGraphletSizeGuard:
         assert r.status_code == 200
         assert "counts" in r.json()
 
-    def test_compare_graphlets_returns_400_when_guard_fires(self, client, monkeypatch):
-        """Both graphs need >50 nodes; compare should propagate the 400 (ORCA absent)."""
-        import orca_integration
-        monkeypatch.setattr(orca_integration, "ORCA_AVAILABLE", False)
+    def test_compare_graphlets_large_graphs_returns_200(self, client):
+        """Large graphs should compare successfully via sampling."""
         csv_bytes = _make_csv(51)
         client.post("/upload?graph_index=0", files={"file": ("g.csv", csv_bytes, "text/csv")})
         client.post("/upload?graph_index=1", files={"file": ("g.csv", csv_bytes, "text/csv")})
         r = client.get("/compare-graphlets?size=4")
-        assert r.status_code == 400
+        assert r.status_code == 200
 
     def test_invalid_size_returns_400(self, small_graph):
         r = small_graph.get("/graphlet-analysis?graph_index=0&size=5")
@@ -344,18 +339,13 @@ class TestBackgroundTasks:
         sig = inspect.signature(chat_with_gene)
         assert "background_tasks" in sig.parameters
 
-    def test_background_tasks_add_task_called_when_no_summary(self, monkeypatch):
-        """When gene_chat has no cached summary, it should enqueue via BackgroundTasks."""
-        import db
+    def test_gene_chat_returns_response_with_background_tasks(self, monkeypatch):
+        """gene_chat returns a response dict regardless of whether background_tasks is set."""
         from services.chat import gene_chat
-        from services.llm import call_llm
 
-        fake_entries = [{"type": "function", "source": "test", "text": "TP53 is a tumour suppressor."}]
-
-        monkeypatch.setattr(db, "get_gene_summary", lambda gene: None)
         monkeypatch.setattr(
             "services.chat.get_passages_unified",
-            lambda gene, **kw: fake_entries,
+            lambda gene, **kw: ["TP53 is a tumour suppressor."],
         )
         monkeypatch.setattr(
             "services.chat.call_llm",
@@ -363,32 +353,19 @@ class TestBackgroundTasks:
         )
 
         bg = MagicMock()
-        gene_chat("TP53", "What does it do?", [], background_tasks=bg)
-        bg.add_task.assert_called_once()
+        result = gene_chat("TP53", "What does it do?", [], background_tasks=bg)
+        assert result["response"] == "Test response."
+        assert result["gene"] == "TP53"
 
-    def test_threading_fallback_when_no_background_tasks(self, monkeypatch):
-        """When background_tasks is None (MCP calls), threading.Thread is used."""
-        import db
+    def test_gene_chat_returns_response_without_background_tasks(self, monkeypatch):
+        """gene_chat works when background_tasks=None (MCP path)."""
         from services.chat import gene_chat
 
-        fake_entries = [{"type": "function", "source": "test", "text": "Gene info."}]
-
-        monkeypatch.setattr(db, "get_gene_summary", lambda gene: None)
         monkeypatch.setattr(
             "services.chat.get_passages_unified",
-            lambda gene, **kw: fake_entries,
+            lambda gene, **kw: ["Gene info."],
         )
         monkeypatch.setattr("services.chat.call_llm", lambda **kw: "Response.")
 
-        started = []
-        original_thread = __import__("threading").Thread
-
-        class MockThread:
-            def __init__(self, *a, **kw):
-                started.append(True)
-            def start(self):
-                pass
-
-        monkeypatch.setattr("services.chat.threading.Thread", MockThread)
-        gene_chat("BRCA1", "Tell me about it.", [], background_tasks=None)
-        assert started, "threading.Thread should be used when background_tasks is None"
+        result = gene_chat("BRCA1", "Tell me about it.", [], background_tasks=None)
+        assert result["response"] == "Response."

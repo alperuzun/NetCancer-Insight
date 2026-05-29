@@ -39,6 +39,52 @@ import { useTheme } from '../context/ThemeContext'
 //   links: LinkObject[]
 // }
 
+// ── SVG export helpers (module-level, no React dependencies) ─────────────────
+
+function _svgEscape(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function _legendGradient(
+  x: number, y: number, barW: number,
+  title: string, gradId: string,
+  labels: Array<{ text: string; pct: number }>
+): string {
+  const BAR_H = 14, PAD = 14, BOX_W = barW + PAD * 2;
+  const BOX_H = PAD + 16 + 8 + BAR_H + 18 + PAD;
+  const labelY = (PAD + 20 + BAR_H + 14).toFixed(1);
+  const labelsStr = labels.map(l => {
+    const lx = (PAD + l.pct * barW).toFixed(1);
+    const anchor = l.pct === 0 ? 'start' : l.pct === 1 ? 'end' : 'middle';
+    return `<text x="${lx}" y="${labelY}" font-family="Helvetica Neue,Arial,sans-serif" font-size="10" text-anchor="${anchor}" fill="#6b7280">${_svgEscape(l.text)}</text>`;
+  }).join('');
+  return `<g transform="translate(${x},${y})">` +
+    `<rect x="0" y="0" width="${BOX_W}" height="${BOX_H}" rx="6" fill="white" stroke="#cccccc" stroke-width="1"/>` +
+    `<text x="${PAD}" y="${PAD + 12}" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" font-weight="600" fill="#1f2937">${_svgEscape(title)}</text>` +
+    `<rect x="${PAD}" y="${PAD + 20}" width="${barW}" height="${BAR_H}" fill="url(#${gradId})" rx="2"/>` +
+    labelsStr +
+    `</g>`;
+}
+
+function _legendSwatches(
+  x: number, y: number,
+  title: string,
+  items: Array<{ color: string; label: string }>
+): string {
+  const PAD = 14, SW = 12, ROW = 20, BOX_W = 190;
+  const BOX_H = PAD * 2 + 22 + items.length * ROW;
+  const swatchRows = items.map((item, i) => {
+    const iy = PAD + 22 + i * ROW;
+    return `<rect x="${PAD}" y="${iy}" width="${SW}" height="${SW}" rx="2" fill="${item.color}" stroke="#33333333" stroke-width="0.5"/>` +
+      `<text x="${PAD + SW + 8}" y="${(iy + SW * 0.8).toFixed(1)}" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#374151">${_svgEscape(item.label)}</text>`;
+  }).join('');
+  return `<g transform="translate(${x},${y})">` +
+    `<rect x="0" y="0" width="${BOX_W}" height="${BOX_H}" rx="6" fill="white" stroke="#cccccc" stroke-width="1"/>` +
+    `<text x="${PAD}" y="${PAD + 12}" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" font-weight="600" fill="#1f2937">${_svgEscape(title)}</text>` +
+    swatchRows +
+    `</g>`;
+}
+
 // Color scale function for cancer drivers
 const getColorForCancerDrivers = (count: number) => {
   if (count === 0) return '#ffa726' // Orange for 0
@@ -122,8 +168,10 @@ const ForceGraph = forwardRef(
       isFilterTouched = false,
       expressionData = null,
       selectedExpressionColumn = null,
+      log2Transform = false,
       nodeClusters = null,
       onSelectionChange,
+      onSimulationChange,
     }: {
       graph: { nodes: any[]; links: any[] };
       is3D: boolean;
@@ -138,8 +186,10 @@ const ForceGraph = forwardRef(
       isFilterTouched?: boolean;
       expressionData?: any | null;
       selectedExpressionColumn?: string | null;
+      log2Transform?: boolean;
       nodeClusters?: { [nodeId: string]: number } | null;
       onSelectionChange?: (genes: string[]) => void;
+      onSimulationChange?: (running: boolean) => void;
     },
     ref: React.Ref<any>
   ) => {
@@ -445,20 +495,17 @@ const ForceGraph = forwardRef(
     // Calculate expression value range when data changes
     useEffect(() => {
         if (selectedExpressionColumn && expressionData) {
-            const values = Object.keys(expressionData)
+            const values = (Object.keys(expressionData)
                 .map(geneId => expressionData[geneId][selectedExpressionColumn])
-                .filter(value => typeof value === 'number') as number[];
-
-            if (values.length > 0) {
-                setExpressionValueRange({
-                    min: Math.min(...values),
-                    max: Math.max(...values)
-                });
+                .filter(value => typeof value === 'number') as number[]);
+            const display = log2Transform ? values.map(v => Math.log2(Math.max(0, v) + 1)) : values;
+            if (display.length > 0) {
+                setExpressionValueRange({ min: Math.min(...display), max: Math.max(...display) });
             }
         } else {
             setExpressionValueRange(null);
         }
-    }, [expressionData, selectedExpressionColumn]);
+    }, [expressionData, selectedExpressionColumn, log2Transform]);
 
     // Updated getNodeColor to use cyan for hovered node
     const getNodeColor = useCallback((node: any) => {
@@ -483,10 +530,11 @@ const ForceGraph = forwardRef(
         if (selectedExpressionColumn && expressionData && expressionValueRange) {
             const geneId = node.id.toUpperCase();
             if (expressionData[geneId] && typeof expressionData[geneId][selectedExpressionColumn] === 'number') {
-                const value = expressionData[geneId][selectedExpressionColumn];
+                const raw = expressionData[geneId][selectedExpressionColumn];
+                const value = log2Transform ? Math.log2(Math.max(0, raw) + 1) : raw;
                 return getExpressionColor(value, expressionValueRange.min, expressionValueRange.max);
             }
-            return '#FFFFFF'; // White for nodes without this expression data
+            return '#94a3b8'; // Slate-400 — clearly distinct from the expression colour scale
         }
         const inSearchResults = searchResults.includes(node.id);
         const inSharedGenes = sharedGenes.includes(node.id);
@@ -507,7 +555,7 @@ const ForceGraph = forwardRef(
         }
     }, [
         nodeClusters,
-        isFilterTouched, showSharedGenes, searchResults, sharedGenes, expressionData, selectedExpressionColumn, expressionValueRange, selectedNodesFromPolygon, hoverNode
+        isFilterTouched, showSharedGenes, searchResults, sharedGenes, expressionData, selectedExpressionColumn, log2Transform, expressionValueRange, selectedNodesFromPolygon, hoverNode
     ]);
 
     const nodeCanvasObject = useCallback(
@@ -547,237 +595,222 @@ const ForceGraph = forwardRef(
     // Reverted handleEngineStop to its simpler form
     const handleEngineStop = useCallback(() => {
         onDrag?.();
+        onSimulationChange?.(false);
 
         // If we're in 3D mode and should zoom to fit, do it now
         if (is3D && shouldZoomToFit && fgRef.current) {
             fgRef.current.zoomToFit(1000, 50);
             setShouldZoomToFit(false);
         }
-    }, [onDrag, is3D, shouldZoomToFit]);
+    }, [onDrag, onSimulationChange, is3D, shouldZoomToFit]);
 
     // unify ref for both modes - This ref points to the library instance (ForceGraph2D or ForceGraph3D)
     const fgRef = useRef<any>(null);
 
-    // Add export functionality
-    const exportAsSVG = useCallback(() => {
-      if (!fgRef.current) return;
+    // Build a complete, publication-quality SVG string from current graph state.
+    // Used by both exportAsSVG (download .svg) and exportAsPNG (render to canvas at 3×).
+    const _buildSVG = useCallback((): string => {
+      if (!fgRef.current || !graph.nodes.length) return '';
 
-      // Get the current graph dimensions
       const bbox = fgRef.current.getGraphBbox();
-      if (!bbox || !Array.isArray(bbox.x) || !Array.isArray(bbox.y) || 
-          bbox.x.length !== 2 || bbox.y.length !== 2) {
-        console.error('Invalid graph bounding box format:', bbox);
-        return;
-      }
+      if (!bbox || !Array.isArray(bbox.x) || !Array.isArray(bbox.y) ||
+          bbox.x.length !== 2 || bbox.y.length !== 2) return '';
 
       const [x1, x2] = bbox.x;
       const [y1, y2] = bbox.y;
+      if (!isFinite(x1) || !isFinite(x2) || !isFinite(y1) || !isFinite(y2)) return '';
 
-      if (!isFinite(x1) || !isFinite(x2) || !isFinite(y1) || !isFinite(y2)) {
-        console.error('Invalid coordinates in bounding box:', { x1, x2, y1, y2 });
-        return;
+      const PAD = 80;
+      const LEGEND_GUTTER = 24;
+      const LEGEND_W = 208;
+      const graphW = Math.abs(x2 - x1) + PAD * 2;
+      const graphH = Math.abs(y2 - y1) + PAD * 2;
+      const totalW = graphW + LEGEND_GUTTER + LEGEND_W;
+      const totalH = Math.max(graphH, 300);
+      const offsetX = -x1 + PAD;
+      const offsetY = -y1 + PAD;
+
+      // Determine current visualization mode
+      const clusterItems = nodeClusters ? getClusterLegendItems(nodeClusters) : null;
+      const hasCluster = !!(clusterItems && clusterItems.length > 0);
+      const hasExpr = !!(selectedExpressionColumn && expressionValueRange);
+      const hasSelection = selectedNodesFromPolygon.length > 0;
+      const needsCancerGrad = !hasCluster && !hasExpr && !hasSelection && !isFilterTouched && !showSharedGenes;
+
+      // Node color without hover effect (exports are static)
+      const getExportNodeColor = (node: any): string => {
+        if (nodeClusters && nodeClusters[node.id] !== undefined) {
+          return clusterColors[nodeClusters[node.id] % clusterColors.length];
+        }
+        if (hasSelection) {
+          return selectedNodesFromPolygon.includes(node.id) ? '#00ffff' : '#ffffff';
+        }
+        if (hasExpr) {
+          const geneId = node.id.toUpperCase();
+          const raw = expressionData?.[geneId]?.[selectedExpressionColumn!];
+          if (typeof raw === 'number') {
+            const val = log2Transform ? Math.log2(Math.max(0, raw) + 1) : raw;
+            return getExpressionColor(val, expressionValueRange!.min, expressionValueRange!.max);
+          }
+          return '#94a3b8'; // no-data — same as canvas render
+        }
+        const inSearch = searchResults.includes(node.id);
+        const inShared = sharedGenes.includes(node.id);
+        if (isFilterTouched) {
+          if (inSearch && inShared && showSharedGenes) return '#33ff85';
+          if (inSearch) return '#ffff33';
+          return '#d3d3d3';
+        }
+        if (showSharedGenes) return inShared ? '#33ff85' : '#d3d3d3';
+        return getColorForCancerDrivers(node.cancer_drivers || 0);
+      };
+
+      // Gradient defs
+      const defsContent: string[] = [];
+      if (needsCancerGrad) {
+        defsContent.push(
+          `<linearGradient id="cancerGrad" x1="0" x2="1" y1="0" y2="0">` +
+          `<stop offset="0%" stop-color="#ffa726"/>` +
+          `<stop offset="100%" stop-color="#d32f2f"/>` +
+          `</linearGradient>`
+        );
+      }
+      if (hasExpr) {
+        defsContent.push(
+          `<linearGradient id="exprGrad" x1="0" x2="1" y1="0" y2="0">` +
+          `<stop offset="0%" stop-color="rgb(56,189,248)"/>` +
+          `<stop offset="50%" stop-color="rgb(255,255,255)"/>` +
+          `<stop offset="100%" stop-color="rgb(239,68,68)"/>` +
+          `</linearGradient>`
+        );
       }
 
-      const padding = 150;
-      const width = Math.abs(x2 - x1) + padding * 2;
-      const height = Math.abs(y2 - y1) + padding * 2;
-
-      // Create SVG element
-      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      svg.setAttribute('width', width.toString());
-      svg.setAttribute('height', height.toString());
-      svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
-
-      // Get the current graph state and ensure valid coordinates
-      const nodes = graph.nodes.map(node => {
-        if (!isFinite(node.x) || !isFinite(node.y)) {
-          console.warn(`Invalid coordinates for node ${node.id}:`, node);
-          return {
-            ...node,
-            x: width / 2,
-            y: height / 2
-          };
-        }
-        return {
-          ...node,
-          x: node.x - x1 + padding,
-          y: node.y - y1 + padding
-        };
-      });
-
-      // Add links
-      const linkGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-      graph.links.forEach(link => {
-        const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
-        const targetId = typeof link.target === 'object' ? link.target.id : link.target;
-        const source = nodes.find(n => n.id === sourceId);
-        const target = nodes.find(n => n.id === targetId);
-        
-        if (source && target && isFinite(source.x) && isFinite(source.y) && isFinite(target.x) && isFinite(target.y)) {
-          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-          line.setAttribute('x1', source.x.toString());
-          line.setAttribute('y1', source.y.toString());
-          line.setAttribute('x2', target.x.toString());
-          line.setAttribute('y2', target.y.toString());
-          line.setAttribute('stroke', getLinkStyle(link).color);
-          line.setAttribute('stroke-width', getLinkStyle(link).width.toString());
-          linkGroup.appendChild(line);
-        }
-      });
-      svg.appendChild(linkGroup);
-
-      // Add nodes
-      const nodeGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-      nodes.forEach(node => {
-        if (!isFinite(node.x) || !isFinite(node.y)) {
-          console.warn(`Skipping node ${node.id} due to invalid coordinates`);
-          return;
-        }
-
-        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        const degree = node.val || 1;
-        const minRadius = 8;
-        const maxRadius = 20;
-        const radius = Math.min(maxRadius, Math.max(minRadius, minRadius + degree * 2));
-
-        circle.setAttribute('cx', node.x.toString());
-        circle.setAttribute('cy', node.y.toString());
-        circle.setAttribute('r', radius.toString());
-        circle.setAttribute('fill', getNodeColor(node));
-        circle.setAttribute('stroke', '#00000088');
-        nodeGroup.appendChild(circle);
-
-        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        text.setAttribute('x', node.x.toString());
-        text.setAttribute('y', (node.y).toString());
-        text.setAttribute('text-anchor', 'middle');
-        text.setAttribute('font-size', '12');
-        text.textContent = node.id;
-        nodeGroup.appendChild(text);
-      });
-      svg.appendChild(nodeGroup);
-
-      // Add legend
-      if (selectedExpressionColumn && expressionValueRange) {
-        // Render Gradient Legend for expression data
-        const legendGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-        const legendX = width - 200;
-        const legendY = 20;
-
-        // Create a gradient definition
-        const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-        const linearGradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
-        linearGradient.setAttribute('id', 'expressionGradient');
-        linearGradient.setAttribute('x1', '0%');
-        linearGradient.setAttribute('y1', '0%');
-        linearGradient.setAttribute('x2', '100%');
-        linearGradient.setAttribute('y2', '0%');
-
-        const stops = [
-          { offset: '0%', color: 'rgb(0,0,255)' },
-          { offset: '50%', color: 'rgb(255,255,255)' },
-          { offset: '100%', color: 'rgb(255,0,0)' },
-        ];
-
-        stops.forEach(stopInfo => {
-          const stop = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
-          stop.setAttribute('offset', stopInfo.offset);
-          stop.setAttribute('stop-color', stopInfo.color);
-          linearGradient.appendChild(stop);
-        });
-        defs.appendChild(linearGradient);
-        svg.appendChild(defs);
-
-        // Legend title
-        const title = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        title.setAttribute('x', legendX.toString());
-        title.setAttribute('y', legendY.toString());
-        title.setAttribute('font-size', '14');
-        title.setAttribute('font-weight', 'bold');
-        title.textContent = selectedExpressionColumn;
-        legendGroup.appendChild(title);
-
-        // Gradient bar
-        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        rect.setAttribute('x', legendX.toString());
-        rect.setAttribute('y', (legendY + 10).toString());
-        rect.setAttribute('width', '180');
-        rect.setAttribute('height', '20');
-        rect.setAttribute('fill', 'url(#expressionGradient)');
-        legendGroup.appendChild(rect);
-
-        // Labels
-        const labels = [
-            { text: expressionValueRange.min.toFixed(2), x: legendX },
-            { text: ((expressionValueRange.min + expressionValueRange.max) / 2).toFixed(2), x: legendX + 90 },
-            { text: expressionValueRange.max.toFixed(2), x: legendX + 180 }
-        ];
-
-        labels.forEach(labelInfo => {
-            const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-            label.setAttribute('x', labelInfo.x.toString());
-            label.setAttribute('y', (legendY + 45).toString());
-            label.setAttribute('font-size', '12');
-            label.setAttribute('text-anchor', 'middle');
-            label.textContent = labelInfo.text;
-            legendGroup.appendChild(label);
-        });
-        svg.appendChild(legendGroup);
-
-      } else if (legendItems && legendItems.length > 0) {
-        // Render Static Legend
-        const legendGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-        const legendPadding = 20;
-        const boxSize = 18;
-        const spacing = 8;
-        const fontSize = 16;
-        const legendX = width - 200; // 200px from right
-        const legendY = legendPadding;
-
-        // Legend title
-        const title = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        title.setAttribute('x', legendX.toString());
-        title.setAttribute('y', (legendY + fontSize).toString());
-        title.setAttribute('font-size', (fontSize + 2).toString());
-        title.setAttribute('font-weight', 'bold');
-        title.textContent = 'Legend';
-        legendGroup.appendChild(title);
-
-        legendItems.forEach((item, i) => {
-          // Color box
-          const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-          rect.setAttribute('x', legendX.toString());
-          rect.setAttribute('y', (legendY + (i + 1) * (boxSize + spacing)).toString());
-          rect.setAttribute('width', boxSize.toString());
-          rect.setAttribute('height', boxSize.toString());
-          rect.setAttribute('fill', item.color);
-          rect.setAttribute('stroke', '#333');
-          legendGroup.appendChild(rect);
-
-          // Label
-          const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-          label.setAttribute('x', (legendX + boxSize + 10).toString());
-          label.setAttribute('y', (legendY + (i + 1) * (boxSize + spacing) + boxSize * 0.75).toString());
-          label.setAttribute('font-size', fontSize.toString());
-          label.textContent = item.label;
-          legendGroup.appendChild(label);
-        });
-        svg.appendChild(legendGroup);
+      // Links
+      const linkLines: string[] = [];
+      for (const link of graph.links) {
+        const sid = typeof link.source === 'object' ? link.source.id : link.source;
+        const tid = typeof link.target === 'object' ? link.target.id : link.target;
+        const s = graph.nodes.find(n => n.id === sid);
+        const t = graph.nodes.find(n => n.id === tid);
+        if (!s || !t || !isFinite(s.x) || !isFinite(s.y) || !isFinite(t.x) || !isFinite(t.y)) continue;
+        const lk = [sid, tid].sort().join('-');
+        const isInteraction = linksWithInteractions.has(lk);
+        linkLines.push(
+          `<line x1="${(s.x + offsetX).toFixed(1)}" y1="${(s.y + offsetY).toFixed(1)}"` +
+          ` x2="${(t.x + offsetX).toFixed(1)}" y2="${(t.y + offsetY).toFixed(1)}"` +
+          ` stroke="${isInteraction ? '#7c3aed' : '#94a3b8'}"` +
+          ` stroke-width="${isInteraction ? 2 : 0.8}" stroke-opacity="0.85"/>`
+        );
       }
 
-      // Serialize and download
-      const serializer = new XMLSerializer();
-      const svgString = serializer.serializeToString(svg);
-      const blob = new Blob([svgString], { type: 'image/svg+xml' });
+      // Nodes
+      const nodeElems: string[] = [];
+      for (const node of graph.nodes) {
+        if (!isFinite(node.x) || !isFinite(node.y)) continue;
+        const nx = (node.x + offsetX).toFixed(1);
+        const ny = (node.y + offsetY).toFixed(1);
+        const r = Math.min(20, Math.max(8, 8 + (node.val || 1) * 2));
+        const fill = getExportNodeColor(node);
+        nodeElems.push(
+          `<circle cx="${nx}" cy="${ny}" r="${r}" fill="${fill}" stroke="#00000055" stroke-width="1"/>` +
+          `<text x="${nx}" y="${ny}" text-anchor="middle" dominant-baseline="central"` +
+          ` font-family="Helvetica Neue,Arial,sans-serif" font-size="9" font-weight="500"` +
+          ` fill="#1e293b">${_svgEscape(node.id)}</text>`
+        );
+      }
+
+      // Legend
+      const LX = graphW + LEGEND_GUTTER;
+      const LY = 20;
+      let legendSVG = '';
+      if (hasExpr && expressionValueRange) {
+        const mid = (expressionValueRange.min + expressionValueRange.max) / 2;
+        const gradTitle = log2Transform ? `${selectedExpressionColumn!} (log₂)` : selectedExpressionColumn!;
+        // BOX_H from _legendGradient: PAD + 16 + 8 + BAR_H + 18 + PAD = 14+16+8+14+18+14 = 84
+        const GRAD_BOX_H = 84;
+        legendSVG = _legendGradient(LX, LY, 180, gradTitle, 'exprGrad', [
+          { text: expressionValueRange.min.toFixed(2), pct: 0 },
+          { text: mid.toFixed(2), pct: 0.5 },
+          { text: expressionValueRange.max.toFixed(2), pct: 1 },
+        ]);
+        // No-data swatch below gradient legend
+        const swY = LY + GRAD_BOX_H + 6;
+        legendSVG +=
+          `<g transform="translate(${LX},${swY})">` +
+          `<rect x="0" y="0" width="208" height="30" rx="6" fill="white" stroke="#cccccc" stroke-width="1"/>` +
+          `<rect x="14" y="9" width="12" height="12" rx="2" fill="#94a3b8"/>` +
+          `<text x="32" y="19.5" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#374151">Not measured</text>` +
+          `</g>`;
+      } else if (needsCancerGrad) {
+        legendSVG = _legendGradient(LX, LY, 180, 'Cancer Drivers', 'cancerGrad', [
+          { text: '0', pct: 0 },
+          { text: '1–2', pct: 0.5 },
+          { text: '≥3', pct: 1 },
+        ]);
+      } else if (hasCluster && clusterItems) {
+        legendSVG = _legendSwatches(LX, LY, 'Clusters', clusterItems);
+      } else if (legendItems.length > 0) {
+        legendSVG = _legendSwatches(LX, LY, 'Legend', legendItems);
+      }
+
+      return [
+        `<?xml version="1.0" encoding="UTF-8"?>`,
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${Math.ceil(totalW)}" height="${Math.ceil(totalH)}"` +
+          ` viewBox="0 0 ${Math.ceil(totalW)} ${Math.ceil(totalH)}">`,
+        `<defs>${defsContent.join('')}</defs>`,
+        `<rect width="${Math.ceil(totalW)}" height="${Math.ceil(totalH)}" fill="white"/>`,
+        `<g id="links">${linkLines.join('')}</g>`,
+        `<g id="nodes">${nodeElems.join('')}</g>`,
+        legendSVG,
+        `</svg>`,
+      ].join('\n');
+    }, [
+      graph, nodeClusters, selectedExpressionColumn, expressionData, log2Transform, expressionValueRange,
+      isFilterTouched, showSharedGenes, sharedGenes, searchResults,
+      selectedNodesFromPolygon, linksWithInteractions, legendItems,
+    ]);
+
+    const exportAsSVG = useCallback(() => {
+      const svgString = _buildSVG();
+      if (!svgString) return;
+      const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = `graph-${graphIndex}.svg`;
-      document.body.appendChild(link);
+      link.download = `network-graph-${graphIndex}.svg`;
       link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-    }, [graph.nodes, graph.links, graphIndex, getNodeColor, getLinkStyle, legendItems, selectedExpressionColumn, expressionValueRange]);
+      setTimeout(() => URL.revokeObjectURL(url), 5000);
+    }, [_buildSVG, graphIndex]);
+
+    const exportAsPNG = useCallback(() => {
+      const svgString = _buildSVG();
+      if (!svgString) return;
+      const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const img = new Image();
+      img.onload = () => {
+        const SCALE = 3;
+        const wMatch = svgString.match(/width="(\d+)"/);
+        const hMatch = svgString.match(/height="(\d+)"/);
+        const w = wMatch ? parseInt(wMatch[1], 10) : 800;
+        const h = hMatch ? parseInt(hMatch[1], 10) : 600;
+        const canvas = document.createElement('canvas');
+        canvas.width = w * SCALE;
+        canvas.height = h * SCALE;
+        const ctx = canvas.getContext('2d')!;
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.scale(SCALE, SCALE);
+        ctx.drawImage(img, 0, 0, w, h);
+        URL.revokeObjectURL(url);
+        const link = document.createElement('a');
+        link.download = `network-graph-${graphIndex}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      };
+      img.onerror = () => URL.revokeObjectURL(url);
+      img.src = url;
+    }, [_buildSVG, graphIndex]);
 
     // Expose necessary properties and methods to the ref received from the parent (Program.tsx)
     useImperativeHandle(ref, () => ({
@@ -802,12 +835,14 @@ const ForceGraph = forwardRef(
       // Add other methods from the library instance that Program.tsx might need to call
       // ... (add any other methods called on fgRef.current in Program.tsx) ...
       exportAsSVG,
+      exportAsPNG,
       selectGenes: (genes: string[]) => setSelectedNodesFromPolygon(genes),
     }));
 
     // adjust forces and initial centering on data change
     useEffect(() => {
       if (!graph?.nodes?.length) return
+      onSimulationChange?.(true)
       setTimeout(() => {
         try {
           if (is3D && fgRef.current) {
@@ -833,7 +868,7 @@ const ForceGraph = forwardRef(
           console.warn('Force simulation update failed:', e)
         }
       }, 0)
-    }, [graph, is3D])
+    }, [graph, is3D, onSimulationChange])
 
     // Handle 3D mode switch specifically
     useEffect(() => {

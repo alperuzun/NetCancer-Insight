@@ -8,7 +8,6 @@ import ComparativeAnalysis from './ComparativeAnalysis'
 import { fetchGraph, getExpressionData, uploadFileDirect, clusterGraph } from '../services/api'
 import FilterPanel from './FilterPanel'
 import NetworkStatsPanel from './NetworkStatsPanel'
-import html2canvas from 'html2canvas-pro'
 import { useTheme } from '../context/ThemeContext'
 // Import Canvas2Image - adjust import based on actual package export if needed
 // import * as Canvas2Image from 'canvas2image-2'
@@ -39,6 +38,8 @@ interface ProgramProps {
   expressionDataVersion: number;
   /** Called when user extracts a subgraph — parent can load it into the other panel */
   onSubgraphCreate?: (graph: { nodes: any[]; links: any[] }) => void;
+  /** Called with true when physics sim starts, false when it settles */
+  onSimulationChange?: (running: boolean) => void;
 }
 
 // Helper function to convert oklch to rgb
@@ -75,6 +76,7 @@ const Program = forwardRef<any, ProgramProps>(({
   onGraphChange,
   expressionDataVersion,
   onSubgraphCreate: _onSubgraphCreate,
+  onSimulationChange,
 }, ref) => {
   const { colors } = useTheme()
   const [is3D, setIs3D] = useState(false)
@@ -99,7 +101,7 @@ const Program = forwardRef<any, ProgramProps>(({
   const [expressionData, setExpressionData] = useState<any | null>(null);
   const [expressionColumns, setExpressionColumns] = useState<string[]>([]);
   const [selectedExpressionColumn, setSelectedExpressionColumn] = useState<string | null>(null);
-  const legendRef = useRef<HTMLDivElement>(null);
+  const [log2Transform, setLog2Transform] = useState(false);
   // Clustering state
   const [selectedClustering, setSelectedClustering] = useState<string>('none');
   const [nodeClusters, setNodeClusters] = useState<{ [nodeId: string]: number } | null>(null);
@@ -186,6 +188,7 @@ const Program = forwardRef<any, ProgramProps>(({
             setExpressionData(null);
             setExpressionColumns([]);
             setSelectedExpressionColumn(null);
+            setLog2Transform(false);
           }
         } catch (error) {
           setExpressionData(null);
@@ -384,102 +387,14 @@ const Program = forwardRef<any, ProgramProps>(({
     onGraphChange(prev);
   };
 
-  const handleExportGraph = async () => {
-    if (!fgRef.current || !containerRef.current || !legendRef.current) {
-      console.error('Export failed: Graph or legend ref not available.');
-      return;
-    }
-    
-    try {
-      // Add a small delay to ensure the graph is fully rendered
-      await new Promise(resolve => setTimeout(resolve, 100));
-
-      // A) Grab the graph's canvas using the exposed property
-      const graphCanvas = fgRef.current.canvasElement as HTMLCanvasElement | null;
-      if (!graphCanvas) {
-        console.error('Export failed: ForceGraph canvas element not found via ref.');
-        return;
-      }
-
-      // B) Grab the legend DOM node using the ref
-      const legendEl = legendRef.current;
-      
-      // C) Snapshot legend into its own canvas using html2canvas-pro
-      const legendSnapshotCanvas = await html2canvas(legendEl, {
-        backgroundColor: '#ffffff', // Use white background for legend snapshot
-        useCORS: true,
-        allowTaint: true,
-        logging: true,
-      });
-
-      // D) Create a master canvas that fits both graph + legend
-      const graphRect = graphCanvas.getBoundingClientRect();
-      const legendRect = legendSnapshotCanvas.getBoundingClientRect();
-      
-      // Calculate master canvas dimensions
-      const masterWidth = graphRect.width; // Match graph width
-      const spacing = 20; // Space between graph and legend
-      const masterHeight = graphRect.height + legendRect.height + spacing; 
-
-      const masterCanvas = document.createElement('canvas');
-      masterCanvas.width = masterWidth * 2; // Increase resolution
-      masterCanvas.height = masterHeight * 2; // Increase resolution
-      const ctx = masterCanvas.getContext('2d');
-
-      if (!ctx) {
-        console.error('Export failed: Could not get 2D context for master canvas.');
-        return;
-      }
-
-      // E) Draw the graph's pixels onto the master canvas
-      ctx.drawImage(
-        graphCanvas,
-        0, // source x
-        0, // source y
-        graphRect.width, // source width
-        graphRect.height, // source height
-        0, // destination x
-        0, // destination y
-        masterWidth * 2, // destination width (scaled)
-        graphRect.height * 2 // destination height (scaled)
-      );
-
-      // F) Draw the legend snapshot right below, with a gap
-      ctx.drawImage(
-        legendSnapshotCanvas,
-        0, // source x
-        0, // source y
-        legendRect.width, // source width
-        legendRect.height, // source height
-        0, // destination x (align with graph left)
-        (graphRect.height + spacing) * 2, // destination y (below graph, scaled)
-        legendRect.width * 2, // destination width (scaled)
-        legendRect.height * 2 // destination height (scaled)
-      );
-
-      // G) Download the combined PNG
-      const dataUrl = masterCanvas.toDataURL('image/png');
-
-      const link = document.createElement('a');
-      link.download = `graph-with-legend-${panelIndex}-${new Date().toISOString()}.png`;
-      link.href = dataUrl;
-      link.click();
-
-      // No temporary container to clean up in this approach
-
-    } catch (error) {
-      console.error('Error exporting graph with legend:', error);
-    }
-  };
+  const handleExportGraph = () => fgRef.current?.exportAsPNG();
 
   // Expose methods through ref
   useImperativeHandle(ref, () => ({
     handleExportGraph,
-    exportAsSVG: () => {
-      if (fgRef.current) {
-        fgRef.current.exportAsSVG();
-      }
-    }
+    exportAsSVG: () => fgRef.current?.exportAsSVG(),
+    exportAsPNG: () => fgRef.current?.exportAsPNG(),
+    selectGene: (gene: string) => fgRef.current?.selectGenes([gene]),
   }));
 
   return (
@@ -636,9 +551,10 @@ const Program = forwardRef<any, ProgramProps>(({
                   const rows = graph.links.map((link: any) => {
                     const src = typeof link.source === 'object' ? link.source.id : link.source;
                     const tgt = typeof link.target === 'object' ? link.target.id : link.target;
-                    return `${src},${tgt}`;
+                    const w = link.weight ?? 1;
+                    return `${src},${tgt},${w}`;
                   });
-                  const csv = ['gene1,gene2', ...rows].join('\n');
+                  const csv = ['gene1,gene2,weight', ...rows].join('\n');
                   const blob = new Blob([csv], { type: 'text/csv' });
                   const url = URL.createObjectURL(blob);
                   const a = document.createElement('a');
@@ -683,6 +599,8 @@ const Program = forwardRef<any, ProgramProps>(({
                 expressionColumns={expressionColumns}
                 selectedExpressionColumn={selectedExpressionColumn}
                 onExpressionColumnChange={setSelectedExpressionColumn}
+                log2Transform={log2Transform}
+                onLog2TransformChange={setLog2Transform}
                 clusteringOptions={clusteringOptions}
                 selectedClustering={selectedClustering}
                 onClusteringChange={clusteringLoading ? () => {} : handleClusteringChange}
@@ -691,6 +609,23 @@ const Program = forwardRef<any, ProgramProps>(({
               {clusteringLoading && (
                 <div style={{ marginTop: 4, fontSize: 11, color: colors.accent }}>Clustering…</div>
               )}
+              {expressionData && graph.nodes.length > 0 && (() => {
+                const mapped = graph.nodes.filter((n: any) => expressionData[n.id.toUpperCase()]).length;
+                const pct = Math.round((mapped / graph.nodes.length) * 100);
+                const ok = pct >= 50;
+                return (
+                  <div style={{
+                    marginTop: 4, fontSize: 11, fontWeight: 500,
+                    color: ok ? colors.accent : '#f59e0b',
+                    background: colors.bgPanel,
+                    border: `1px solid ${ok ? colors.accent + '44' : '#f59e0b44'}`,
+                    borderRadius: 5, padding: '3px 8px',
+                    display: 'inline-block',
+                  }}>
+                    Expression: {mapped}/{graph.nodes.length} genes mapped ({pct}%)
+                  </div>
+                );
+              })()}
               <NetworkStatsPanel graph={graph} />
             </div>
             <div className="w-full h-full">
@@ -709,8 +644,10 @@ const Program = forwardRef<any, ProgramProps>(({
                 sharedGenes={sharedGenes}
                 expressionData={expressionData}
                 selectedExpressionColumn={selectedExpressionColumn}
+                log2Transform={log2Transform}
                 nodeClusters={nodeClusters}
                 onSelectionChange={setSelectedGenes}
+                onSimulationChange={onSimulationChange}
               />
             </div>
           </div>

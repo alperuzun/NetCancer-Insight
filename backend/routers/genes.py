@@ -1,10 +1,13 @@
 """Gene detail, interaction, and enrichment routes."""
 import concurrent.futures
+import logging
 import os
 
 from bioservices import KEGG
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
+
+log = logging.getLogger(__name__)
 
 import db
 import state
@@ -47,8 +50,9 @@ def get_gene_details(gene_name: str):
         )
     try:
         return {"gene": gene, "data": clean_gene_info(info)}
-    except Exception as exc:
-        return JSONResponse(status_code=500, content={"error": str(exc), "gene": gene_name})
+    except Exception:
+        log.exception("clean_gene_info failed for %s", gene_name)
+        return JSONResponse(status_code=500, content={"error": "Internal server error", "gene": gene_name})
 
 
 @router.get("/interaction/{gene1}/{gene2}")
@@ -81,8 +85,9 @@ def get_gene_enrichment(gene_symbol: str):
             status_code=504,
             content={"message": f"KEGG lookup timed out for {gene_symbol}. Try again later."},
         )
-    except Exception as exc:
+    except Exception:
+        log.exception("KEGG fetch failed for %s", gene_symbol)
         return JSONResponse(
             status_code=500,
-            content={"message": f"Failed to fetch enrichment for {gene_symbol}: {exc}"},
+            content={"message": f"Failed to fetch enrichment for {gene_symbol}. Try again later."},
         )

@@ -118,6 +118,9 @@ export default function SplitPanelLayout() {
   const [isExportSelectorOpen, setIsExportSelectorOpen] = useState(false);
   const [exportType, setExportType] = useState<'PNG' | 'SVG' | null>(null);
   const [showLLMSettings, setShowLLMSettings] = useState(false);
+  const [sim1Running, setSim1Running] = useState(false);
+  const [sim2Running, setSim2Running] = useState(false);
+  const simRunning = sim1Running || (showSecond && sim2Running);
 
   // Sidebar active section
   const [activeSection, setActiveSection] = useState<'analyze' | 'settings'>('analyze');
@@ -414,8 +417,8 @@ export default function SplitPanelLayout() {
             NetCancer Insight
           </span>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-            <TopBarBtn label="Export PNG" onClick={doExportPNG} colors={colors} />
-            <TopBarBtn label="Export SVG" onClick={doExportSVG} colors={colors} />
+            {hasUploaded1 && <TopBarBtn label="Export PNG" onClick={doExportPNG} colors={colors} disabled={simRunning} />}
+            {hasUploaded1 && <TopBarBtn label="Export SVG" onClick={doExportSVG} colors={colors} disabled={simRunning} />}
             {showSecond && hasUploaded1 && hasUploaded2 && (
               <TopBarBtn label="Comparative Analysis" onClick={() => setShowComparativeAnalysis(true)} colors={colors} />
             )}
@@ -432,7 +435,7 @@ export default function SplitPanelLayout() {
                 )}
                 <Program
                   ref={program1Ref}
-                  onUploaded={() => setHasUploaded1(true)}
+                  onUploaded={() => { setHasUploaded1(true); setExpressionDataVersion(v => v + 1); }}
                   paneSplit={showSecond}
                   panelIndex={0}
                   searchQuery={searchQuery1}
@@ -446,6 +449,7 @@ export default function SplitPanelLayout() {
                   onGraphChange={setGraph1}
                   expressionDataVersion={expressionDataVersion}
                   onSubgraphCreate={handleSubgraphCreate(0)}
+                  onSimulationChange={setSim1Running}
                 />
               </div>
             </Panel>
@@ -467,7 +471,7 @@ export default function SplitPanelLayout() {
                     <PanelLabel label="Panel 2" onClose={() => handleClosePanel(1)} colors={colors} />
                     <Program
                       ref={program2Ref}
-                      onUploaded={() => setHasUploaded2(true)}
+                      onUploaded={() => { setHasUploaded2(true); setExpressionDataVersion(v => v + 1); }}
                       paneSplit={showSecond}
                       panelIndex={1}
                       searchQuery={searchQuery2}
@@ -481,6 +485,7 @@ export default function SplitPanelLayout() {
                       onGraphChange={setGraph2}
                       expressionDataVersion={expressionDataVersion}
                       onSubgraphCreate={handleSubgraphCreate(1)}
+                      onSimulationChange={setSim2Running}
                     />
                   </div>
                 </Panel>
@@ -494,12 +499,16 @@ export default function SplitPanelLayout() {
       <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileChange} accept=".csv" />
       <input type="file" ref={sessionInputRef} style={{ display: 'none' }} onChange={handleLoadSession} accept=".json" />
 
-      {/* Modals */}
+      {/* Comparative Analysis drawer — fixed right panel, non-blocking */}
       {showComparativeAnalysis && (
         <ComparativeAnalysis
           onClose={() => setShowComparativeAnalysis(false)}
           graph1={graph1}
           graph2={graph2}
+          onHubGeneClick={(gene) => {
+            program1Ref.current?.selectGene?.(gene);
+            program2Ref.current?.selectGene?.(gene);
+          }}
         />
       )}
       <ExpressionColumnSelectorModal
@@ -529,22 +538,24 @@ export default function SplitPanelLayout() {
 
 // ── Small helpers ─────────────────────────────────────────────────────────────
 
-function TopBarBtn({ label, onClick, colors }: { label: string; onClick: () => void; colors: ReturnType<typeof useTheme>['colors'] }) {
+function TopBarBtn({ label, onClick, colors, disabled }: { label: string; onClick: () => void; colors: ReturnType<typeof useTheme>['colors']; disabled?: boolean }) {
   const [hov, setHov] = useState(false);
   return (
     <button
-      onClick={onClick}
-      onMouseEnter={() => setHov(true)}
+      onClick={disabled ? undefined : onClick}
+      onMouseEnter={() => !disabled && setHov(true)}
       onMouseLeave={() => setHov(false)}
+      title={disabled ? 'Waiting for physics to settle…' : undefined}
       style={{
         fontSize: 12,
         fontWeight: 500,
         padding: '4px 10px',
         borderRadius: 6,
         border: `1px solid ${colors.border}`,
-        background: hov ? colors.bgHover : 'transparent',
-        color: colors.textMuted,
-        cursor: 'pointer',
+        background: hov && !disabled ? colors.bgHover : 'transparent',
+        color: disabled ? colors.textMuted : colors.textMuted,
+        opacity: disabled ? 0.4 : 1,
+        cursor: disabled ? 'not-allowed' : 'pointer',
         transition: 'all 0.15s',
       }}
     >

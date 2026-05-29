@@ -23,6 +23,8 @@ llm_data/
 # │  Runtime data (Docker volumes)
 # └───────────────────────────
 data/db.sqlite
+data/db.sqlite-shm
+data/db.sqlite-wal
 data/chroma/*
 !data/chroma/.gitkeep
 

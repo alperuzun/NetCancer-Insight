@@ -1,12 +1,14 @@
+import logging
 import os
 import sys
 from contextlib import asynccontextmanager
 
 from dotenv import load_dotenv
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel
+from starlette.middleware.base import BaseHTTPMiddleware
 
 load_dotenv()
 
@@ -39,20 +41,30 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="NetCancer-Insight API", lifespan=lifespan)
 
 # ── CORS ─────────────────────────────────────────────────────────────────────
-_origins = [
-    "http://localhost:5173",
-    "http://localhost:3000",
-    os.getenv("FRONTEND_ORIGIN", ""),
-]
-allowed_origins = [o.rstrip("/") for o in _origins if o]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,
+    allow_origins=["http://localhost:5173", "http://localhost:3000"],
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "DELETE"],
+    allow_headers=["Content-Type", "X-API-Key"],
 )
+
+# ── Optional API key auth ─────────────────────────────────────────────────────
+# Set API_KEY in .env to require all requests to include X-API-Key header.
+# Leave unset for local single-user use (no auth required).
+_API_KEY = os.getenv("API_KEY", "").strip()
+
+if _API_KEY:
+    _UNPROTECTED = {"/", "/docs", "/openapi.json", "/redoc"}
+
+    class _APIKeyMiddleware(BaseHTTPMiddleware):
+        async def dispatch(self, request: Request, call_next):
+            if request.url.path not in _UNPROTECTED:
+                if request.headers.get("X-API-Key") != _API_KEY:
+                    return JSONResponse(status_code=401, content={"message": "Unauthorized"})
+            return await call_next(request)
+
+    app.add_middleware(_APIKeyMiddleware)
 
 # ── Routers ───────────────────────────────────────────────────────────────────
 app.include_router(graph.router)

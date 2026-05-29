@@ -17,6 +17,8 @@ interface FilterPanelProps {
   expressionColumns: string[];
   selectedExpressionColumn: string | null;
   onExpressionColumnChange: (column: string | null) => void;
+  log2Transform?: boolean;
+  onLog2TransformChange?: (v: boolean) => void;
   clusteringOptions: string[];
   selectedClustering: string;
   onClusteringChange: (algorithm: string) => void;
@@ -86,6 +88,8 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   expressionColumns,
   selectedExpressionColumn,
   onExpressionColumnChange,
+  log2Transform = false,
+  onLog2TransformChange,
   clusteringOptions,
   selectedClustering,
   onClusteringChange,
@@ -229,6 +233,21 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
                   <span style={{ fontSize: 12, color: colors.textMuted }}>{col}</span>
                 </label>
               ))}
+              {selectedExpressionColumn && onLog2TransformChange && (
+                <label style={{
+                  display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer',
+                  marginTop: 4, paddingTop: 6,
+                  borderTop: `1px solid ${colors.border}`,
+                }}>
+                  <input
+                    type="checkbox"
+                    checked={log2Transform}
+                    onChange={e => onLog2TransformChange(e.target.checked)}
+                    style={{ accentColor: colors.accent, width: 12, height: 12 }}
+                  />
+                  <span style={{ fontSize: 12, color: colors.textMuted }}>Log₂(x+1) transform</span>
+                </label>
+              )}
             </Section>
           )}
 

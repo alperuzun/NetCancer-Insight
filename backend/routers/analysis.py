@@ -5,7 +5,7 @@ from fastapi.responses import JSONResponse
 
 import state
 from models import ClusterRequest
-from orca_integration import analyze_graphlets_3_orca, analyze_graphlets_4_orca
+from graphlets import analyze_3node, analyze_4node
 
 try:
     import community as community_louvain
@@ -32,13 +32,11 @@ def _build_nx_graph(graph_data: dict) -> nx.Graph:
 
 
 def _run_graphlet_analysis(graph_index: int, size: int) -> dict:
-    """Core analysis logic. Raises ValueError if the graph is too large for brute-force."""
     cache_key = f"{graph_index}_{size}"
     if cache_key in state.graphlet_cache:
         return state.graphlet_cache[cache_key]
-
     G = _build_nx_graph(state.current_graphs[graph_index])
-    result = analyze_graphlets_4_orca(G) if size == 4 else analyze_graphlets_3_orca(G)
+    result = analyze_4node(G) if size == 4 else analyze_3node(G)
     state.graphlet_cache[cache_key] = result
     return result
 
@@ -49,11 +47,7 @@ def perform_graphlet_analysis(graph_index: int = 0, size: int = 3):
         return JSONResponse(status_code=400, content={"message": "graph_index must be 0 or 1"})
     if size not in (3, 4):
         return JSONResponse(status_code=400, content={"message": "Graphlet size must be 3 or 4"})
-
-    try:
-        return _run_graphlet_analysis(graph_index, size)
-    except ValueError as exc:
-        return JSONResponse(status_code=400, content={"message": str(exc)})
+    return _run_graphlet_analysis(graph_index, size)
 
 
 @router.get("/compare-graphlets")
@@ -63,11 +57,8 @@ def compare_graphlets(graph_index1: int = 0, graph_index2: int = 1, size: int = 
     if size not in (3, 4):
         return JSONResponse(status_code=400, content={"message": "Graphlet size must be 3 or 4"})
 
-    try:
-        a1 = _run_graphlet_analysis(graph_index1, size)
-        a2 = _run_graphlet_analysis(graph_index2, size)
-    except ValueError as exc:
-        return JSONResponse(status_code=400, content={"message": str(exc)})
+    a1 = _run_graphlet_analysis(graph_index1, size)
+    a2 = _run_graphlet_analysis(graph_index2, size)
 
     f1 = a1.get("frequencies", {})
     f2 = a2.get("frequencies", {})

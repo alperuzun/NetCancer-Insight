@@ -3,6 +3,7 @@ Global application state: in-memory graph store and static gene databases.
 Mutable per-upload data (graphs, caches, expression) is persisted via db.py.
 """
 import os
+import threading
 from typing import Dict, Optional, Set
 
 from file_utils import update_gene_data_dict, update_link_data_dict
@@ -23,6 +24,9 @@ current_graphs  = [{"nodes": [], "links": []}, {"nodes": [], "links": []}]
 
 graphlet_cache: Dict[str, dict] = {}
 shared_genes_cache: Optional[Set[str]] = None
+
+# One lock per graph slot — acquire before any read-modify-write on graph state.
+graph_locks = [threading.Lock(), threading.Lock()]
 
 # ── Static gene & interaction databases ──────────────────────────────────────
 # Loaded once at import time from the read-only gene_data/ files.

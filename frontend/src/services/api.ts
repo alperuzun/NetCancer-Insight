@@ -1,52 +1,15 @@
 import axios from 'axios'
 
-const inferDefaultApiBase = () => {
-  if (typeof window !== 'undefined') {
-    const { protocol, hostname } = window.location
-    return `${protocol}//${hostname}:8000`
-  }
-  return 'http://localhost:8000'
-}
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || inferDefaultApiBase()
+const API_BASE_URL = 'http://localhost:8000'
 
 const API = axios.create({
   baseURL: API_BASE_URL,
   withCredentials: true,
   timeout: 15000,
+  headers: import.meta.env.VITE_API_KEY
+    ? { 'X-API-Key': import.meta.env.VITE_API_KEY }
+    : {},
 });
-
-// Add request interceptor for logging
-API.interceptors.request.use(request => {
-  console.log('API Request:', {
-    url: request.url,
-    method: request.method,
-    params: request.params,
-    data: request.data
-  });
-  return request;
-});
-
-// Add response interceptor for logging
-API.interceptors.response.use(
-  response => {
-    console.log('API Response:', {
-      url: response.config.url,
-      status: response.status,
-      data: response.data
-    });
-    return response;
-  },
-  error => {
-    console.error('API Error:', {
-      url: error.config?.url,
-      status: error.response?.status,
-      data: error.response?.data,
-      message: error.message
-    });
-    return Promise.reject(error);
-  }
-);
 
 export const uploadFileDirect = async (file: File, graphIndex: number) => {
   const formData = new FormData();
@@ -126,7 +89,8 @@ export const getComparativeAnalysis = async (graphIndex1: number, graphIndex2: n
     params: {
       graph_index1: graphIndex1,
       graph_index2: graphIndex2,
-    }
+    },
+    timeout: 120000,
   });
   return response;
 }
@@ -165,7 +129,10 @@ export const streamChatMessage = (
 ): Promise<Response> => {
   return fetch(`${API_BASE_URL}/chat/stream`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      ...(import.meta.env.VITE_API_KEY ? { 'X-API-Key': import.meta.env.VITE_API_KEY } : {}),
+    },
     credentials: 'include',
     body: JSON.stringify({ gene, message, conversation_history }),
   });

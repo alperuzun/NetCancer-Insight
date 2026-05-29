@@ -14,7 +14,6 @@ BM25_CACHE_PATH  Path to persist the BM25 index (default: <chroma_dir>/bm25_inde
 import glob
 import json
 import os
-import pickle
 import re
 from functools import lru_cache
 from typing import List, Optional
@@ -41,7 +40,7 @@ CHUNKS_DIR = os.getenv(
 )
 BM25_CACHE_PATH = os.getenv(
     "BM25_CACHE_PATH",
-    os.path.join(CHROMA_DIR, "bm25_index.pkl"),
+    os.path.join(CHROMA_DIR, "bm25_index.json"),
 )
 
 
@@ -69,14 +68,14 @@ def _build_bm25():
     """
     collection = _get_collection()
 
-    # Try to load from disk first
+    # Try to load from disk first (JSON cache — no pickle, no arbitrary code execution)
     if os.path.exists(BM25_CACHE_PATH):
         try:
-            with open(BM25_CACHE_PATH, "rb") as fh:
-                cached = pickle.load(fh)
-            # Validate that the saved index has the same document count
+            with open(BM25_CACHE_PATH) as fh:
+                cached = json.load(fh)
             if cached.get("count") == collection.count():
-                return cached["bm25"], cached["ids"], cached["docs"], cached["metas"]
+                bm25 = BM25Okapi(cached["tokenized"])
+                return bm25, cached["ids"], cached["docs"], cached["metas"]
         except Exception:
             pass  # Corrupt cache — rebuild below
 
@@ -87,13 +86,13 @@ def _build_bm25():
     tokenized = [_tokenize(d) for d in all_docs]
     bm25 = BM25Okapi(tokenized)
 
-    # Persist so future startups skip the build step
+    # Persist so future startups skip the ChromaDB fetch + tokenize step
     try:
         os.makedirs(os.path.dirname(BM25_CACHE_PATH), exist_ok=True)
-        with open(BM25_CACHE_PATH, "wb") as fh:
-            pickle.dump(
-                {"bm25": bm25, "ids": all_ids, "docs": all_docs, "metas": all_metas,
-                 "count": collection.count()},
+        with open(BM25_CACHE_PATH, "w") as fh:
+            json.dump(
+                {"ids": all_ids, "docs": all_docs, "metas": all_metas,
+                 "tokenized": tokenized, "count": collection.count()},
                 fh,
             )
     except Exception:
@@ -106,15 +105,16 @@ def _build_bm25():
 
 def invalidate_bm25_cache() -> None:
     """
-    Drop the in-memory BM25 index and delete the on-disk pickle.
+    Drop the in-memory BM25 index and delete the on-disk JSON cache.
     Call after adding new documents to ChromaDB so the next retrieval
     rebuilds the index with the new data included.
     """
     _build_bm25.cache_clear()
-    try:
-        os.remove(BM25_CACHE_PATH)
-    except FileNotFoundError:
-        pass
+    for path in (BM25_CACHE_PATH, BM25_CACHE_PATH.replace(".json", ".pkl")):
+        try:
+            os.remove(path)
+        except FileNotFoundError:
+            pass
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
