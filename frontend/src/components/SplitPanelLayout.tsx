@@ -12,6 +12,7 @@ import TargetGraphSelectorModal from './TargetGraphSelectorModal'
 import LLMSettingsModal from './LLMSettingsModal'
 import Papa from 'papaparse'
 import { useTheme } from '../context/ThemeContext'
+import { BrandMark } from './BrandMark'
 
 // ── Sidebar ───────────────────────────────────────────────────────────────────
 
@@ -329,21 +330,11 @@ export default function SplitPanelLayout() {
         }}
       >
         {/* Logo */}
-        <div
-          style={{
-            width: 40,
-            height: 40,
-            borderRadius: 11,
-            background: `linear-gradient(135deg, ${colors.accent}, #818cf8)`,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginBottom: 20,
-            flexShrink: 0,
-          }}
-        >
-          <Network size={20} color="#fff" />
-        </div>
+        <BrandMark
+          size={40}
+          gradient={`linear-gradient(135deg, ${colors.accent}, #818cf8)`}
+          style={{ marginBottom: 20 }}
+        />
 
         {/* Nav items */}
         <div style={{ flex: 1, width: '100%' }}>

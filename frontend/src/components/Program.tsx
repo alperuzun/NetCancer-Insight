@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react'
-import { Upload, Box, ZoomIn, BarChart2, Scissors, Download } from 'lucide-react'
+import { Upload, Box, ZoomIn, BarChart2, Scissors, Download, ChevronUp, ChevronDown } from 'lucide-react'
 import UploadFile from './UploadFile'
 import ForceGraph from './ForceGraph'
 import GeneTableModal from './GeneTableModal'
@@ -85,6 +85,7 @@ const Program = forwardRef<any, ProgramProps>(({
 
   const [showGraphletAnalysis, setShowGraphletAnalysis] = useState(false)
   const [showComparativeAnalysis, setShowComparativeAnalysis] = useState(false)
+  const [toolbarCollapsed, setToolbarCollapsed] = useState(false)
   const [genes, setGenes] = useState<string[]>([])
   const [rightBoundary, setRightBoundary] = useState(16)
   const fgRef = useRef<any>(null)
@@ -438,7 +439,50 @@ const Program = forwardRef<any, ProgramProps>(({
         </div>
       ) : (
         <>
-          {/* Toolbar */}
+          {/* Toolbar — collapsible */}
+          {toolbarCollapsed ? (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '4px 10px',
+                background: colors.bgPanel,
+                borderBottom: `1px solid ${colors.border}`,
+                zIndex: 10,
+                position: 'relative',
+                gap: 8,
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 10,
+                  fontWeight: 600,
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  color: colors.textFaint,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                Graph Tools
+              </span>
+              <button
+                onClick={() => setToolbarCollapsed(false)}
+                title="Show Tools"
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 5,
+                  padding: '4px 9px', borderRadius: 6,
+                  background: colors.bgPanelSecondary,
+                  color: colors.textMuted,
+                  border: `1px solid ${colors.border}`,
+                  fontSize: 12, cursor: 'pointer',
+                }}
+              >
+                <ChevronDown size={13} />
+                Show Tools
+              </button>
+            </div>
+          ) : (
           <div
             style={{
               display: 'flex',
@@ -518,8 +562,26 @@ const Program = forwardRef<any, ProgramProps>(({
                   Extract Subgraph ({selectedGenes.length})
                 </button>
               )}
+
+              {/* Collapse toolbar */}
+              <button
+                onClick={() => setToolbarCollapsed(true)}
+                title="Hide toolbar"
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 5,
+                  padding: '4px 9px', borderRadius: 6,
+                  background: 'transparent',
+                  color: colors.textMuted,
+                  border: `1px solid ${colors.border}`,
+                  fontSize: 12, cursor: 'pointer',
+                }}
+              >
+                <ChevronUp size={13} />
+                Hide
+              </button>
             </div>
           </div>
+          )}
           {/* Drill-down breadcrumb */}
           {graphStack.length > 0 && (
             <div

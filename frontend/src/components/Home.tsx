@@ -5,6 +5,7 @@ import affil1 from '../assets/Brown_logo.png';
 import affil2 from '../assets/Legoretta.png';
 import affil3 from '../assets/WarrenAlpert_logo.png';
 import LLMTestButton from './LLMTestButton';
+import { BrandMark } from './BrandMark';
 
 // --- Parallax helpers -------------------------------------------------------
 function useScrollHue(base = 230, span = 180) {
@@ -379,8 +380,10 @@ export default function Home() {
       <header className="sticky top-0 z-30 border-b border-white/10 bg-slate-950/50 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
           <div className="flex items-center gap-2">
-            <div className="h-9 w-9 rounded-lg"
-                 style={{ background: `linear-gradient(135deg, hsla(${hue},100%,65%,1), hsla(${hue + 60},100%,65%,1))` }} />
+            <BrandMark
+              size={36}
+              gradient={`linear-gradient(135deg, hsla(${hue},100%,65%,1), hsla(${hue + 60},100%,65%,1))`}
+            />
             <span className="text-lg font-bold">NetCancer Insight</span>
           </div>
           <div className="flex items-center gap-3">
@@ -501,9 +504,10 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 py-10">
           <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
             <div className="flex items-center gap-2">
-              <div
-                className="h-8 w-8 rounded-md"
-                style={{ background: `linear-gradient(135deg, hsla(${hue},100%,65%,1), hsla(${hue + 60},100%,65%,1))` }}
+              <BrandMark
+                size={32}
+                glow={false}
+                gradient={`linear-gradient(135deg, hsla(${hue},100%,65%,1), hsla(${hue + 60},100%,65%,1))`}
               />
               <span className="font-semibold">NetCancer Insight</span>
             </div>

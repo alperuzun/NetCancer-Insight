@@ -1,0 +1,54 @@
+/* ============================================================
+   NetCancer Insight — Typography tokens
+   The product uses the NATIVE system UI stack by design — a
+   deliberate tech-minimalist choice (fast, native, neutral).
+   Monospace is reserved for gene symbols & numeric data.
+   ============================================================ */
+
+:root {
+  /* ---- Families -------------------------------------------- */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica,
+               Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "SFMono-Regular", "Menlo",
+               "Consolas", "Liberation Mono", monospace;
+
+  /* Semantic family aliases */
+  --font-display: var(--font-sans);   /* hero / page titles */
+  --font-body:    var(--font-sans);   /* prose & UI copy */
+  --font-data:    var(--font-mono);   /* gene symbols, counts, code */
+
+  /* ---- Type scale (px) -------------------------------------
+     Tight, UI-dense at the small end (panels run 10–13px),
+     expressive at the large end (marketing hero ≈ 48–56px). */
+  --text-2xs: 10px;   /* panel section labels (uppercase) */
+  --text-xs:  11px;   /* metadata, captions, table cells */
+  --text-sm:  12px;   /* dense UI: toolbar, filter rows */
+  --text-base:13px;   /* default app body */
+  --text-md:  14px;   /* comfortable body / inputs */
+  --text-lg:  16px;   /* card titles, lead UI */
+  --text-xl:  20px;   /* section titles */
+  --text-2xl: 24px;   /* sub-headlines */
+  --text-3xl: 30px;   /* page / marketing H2 */
+  --text-4xl: 36px;
+  --text-5xl: 48px;   /* hero H1 */
+  --text-6xl: 56px;
+
+  /* ---- Weights --------------------------------------------- */
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+  --weight-extra:    800;   /* hero display only */
+
+  /* ---- Line heights ---------------------------------------- */
+  --leading-tight:  1.1;    /* large display */
+  --leading-snug:   1.25;   /* headings */
+  --leading-normal: 1.5;    /* body */
+  --leading-relaxed:1.65;   /* long-form prose */
+
+  /* ---- Letter spacing -------------------------------------- */
+  --tracking-tight:  -0.02em;  /* big display */
+  --tracking-normal:  0;
+  --tracking-wide:    0.05em;  /* small uppercase labels */
+  --tracking-wider:   0.08em;  /* panel eyebrows */
+}

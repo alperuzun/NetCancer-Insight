@@ -1,0 +1,30 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: netcancer-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/data
+      - hf-cache:/root/.cache/huggingface
+    environment:
+      DB_PATH: /data/db.sqlite
+      CHROMA_PATH: /data/chroma
+      API_KEY: ${API_KEY:-}
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: netcancer-frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  hf-cache:

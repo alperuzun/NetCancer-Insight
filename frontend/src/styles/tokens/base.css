@@ -1,0 +1,49 @@
+/* ============================================================
+   NetCancer Insight — base element defaults
+   Minimal element defaults that apply the brand foundation
+   (system-ui font, dark violet-ink canvas, subtle scrollbars).
+   Tokens come from the imported token files.
+   ============================================================ */
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+  background: var(--surface-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Gene symbols, counts, and code use the mono stack. */
+code, kbd, samp, pre {
+  font-family: var(--font-data);
+}
+
+::selection {
+  background: var(--brand-accent-faint);
+  color: var(--text-primary);
+}
+
+/* Links inherit the brand accent rather than the browser default. */
+a {
+  color: var(--brand-accent);
+  text-decoration: inherit;
+}
+a:hover {
+  color: var(--brand-accent-hover);
+}
+
+/* Custom scrollbar — subtle, matches the dark dense UI */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+*::-webkit-scrollbar { width: 9px; height: 9px; }
+*::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-brand-full);
+}
+*::-webkit-scrollbar-track { background: transparent; }

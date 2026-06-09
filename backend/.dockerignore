@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+env/
+tests/
+Dockerfile
+Dockerfile.ubuntu
+.dockerignore
+*.log
+annotation_cache.json
+gene_summary_cache.json
+llm_data/

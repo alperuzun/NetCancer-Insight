@@ -1,0 +1,16 @@
+/* ============================================================
+   NetCancer Insight — Design System tokens (entry point)
+   Vendored from the NetCancer Insight Design System handoff.
+   Import this once (from index.css) to make every design token
+   — colors, typography, the 4px spacing grid, radii, shadows,
+   glows, blur, and motion easings — available app-wide, plus the
+   brand base element defaults. Light/dark switch automatically via
+   the [data-theme] attribute set by ThemeContext.
+   Import order matters: tokens first, then base element defaults.
+   ============================================================ */
+
+@import "./tokens/colors.css";
+@import "./tokens/typography.css";
+@import "./tokens/spacing.css";
+@import "./tokens/effects.css";
+@import "./tokens/base.css";

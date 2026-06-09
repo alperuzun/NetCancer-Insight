@@ -1,0 +1,30 @@
+[
+  {
+    "drug": {"name": "Nutlin-3", "conceptId": "CHEMBL206813", "approved": false},
+    "interactionTypes": [{"type": "inhibitor", "directionality": "ACTIVATES"}],
+    "interactionScore": 3.45,
+    "sources": [{"sourceDbName": "ChemblInteractions"}, {"sourceDbName": "GuideToPharmacology"}],
+    "publications": [{"pmid": "14704432"}, {"pmid": "16413976"}]
+  },
+  {
+    "drug": {"name": "APR-246", "conceptId": "CHEMBL3989723", "approved": false},
+    "interactionTypes": [{"type": "activator", "directionality": "ACTIVATES"}],
+    "interactionScore": 2.12,
+    "sources": [{"sourceDbName": "ChemblInteractions"}],
+    "publications": [{"pmid": "22473468"}]
+  },
+  {
+    "drug": {"name": "unknown", "conceptId": "", "approved": false},
+    "interactionTypes": [],
+    "interactionScore": 0.1,
+    "sources": [],
+    "publications": []
+  },
+  {
+    "drug": {"name": "WeakAssociation", "conceptId": "CHEMBL999", "approved": false},
+    "interactionTypes": [{"type": "modulator"}],
+    "interactionScore": 0.21,
+    "sources": [{"sourceDbName": "TextMining"}],
+    "publications": []
+  }
+]

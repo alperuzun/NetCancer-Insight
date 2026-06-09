@@ -1,0 +1,39 @@
+/* ============================================================
+   NetCancer Insight — Effects: shadows, blur, motion
+   The app leans on soft dark-tuned shadows + glassy blur on
+   floating panels; the landing page adds large colored glows.
+   ============================================================ */
+
+:root {
+  /* ---- Elevation shadows ----------------------------------- */
+  --shadow-xs:  0 1px 2px rgba(0, 0, 0, 0.12);
+  --shadow-sm:  0 2px 8px rgba(0, 0, 0, 0.16);
+  --shadow-md:  0 4px 16px rgba(0, 0, 0, 0.18);   /* floating panels */
+  --shadow-lg:  0 12px 32px rgba(0, 0, 0, 0.28);  /* modals, dropdowns */
+  --shadow-xl:  0 24px 60px rgba(0, 0, 0, 0.40);  /* dialogs */
+  --shadow-tooltip: 0 4px 12px rgba(0, 0, 0, 0.20);
+
+  /* ---- Accent glow — the violet halo on hero/CTA surfaces -- */
+  --glow-accent:    0 10px 30px -10px rgba(168, 85, 247, 0.5);
+  --glow-accent-lg: 0 30px 80px -40px rgba(168, 85, 247, 0.35);
+
+  /* ---- Focus ring ------------------------------------------ */
+  --ring-accent: 0 0 0 3px var(--brand-accent-ring);
+
+  /* ---- Glass blur ------------------------------------------ */
+  --blur-panel: blur(8px);
+  --blur-nav:   blur(12px);
+
+  /* ---- Motion ---------------------------------------------- */
+  /* The product favors quick, restrained transitions (0.15s)
+     for UI, and gentle springs for marketing motion. */
+  --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:cubic-bezier(0.45, 0, 0.55, 1);
+  --ease-spring:cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --dur-fast:   0.15s;
+  --dur-base:   0.2s;
+  --dur-slow:   0.4s;
+
+  --transition-ui: all var(--dur-fast) var(--ease-in-out);
+}

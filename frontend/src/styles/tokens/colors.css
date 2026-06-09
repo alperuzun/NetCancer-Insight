@@ -1,0 +1,141 @@
+/* ============================================================
+   NetCancer Insight — Color tokens
+   Source of truth: src/context/ThemeContext.tsx (mirrored here).
+   The brand's primary surface is DARK (app default + landing).
+   A light theme is provided under [data-theme="light"] / .light.
+   ============================================================ */
+
+:root {
+  /* ---- Brand palette: Violet ---------------------------------
+     The signature accent. #a855f7 (violet-500) on dark,
+     #7c3aed (violet-600) on light. Derived ramp below. */
+  --violet-50:  #faf5ff;
+  --violet-100: #f3e8ff;
+  --violet-200: #e9d5ff;
+  --violet-300: #d8b4fe;
+  --violet-400: #c084fc;   /* accentHover (dark) */
+  --violet-500: #a855f7;   /* accent (dark) — the brand color */
+  --violet-600: #7c3aed;   /* accent (light) */
+  --violet-700: #6d28d9;   /* accentHover (light) */
+  --violet-800: #5b21b6;
+  --violet-900: #4c1d95;
+
+  /* Indigo companion — used in gradient pairings (logo, hero) */
+  --indigo-400: #818cf8;
+  --indigo-500: #6366f1;
+
+  /* ---- Ink: the deep violet-tinted neutrals (dark surfaces) -- */
+  --ink-950: #0d0b17;   /* base canvas */
+  --ink-900: #0f0a1e;   /* sidebar */
+  --ink-850: #14101f;   /* panel */
+  --ink-800: #1c1828;   /* panel secondary */
+
+  /* ---- Slate: cool text neutrals (from landing + app) -------- */
+  --slate-50:  #f1f5f9;
+  --slate-400: #94a3b8;
+  --slate-600: #475569;
+  --slate-950: #020617;
+
+  /* ---- Lilac: warm violet-tinted neutrals (light surfaces) --- */
+  --lilac-50:  #f5f3ff;   /* light base */
+  --lilac-75:  #faf8ff;   /* light panel secondary */
+  --lilac-100: #f9f8ff;   /* light input */
+  --lilac-200: #e9e4f5;   /* light border */
+  --lilac-300: #d4cae8;   /* light border strong */
+  --lilac-ink: #0f0720;   /* light primary text */
+  --lilac-muted: #5b4d7a; /* light muted text */
+  --lilac-faint: #9d89bb; /* light faint text */
+
+  /* ---- Status ------------------------------------------------ */
+  --success-dark: #34d399;
+  --warning-dark: #fbbf24;
+  --danger-dark:  #f87171;
+  --success-light: #059669;
+  --warning-light: #d97706;
+  --danger-light:  #dc2626;
+
+  /* Data-viz ramp — expression heatmap / chart series.
+     Drawn from the app's gradient legend + chart palette. */
+  --data-1: #a855f7;
+  --data-2: #6366f1;
+  --data-3: #38bdf8;
+  --data-4: #34d399;
+  --data-5: #fbbf24;
+  --data-6: #f87171;
+
+  /* ============================================================
+     SEMANTIC ALIASES — default (DARK) theme
+     Reference these in components, not the raw ramp above.
+     ============================================================ */
+
+  /* Surfaces */
+  --surface-base:       var(--ink-950);   /* app canvas / page bg */
+  --surface-panel:      var(--ink-850);   /* cards, panels, modals */
+  --surface-panel-2:    var(--ink-800);   /* nested / header rows */
+  --surface-input:      var(--ink-950);   /* form fields */
+  --surface-sidebar:    var(--ink-900);
+  --surface-hover:      rgba(255, 255, 255, 0.05);
+  --surface-active:     rgba(168, 85, 247, 0.12);
+  --surface-overlay:    rgba(5, 4, 12, 0.66);   /* modal scrim */
+
+  /* Borders */
+  --border-subtle:  rgba(255, 255, 255, 0.07);
+  --border-strong:  rgba(255, 255, 255, 0.14);
+  --border-sidebar: rgba(255, 255, 255, 0.06);
+
+  /* Text */
+  --text-primary: var(--slate-50);
+  --text-muted:   var(--slate-400);
+  --text-faint:   var(--slate-600);
+  --text-on-accent: #ffffff;
+
+  /* Accent (brand) — the brand violet, addressable as --brand-accent
+     so it never collides with the shadcn/Tailwind --accent token. */
+  --brand-accent:       var(--violet-500);
+  --brand-accent-hover: var(--violet-400);
+  --brand-accent-faint: rgba(168, 85, 247, 0.15);
+  --brand-accent-ring:  rgba(168, 85, 247, 0.45);
+
+  /* Status (semantic) */
+  --success: var(--success-dark);
+  --warning: var(--warning-dark);
+  --danger:  var(--danger-dark);
+
+  /* Signature gradients */
+  --gradient-brand: linear-gradient(135deg, var(--violet-500), var(--indigo-400));
+  --gradient-hero:  linear-gradient(90deg, #c084fc, #818cf8);
+  --gradient-glow:  radial-gradient(60% 60% at 50% 40%, rgba(168, 85, 247, 0.45), transparent 70%);
+}
+
+/* ============================================================
+   LIGHT THEME
+   Applied via <html data-theme="light"> (ThemeContext) or a .light wrapper.
+   ============================================================ */
+[data-theme="light"],
+.light {
+  --surface-base:    var(--lilac-50);
+  --surface-panel:   #ffffff;
+  --surface-panel-2: var(--lilac-75);
+  --surface-input:   var(--lilac-100);
+  --surface-sidebar: var(--ink-900);   /* sidebar stays dark in light mode */
+  --surface-hover:   rgba(0, 0, 0, 0.04);
+  --surface-active:  rgba(124, 58, 237, 0.08);
+  --surface-overlay: rgba(15, 7, 32, 0.4);
+
+  --border-subtle:  var(--lilac-200);
+  --border-strong:  var(--lilac-300);
+  --border-sidebar: rgba(255, 255, 255, 0.06);
+
+  --text-primary: var(--lilac-ink);
+  --text-muted:   var(--lilac-muted);
+  --text-faint:   var(--lilac-faint);
+
+  --brand-accent:       var(--violet-600);
+  --brand-accent-hover: var(--violet-700);
+  --brand-accent-faint: rgba(124, 58, 237, 0.1);
+  --brand-accent-ring:  rgba(124, 58, 237, 0.4);
+
+  --success: var(--success-light);
+  --warning: var(--warning-light);
+  --danger:  var(--danger-light);
+}

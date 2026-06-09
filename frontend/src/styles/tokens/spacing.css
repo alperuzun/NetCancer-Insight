@@ -1,0 +1,55 @@
+/* ============================================================
+   NetCancer Insight — Spacing & layout tokens
+   4px base grid. The app is dense (panels, toolbars), so the
+   small steps carry most of the weight.
+
+   NOTE: the radius tokens below intentionally share names with
+   Tailwind's theme radii. This file is imported BEFORE Tailwind's
+   @theme block, so Tailwind's values win for the rounded-* utilities;
+   these remain the documented design-system reference values.
+   ============================================================ */
+
+:root {
+  /* ---- Spacing scale (4px base) ---------------------------- */
+  --space-0:  0;
+  --space-1:  2px;
+  --space-2:  4px;
+  --space-3:  6px;
+  --space-4:  8px;
+  --space-5:  10px;
+  --space-6:  12px;
+  --space-8:  16px;
+  --space-10: 20px;
+  --space-12: 24px;
+  --space-16: 32px;
+  --space-20: 40px;
+  --space-24: 48px;
+  --space-32: 64px;
+  --space-40: 80px;
+
+  /* ---- Fixed layout dimensions (from the app shell) -------- */
+  --sidebar-width:   60px;
+  --sidebar-icon:    52px;   /* icon-button hit target */
+  --topbar-height:   44px;
+  --panel-width:     228px;  /* floating filter / stats panel */
+  --resize-handle:   4px;
+
+  /* ---- Radii ----------------------------------------------- */
+  --radius-brand-xs:   4px;    /* tiny chips, inline toggles */
+  --radius-brand-sm:   6px;    /* buttons, inputs, toolbar items */
+  --radius-brand-md:   8px;
+  --radius-brand-lg:   10px;   /* panels, cards, sidebar items */
+  --radius-brand-xl:   12px;   /* marketing cards */
+  --radius-brand-2xl:  16px;   /* feature cards */
+  --radius-brand-3xl:  24px;   /* hero surfaces */
+  --radius-brand-full: 9999px; /* pills, avatars */
+
+  /* ---- Z-index scale --------------------------------------- */
+  --z-base:     0;
+  --z-graph:    10;
+  --z-panel:    30;
+  --z-sidebar:  50;
+  --z-tooltip:  1000;
+  --z-modal:    2000;
+  --z-toast:    3000;
+}

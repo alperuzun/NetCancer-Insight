@@ -1,0 +1,27 @@
+{
+  "id": "ENSG00000141510",
+  "approvedSymbol": "TP53",
+  "tractability": [
+    {"modality": "SM", "value": true, "label": "Approved Drug"},
+    {"modality": "AB", "value": false, "label": "GO CC high conf"}
+  ],
+  "knownDrugs": {
+    "count": 2,
+    "rows": [
+      {
+        "drug": {"name": "APR-246", "maximumClinicalTrialPhase": 3, "isApproved": false},
+        "disease": {"name": "Myelodysplastic Syndrome"},
+        "phase": 3,
+        "status": "Recruiting",
+        "mechanismOfAction": "Mutant p53 reactivator"
+      },
+      {
+        "drug": {"name": "Idasanutlin", "maximumClinicalTrialPhase": 2, "isApproved": false},
+        "disease": {"name": "Acute Myeloid Leukemia"},
+        "phase": 2,
+        "status": "Completed",
+        "mechanismOfAction": "MDM2 inhibitor"
+      }
+    ]
+  }
+}
